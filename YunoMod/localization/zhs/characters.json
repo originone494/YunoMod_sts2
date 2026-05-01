@@ -1,0 +1,17 @@
+{
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.aromaPrinciple": "[sine][blue]……等待……[/blue][/sine]",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.banter.alive.endTurnPing": "……",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.banter.dead.endTurnPing": "……",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.cardsModifierDescription": "由乃的卡牌现在会出现在奖励和商店中。",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.cardsModifierTitle": "戈多卡牌",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.description": "由乃。",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.eventDeathPrevention": "我还得继续……",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.goldMonologue": "[sine]这些金币……也许能派上用场……[/sine]",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.possessiveAdjective": "她的",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.pronounObject": "她",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.pronounPossessive": "她的",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.pronounSubject": "她",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.title": "我妻由乃",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.titleObject": "由乃",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.unlockText": "..."
+}
