@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
 
-namespace YunoMod;
+namespace YunoMod.Scripts;
 
 [ModInitializer(nameof(Init))]
 public class Entry

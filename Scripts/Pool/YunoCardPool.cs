@@ -2,7 +2,7 @@ using Godot;
 using STS2RitsuLib.Scaffolding.Content;
 using STS2RitsuLib.Utils;
 
-namespace YunoMod.Pool;
+namespace YunoMod.Scripts.Pool;
 
 public class YunoCardPool : TypeListCardPoolModel
 {

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://lknieqghm5pd"]
 
-[ext_resource type="Texture2D" uid="uid://cjkamqs2qty5o" path="res://icon.svg" id="1_c8lhi"]
+[ext_resource type="Texture2D" uid="uid://ckqm3sojnd33" path="res://YunoMod/images/YunoPortrait.png" id="2_l6qlp"]
 
 [node name="TestBg" type="Control"]
 layout_mode = 3
@@ -40,20 +40,10 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.44705883, 0.49803922, 1, 1)
 
-[node name="Icon" type="TextureRect" parent="Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 1362.0
-offset_top = 242.00006
-offset_right = -132.14636
-offset_bottom = -417.70734
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.82, 0.82)
-texture = ExtResource("1_c8lhi")
-expand_mode = 1
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+position = Vector2(960, 539)
+scale = Vector2(1, 0.8983333)
+texture = ExtResource("2_l6qlp")
 
 [node name="ash1" type="CPUParticles2D" parent="."]
 position = Vector2(1832, -17)

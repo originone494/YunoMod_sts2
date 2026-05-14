@@ -1,0 +1,16 @@
+{
+    "YUNO_MOD_KEYWORD_DAGGER.description": "匕首牌，具有独特的匕首相关效果",
+    "YUNO_MOD_KEYWORD_DAGGER.title": "匕首",
+    "YUNO_MOD_KEYWORD_AXE.description": "斧头牌，具有独特的斧头相关效果",
+    "YUNO_MOD_KEYWORD_AXE.title": "斧头",
+    "YUNO_MOD_KEYWORD_GUN.description": "枪械牌，具有独特的枪械相关效果",
+    "YUNO_MOD_KEYWORD_GUN.title": "枪械",
+    "YUNO_MOD_KEYWORD_SWORD.description": "刃牌，具有独特的刃相关效果",
+    "YUNO_MOD_KEYWORD_SWORD.title": "刃",
+    "YUNO_MOD_KEYWORD_LIU_XUE_POWER.description": "流血效果，敌人会持续受到伤害",
+    "YUNO_MOD_KEYWORD_LIU_XUE_POWER.title": "流血",
+    "YUNO_MOD_KEYWORD_ZHI_CAN_POWER.description": "致残效果，敌人受到伤害时会额外失去生命值",
+    "YUNO_MOD_KEYWORD_ZHI_CAN_POWER.title": "致残",
+    "YUNO_MOD_KEYWORD_LING_HUO.description": "灵火效果，敌人受到伤害时会额外失去生命值",
+    "YUNO_MOD_KEYWORD_LING_HUO.title": "灵活"
+}

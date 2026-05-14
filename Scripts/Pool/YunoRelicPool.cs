@@ -1,6 +1,6 @@
 using STS2RitsuLib.Scaffolding.Content;
 
-namespace YunoMod.Pool;
+namespace YunoMod.Scripts.Pool;
 
 public class YunoRelicPool : TypeListRelicPoolModel
 {

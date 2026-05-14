@@ -1,15 +1,768 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkft7e41sjfud"]
+[gd_scene load_steps=191 format=3 uid="uid://bkft7e41sjfud"]
 
-[ext_resource type="Texture2D" uid="uid://hn2nofekpwrp" path="res://icon.svg" id="1_74iws"]
+[ext_resource type="Script" path="res://Scripts/Character/NYunoCharacter_rest.cs" id="1_om8ub"]
+[ext_resource type="Texture2D" uid="uid://b3wfsojnywl6s" path="res://YunoMod/scenes/rest/processed_frame_048_cropped.png" id="48_2ahji"]
+[ext_resource type="Texture2D" uid="uid://ctv0lksfax6ke" path="res://YunoMod/scenes/rest/processed_frame_049_cropped.png" id="49_uslbh"]
+[ext_resource type="Texture2D" uid="uid://dxa2fcciyvjyl" path="res://YunoMod/scenes/rest/processed_frame_050_cropped.png" id="50_6y064"]
+[ext_resource type="Texture2D" uid="uid://c7co1dbclf83s" path="res://YunoMod/scenes/rest/processed_frame_051_cropped.png" id="51_yripg"]
+[ext_resource type="Texture2D" uid="uid://brp5wpyi8yivj" path="res://YunoMod/scenes/rest/processed_frame_052_cropped.png" id="52_63lav"]
+[ext_resource type="Texture2D" uid="uid://h1ye0ikgkn0q" path="res://YunoMod/scenes/rest/processed_frame_053_cropped.png" id="53_62w7j"]
+[ext_resource type="Texture2D" uid="uid://007ch7t3ommb" path="res://YunoMod/scenes/rest/processed_frame_054_cropped.png" id="54_ouyfw"]
+[ext_resource type="Texture2D" uid="uid://b26kjgx1oi83" path="res://YunoMod/scenes/rest/processed_frame_055_cropped.png" id="55_qx1cm"]
+[ext_resource type="Texture2D" uid="uid://cn4o2lxqmdqv3" path="res://YunoMod/scenes/rest/processed_frame_056_cropped.png" id="56_ns0j3"]
+[ext_resource type="Texture2D" uid="uid://u5nj1v13u4v" path="res://YunoMod/scenes/rest/processed_frame_057_cropped.png" id="57_g8cnf"]
+[ext_resource type="Texture2D" uid="uid://cub017uxqu214" path="res://YunoMod/scenes/rest/processed_frame_058_cropped.png" id="58_bsd3p"]
+[ext_resource type="Texture2D" uid="uid://dn0cd6x75gr8" path="res://YunoMod/scenes/rest/processed_frame_059_cropped.png" id="59_m8ia0"]
+[ext_resource type="Texture2D" uid="uid://br4xbvkrdqpf" path="res://YunoMod/scenes/rest/processed_frame_060_cropped.png" id="60_bdibn"]
+[ext_resource type="Texture2D" uid="uid://4wapkw7pwfkk" path="res://YunoMod/scenes/rest/processed_frame_061_cropped.png" id="61_o8fpj"]
+[ext_resource type="Texture2D" uid="uid://3xsujm8px88c" path="res://YunoMod/scenes/rest/processed_frame_062_cropped.png" id="62_d1fry"]
+[ext_resource type="Texture2D" uid="uid://dlo2utupn0kmp" path="res://YunoMod/scenes/rest/processed_frame_063_cropped.png" id="63_xj1oh"]
+[ext_resource type="Texture2D" uid="uid://qeswxlb8oii4" path="res://YunoMod/scenes/rest/processed_frame_064_cropped.png" id="64_aavwv"]
+[ext_resource type="Texture2D" uid="uid://cgmm73owbpbsi" path="res://YunoMod/scenes/rest/processed_frame_065_cropped.png" id="65_dbwta"]
+[ext_resource type="Texture2D" uid="uid://cmnnk54anxpno" path="res://YunoMod/scenes/rest/processed_frame_066_cropped.png" id="66_8crp6"]
+[ext_resource type="Texture2D" uid="uid://catdciivvot1k" path="res://YunoMod/scenes/rest/processed_frame_067_cropped.png" id="67_ohjd8"]
+[ext_resource type="Texture2D" uid="uid://biotpcwpaf5rg" path="res://YunoMod/scenes/rest/processed_frame_068_cropped.png" id="68_ehkcb"]
+[ext_resource type="Texture2D" uid="uid://cju3hqm1306tr" path="res://YunoMod/scenes/rest/processed_frame_069_cropped.png" id="69_6mi1b"]
+[ext_resource type="Texture2D" uid="uid://4iyrqmuq8u1n" path="res://YunoMod/scenes/rest/processed_frame_070_cropped.png" id="70_gbnjj"]
+[ext_resource type="Texture2D" uid="uid://xxqrs1plkkw4" path="res://YunoMod/scenes/rest/processed_frame_071_cropped.png" id="71_pn5pr"]
+[ext_resource type="Texture2D" uid="uid://22h4utqop2c7" path="res://YunoMod/scenes/rest/processed_frame_072_cropped.png" id="72_eaqqx"]
+[ext_resource type="Texture2D" uid="uid://bdbkyutgy16o0" path="res://YunoMod/scenes/rest/processed_frame_073_cropped.png" id="73_78n1n"]
+[ext_resource type="Texture2D" uid="uid://ddtfl5un2cewe" path="res://YunoMod/scenes/rest/processed_frame_074_cropped.png" id="74_754o0"]
+[ext_resource type="Texture2D" uid="uid://bymdl4gflx3ru" path="res://YunoMod/scenes/rest/processed_frame_075_cropped.png" id="75_1yjaf"]
+[ext_resource type="Texture2D" uid="uid://cxqp7rfvr7pmg" path="res://YunoMod/scenes/rest/processed_frame_076_cropped.png" id="76_5k40n"]
+[ext_resource type="Texture2D" uid="uid://b0dhu3wx72uby" path="res://YunoMod/scenes/rest/processed_frame_077_cropped.png" id="77_qwcs5"]
+[ext_resource type="Texture2D" uid="uid://bxbmyo0iukht2" path="res://YunoMod/scenes/rest/processed_frame_078_cropped.png" id="78_fkenx"]
+[ext_resource type="Texture2D" uid="uid://cw8hej6m6q3m5" path="res://YunoMod/scenes/rest/processed_frame_079_cropped.png" id="79_bgv3w"]
+[ext_resource type="Texture2D" uid="uid://b16hqv64tgia" path="res://YunoMod/scenes/rest/processed_frame_080_cropped.png" id="80_made2"]
+[ext_resource type="Texture2D" uid="uid://cs3cwi7x7uv8l" path="res://YunoMod/scenes/rest/processed_frame_081_cropped.png" id="81_yf6fb"]
+[ext_resource type="Texture2D" uid="uid://c3ltx61c60p17" path="res://YunoMod/scenes/rest/processed_frame_082_cropped.png" id="82_q7rsg"]
+[ext_resource type="Texture2D" uid="uid://blseta2c0m64w" path="res://YunoMod/scenes/rest/processed_frame_083_cropped.png" id="83_oe06j"]
+[ext_resource type="Texture2D" uid="uid://jj22u76wcek0" path="res://YunoMod/scenes/rest/processed_frame_084_cropped.png" id="84_uv6yn"]
+[ext_resource type="Texture2D" uid="uid://dtjjh8pwatlap" path="res://YunoMod/scenes/rest/processed_frame_085_cropped.png" id="85_nk462"]
+[ext_resource type="Texture2D" uid="uid://c4nqdmjmhes87" path="res://YunoMod/scenes/rest/processed_frame_086_cropped.png" id="86_ib6rj"]
+[ext_resource type="Texture2D" uid="uid://hgx0q1r47dir" path="res://YunoMod/scenes/rest/processed_frame_087_cropped.png" id="87_omw5i"]
+[ext_resource type="Texture2D" uid="uid://dl1mpj4vjadsj" path="res://YunoMod/scenes/rest/processed_frame_088_cropped.png" id="88_rxwfe"]
+[ext_resource type="Texture2D" uid="uid://bueswabetoaqu" path="res://YunoMod/scenes/rest/processed_frame_089_cropped.png" id="89_dwcie"]
+[ext_resource type="Texture2D" uid="uid://djlo615b63ybi" path="res://YunoMod/scenes/rest/processed_frame_090_cropped.png" id="90_184dd"]
+[ext_resource type="Texture2D" uid="uid://dd0h4jcksk0xb" path="res://YunoMod/scenes/rest/processed_frame_091_cropped.png" id="91_eyfhm"]
+[ext_resource type="Texture2D" uid="uid://glh2htuoe2ru" path="res://YunoMod/scenes/rest/processed_frame_092_cropped.png" id="92_43hl4"]
+[ext_resource type="Texture2D" uid="uid://bcrdp2s6c480c" path="res://YunoMod/scenes/rest/processed_frame_093_cropped.png" id="93_1gk1k"]
+[ext_resource type="Texture2D" uid="uid://d2ramt0bu3gbh" path="res://YunoMod/scenes/rest/processed_frame_094_cropped.png" id="94_rjl15"]
+[ext_resource type="Texture2D" uid="uid://yco0knfmlrsg" path="res://YunoMod/scenes/rest/processed_frame_095_cropped.png" id="95_c8nid"]
+[ext_resource type="Texture2D" uid="uid://dr3gld5xyqrtk" path="res://YunoMod/scenes/rest/processed_frame_096_cropped.png" id="96_2mx2n"]
+[ext_resource type="Texture2D" uid="uid://dj3aejosjlxv" path="res://YunoMod/scenes/rest/processed_frame_097_cropped.png" id="97_jg1mb"]
+[ext_resource type="Texture2D" uid="uid://be70rcy12bxf5" path="res://YunoMod/scenes/rest/processed_frame_098_cropped.png" id="98_naxoy"]
+[ext_resource type="Texture2D" uid="uid://cdfxf8nevqg6q" path="res://YunoMod/scenes/rest/processed_frame_099_cropped.png" id="99_ddex3"]
+[ext_resource type="Texture2D" uid="uid://dyckgdwrwy3k1" path="res://YunoMod/scenes/rest/processed_frame_100_cropped.png" id="100_2218v"]
+[ext_resource type="Texture2D" uid="uid://esjj4psi1aom" path="res://YunoMod/scenes/rest/processed_frame_101_cropped.png" id="101_r1kxc"]
+[ext_resource type="Texture2D" uid="uid://ct7ywkpdamlui" path="res://YunoMod/scenes/rest/processed_frame_102_cropped.png" id="102_anjvr"]
+[ext_resource type="Texture2D" uid="uid://bqv27offnfx1i" path="res://YunoMod/scenes/rest/processed_frame_103_cropped.png" id="103_xcq78"]
+[ext_resource type="Texture2D" uid="uid://dgcq5v5i8gbnb" path="res://YunoMod/scenes/rest/processed_frame_104_cropped.png" id="104_bl15k"]
+[ext_resource type="Texture2D" uid="uid://dbaa3dsdejxdi" path="res://YunoMod/scenes/rest/processed_frame_105_cropped.png" id="105_jeh5f"]
+[ext_resource type="Texture2D" uid="uid://bgl04bl7mif1v" path="res://YunoMod/scenes/rest/processed_frame_106_cropped.png" id="106_ce2e8"]
+[ext_resource type="Texture2D" uid="uid://dvc14qjke5mac" path="res://YunoMod/scenes/rest/processed_frame_107_cropped.png" id="107_83nnf"]
+[ext_resource type="Texture2D" uid="uid://crjycu4nhh6h" path="res://YunoMod/scenes/rest/processed_frame_108_cropped.png" id="108_n74v4"]
+[ext_resource type="Texture2D" uid="uid://cpvrk8fswbqc7" path="res://YunoMod/scenes/rest/processed_frame_109_cropped.png" id="109_5lf48"]
+[ext_resource type="Texture2D" uid="uid://col2t6y7xynvi" path="res://YunoMod/scenes/rest/processed_frame_110_cropped.png" id="110_cnssv"]
+[ext_resource type="Texture2D" uid="uid://ru7ooo8oy0sy" path="res://YunoMod/scenes/rest/processed_frame_111_cropped.png" id="111_l5vos"]
+[ext_resource type="Texture2D" uid="uid://wic5xaeakwaf" path="res://YunoMod/scenes/rest/processed_frame_112_cropped.png" id="112_4dp3y"]
+[ext_resource type="Texture2D" uid="uid://c62w7aaw5vn5r" path="res://YunoMod/scenes/rest/processed_frame_113_cropped.png" id="113_xtsgc"]
+[ext_resource type="Texture2D" uid="uid://bo78axctmu3q8" path="res://YunoMod/scenes/rest/processed_frame_114_cropped.png" id="114_40hxt"]
+[ext_resource type="Texture2D" uid="uid://chqklkggogioq" path="res://YunoMod/scenes/rest/processed_frame_115_cropped.png" id="115_1vsr8"]
+[ext_resource type="Texture2D" uid="uid://c3wnactw4bpl0" path="res://YunoMod/scenes/rest/processed_frame_116_cropped.png" id="116_e4bmf"]
+[ext_resource type="Texture2D" uid="uid://chmu1t8jeft31" path="res://YunoMod/scenes/rest/processed_frame_117_cropped.png" id="117_3nv4d"]
+[ext_resource type="Texture2D" uid="uid://bcdyqnfejmhep" path="res://YunoMod/scenes/rest/processed_frame_118_cropped.png" id="118_mnopp"]
+[ext_resource type="Texture2D" uid="uid://7wvx0b3rm7o" path="res://YunoMod/scenes/rest/processed_frame_119_cropped.png" id="119_vlgog"]
+[ext_resource type="Texture2D" uid="uid://b6taaiq1fd3h8" path="res://YunoMod/scenes/rest/processed_frame_120_cropped.png" id="120_bfxrx"]
+[ext_resource type="Texture2D" uid="uid://cdub32jvomc6i" path="res://YunoMod/scenes/rest/processed_frame_121_cropped.png" id="121_krxde"]
+[ext_resource type="Texture2D" uid="uid://tmi2xkfnt86" path="res://YunoMod/scenes/rest/processed_frame_122_cropped.png" id="122_6g3s7"]
+[ext_resource type="Texture2D" uid="uid://dfvqa08iinj28" path="res://YunoMod/scenes/rest/processed_frame_123_cropped.png" id="123_b10yp"]
+[ext_resource type="Texture2D" uid="uid://bjgrjmkpiceet" path="res://YunoMod/scenes/rest/processed_frame_124_cropped.png" id="124_ogkyd"]
+[ext_resource type="Texture2D" uid="uid://jk0xty47pigo" path="res://YunoMod/scenes/rest/processed_frame_125_cropped.png" id="125_2oktf"]
+[ext_resource type="Texture2D" uid="uid://bfn5bgbcodyvl" path="res://YunoMod/scenes/rest/processed_frame_126_cropped.png" id="126_85e2s"]
+[ext_resource type="Texture2D" uid="uid://btbbphiw2ryhd" path="res://YunoMod/scenes/rest/processed_frame_127_cropped.png" id="127_7ahef"]
+[ext_resource type="Texture2D" uid="uid://b413qqii6a1am" path="res://YunoMod/scenes/rest/processed_frame_128_cropped.png" id="128_euxr3"]
+[ext_resource type="Texture2D" uid="uid://cubdqr47uo1rq" path="res://YunoMod/scenes/rest/processed_frame_129_cropped.png" id="129_bgn28"]
+[ext_resource type="Texture2D" uid="uid://ccgyfv5k5iftp" path="res://YunoMod/scenes/rest/processed_frame_130_cropped.png" id="130_rmmgp"]
+[ext_resource type="Texture2D" uid="uid://cx44gv7mneymp" path="res://YunoMod/scenes/rest/processed_frame_131_cropped.png" id="131_pnm11"]
+[ext_resource type="Texture2D" uid="uid://bq6sve4uwpu0m" path="res://YunoMod/scenes/rest/processed_frame_132_cropped.png" id="132_vfvx3"]
+[ext_resource type="Texture2D" uid="uid://b4r3cg22vi1i1" path="res://YunoMod/scenes/rest/processed_frame_133_cropped.png" id="133_apo54"]
+[ext_resource type="Texture2D" uid="uid://bfwhjqltf123u" path="res://YunoMod/scenes/rest/processed_frame_134_cropped.png" id="134_phevt"]
+[ext_resource type="Texture2D" uid="uid://to50kd63rq4x" path="res://YunoMod/scenes/rest/processed_frame_135_cropped.png" id="135_8g5p6"]
+[ext_resource type="Texture2D" uid="uid://dk6asb24ldijf" path="res://YunoMod/scenes/rest/processed_frame_136_cropped.png" id="136_5sc2c"]
+[ext_resource type="Texture2D" uid="uid://dqfdn3jglcgll" path="res://YunoMod/scenes/rest/processed_frame_137_cropped.png" id="137_5ocic"]
+[ext_resource type="Texture2D" uid="uid://r68p003f5nm1" path="res://YunoMod/scenes/rest/processed_frame_138_cropped.png" id="138_by5qd"]
+[ext_resource type="Texture2D" uid="uid://dfydgo3vwx2jn" path="res://YunoMod/scenes/rest/processed_frame_139_cropped.png" id="139_8uh5w"]
+[ext_resource type="Texture2D" uid="uid://dup2s8rwsbxcp" path="res://YunoMod/scenes/rest/processed_frame_140_cropped.png" id="140_smddb"]
+[ext_resource type="Texture2D" uid="uid://bb2nlvjiv30et" path="res://YunoMod/scenes/rest/processed_frame_141_cropped.png" id="141_57cmi"]
+[ext_resource type="Texture2D" uid="uid://c0hd8xn3jwfp5" path="res://YunoMod/scenes/rest/processed_frame_142_cropped.png" id="142_qrem8"]
+[ext_resource type="Texture2D" uid="uid://dfj0fp5l1m4w" path="res://YunoMod/scenes/rest/processed_frame_143_cropped.png" id="143_psty2"]
+[ext_resource type="Texture2D" uid="uid://hugfewntdir1" path="res://YunoMod/scenes/rest/processed_frame_144_cropped.png" id="144_r382i"]
+[ext_resource type="Texture2D" uid="uid://l2bih8w88o1u" path="res://YunoMod/scenes/rest/processed_frame_145_cropped.png" id="145_lecmr"]
+[ext_resource type="Texture2D" uid="uid://b07x78gco60lj" path="res://YunoMod/scenes/rest/processed_frame_146_cropped.png" id="146_otxee"]
+[ext_resource type="Texture2D" uid="uid://7em2202jk4rt" path="res://YunoMod/scenes/rest/processed_frame_147_cropped.png" id="147_548ym"]
+[ext_resource type="Texture2D" uid="uid://bbfrw4ys40lxj" path="res://YunoMod/scenes/rest/processed_frame_148_cropped.png" id="148_bv7i3"]
+[ext_resource type="Texture2D" uid="uid://cl3rwt6gff1s8" path="res://YunoMod/scenes/rest/processed_frame_149_cropped.png" id="149_77h6b"]
+[ext_resource type="Texture2D" uid="uid://dr5tniunu75wf" path="res://YunoMod/scenes/rest/processed_frame_150_cropped.png" id="150_1k7la"]
+[ext_resource type="Texture2D" uid="uid://dsm7qitcj3xu2" path="res://YunoMod/scenes/rest/processed_frame_151_cropped.png" id="151_vrhg4"]
+[ext_resource type="Texture2D" uid="uid://bm0q5acfm81if" path="res://YunoMod/scenes/rest/processed_frame_152_cropped.png" id="152_y874l"]
+[ext_resource type="Texture2D" uid="uid://wxrpvc7klm7l" path="res://YunoMod/scenes/rest/processed_frame_153_cropped.png" id="153_43cg4"]
+[ext_resource type="Texture2D" uid="uid://bws3slahiay8s" path="res://YunoMod/scenes/rest/processed_frame_154_cropped.png" id="154_5uecq"]
+[ext_resource type="Texture2D" uid="uid://7tdeoxyjvhy4" path="res://YunoMod/scenes/rest/processed_frame_155_cropped.png" id="155_wvdo1"]
+[ext_resource type="Texture2D" uid="uid://dmehegokicdvm" path="res://YunoMod/scenes/rest/processed_frame_156_cropped.png" id="156_v7w8r"]
+[ext_resource type="Texture2D" uid="uid://ooy5fcxedbqc" path="res://YunoMod/scenes/rest/processed_frame_157_cropped.png" id="157_npn82"]
+[ext_resource type="Texture2D" uid="uid://bik44s20xl0bb" path="res://YunoMod/scenes/rest/processed_frame_158_cropped.png" id="158_mogb5"]
+[ext_resource type="Texture2D" uid="uid://b1w0r7fw2wnln" path="res://YunoMod/scenes/rest/processed_frame_159_cropped.png" id="159_tqogc"]
+[ext_resource type="Texture2D" uid="uid://dxfn7hrx64dsb" path="res://YunoMod/scenes/rest/processed_frame_160_cropped.png" id="160_05g62"]
+[ext_resource type="Texture2D" uid="uid://dp7ljks5aj8wy" path="res://YunoMod/scenes/rest/processed_frame_161_cropped.png" id="161_0i5uu"]
+[ext_resource type="Texture2D" uid="uid://c0loouhgrlupd" path="res://YunoMod/scenes/rest/processed_frame_162_cropped.png" id="162_8qydm"]
+[ext_resource type="Texture2D" uid="uid://brut6sq8qwffd" path="res://YunoMod/scenes/rest/processed_frame_163_cropped.png" id="163_81aol"]
+[ext_resource type="Texture2D" uid="uid://cqgjmdct1aguk" path="res://YunoMod/scenes/rest/processed_frame_164_cropped.png" id="164_6pvof"]
+[ext_resource type="Texture2D" uid="uid://p1e4lmoq2uyr" path="res://YunoMod/scenes/rest/processed_frame_165_cropped.png" id="165_h7hl7"]
+[ext_resource type="Texture2D" uid="uid://cih0h4xo28i3t" path="res://YunoMod/scenes/rest/processed_frame_166_cropped.png" id="166_u0gqe"]
+[ext_resource type="Texture2D" uid="uid://bq4cyse6bmi33" path="res://YunoMod/scenes/rest/processed_frame_167_cropped.png" id="167_weuwn"]
+[ext_resource type="Texture2D" uid="uid://csg70v8175hc5" path="res://YunoMod/scenes/rest/processed_frame_168_cropped.png" id="168_rgxav"]
+[ext_resource type="Texture2D" uid="uid://ccq47dw2wd3ys" path="res://YunoMod/scenes/rest/processed_frame_169_cropped.png" id="169_mogyk"]
+[ext_resource type="Texture2D" uid="uid://b2kdn0cpexn2u" path="res://YunoMod/scenes/rest/processed_frame_170_cropped.png" id="170_12gxn"]
+[ext_resource type="Texture2D" uid="uid://enyuhlfet1pn" path="res://YunoMod/scenes/rest/processed_frame_171_cropped.png" id="171_lc7et"]
+[ext_resource type="Texture2D" uid="uid://dtosfvf74wrkl" path="res://YunoMod/scenes/rest/processed_frame_172_cropped.png" id="172_etddd"]
+[ext_resource type="Texture2D" uid="uid://cj22t7eso65x6" path="res://YunoMod/scenes/rest/processed_frame_173_cropped.png" id="173_vog8e"]
+[ext_resource type="Texture2D" uid="uid://cx3eicvudvq1t" path="res://YunoMod/scenes/rest/processed_frame_174_cropped.png" id="174_bh4k5"]
+[ext_resource type="Texture2D" uid="uid://dsiapnmt73syu" path="res://YunoMod/scenes/rest/processed_frame_175_cropped.png" id="175_m8cjg"]
+[ext_resource type="Texture2D" uid="uid://bmrq760mym26j" path="res://YunoMod/scenes/rest/processed_frame_176_cropped.png" id="176_q73y7"]
+[ext_resource type="Texture2D" uid="uid://c65aj874o20sj" path="res://YunoMod/scenes/rest/processed_frame_177_cropped.png" id="177_cfu5o"]
+[ext_resource type="Texture2D" uid="uid://dfyp2mp7s32xv" path="res://YunoMod/scenes/rest/processed_frame_178_cropped.png" id="178_uf6sm"]
+[ext_resource type="Texture2D" uid="uid://cmx0or73ymfta" path="res://YunoMod/scenes/rest/processed_frame_179_cropped.png" id="179_ylc3i"]
+[ext_resource type="Texture2D" uid="uid://dsi42us5a5f38" path="res://YunoMod/scenes/rest/processed_frame_180_cropped.png" id="180_re4f7"]
+[ext_resource type="Texture2D" uid="uid://xp1lri8xobpb" path="res://YunoMod/scenes/rest/processed_frame_181_cropped.png" id="181_4av6k"]
+[ext_resource type="Texture2D" uid="uid://dmqsd2gh0b1al" path="res://YunoMod/scenes/rest/processed_frame_182_cropped.png" id="182_1w81l"]
+[ext_resource type="Texture2D" uid="uid://p11f1skptjbt" path="res://YunoMod/scenes/rest/processed_frame_183_cropped.png" id="183_jopyk"]
+[ext_resource type="Texture2D" uid="uid://cfhb60818ipjq" path="res://YunoMod/scenes/rest/processed_frame_184_cropped.png" id="184_g52fi"]
+[ext_resource type="Texture2D" uid="uid://dcfk5cb86luox" path="res://YunoMod/scenes/rest/processed_frame_185_cropped.png" id="185_dxe0k"]
+[ext_resource type="Texture2D" uid="uid://baeaw1o01pirr" path="res://YunoMod/scenes/rest/processed_frame_186_cropped.png" id="186_1fma0"]
+[ext_resource type="Texture2D" uid="uid://dbc1l8efxsy5q" path="res://YunoMod/scenes/rest/processed_frame_187_cropped.png" id="187_5i7qe"]
+[ext_resource type="Texture2D" uid="uid://chhf7g3sdfjeo" path="res://YunoMod/scenes/rest/processed_frame_188_cropped.png" id="188_aupbl"]
+[ext_resource type="Texture2D" uid="uid://dn0lxlucqdydc" path="res://YunoMod/scenes/rest/processed_frame_189_cropped.png" id="189_dcyy2"]
+[ext_resource type="Texture2D" uid="uid://wsm5xhky4ygo" path="res://YunoMod/scenes/rest/processed_frame_190_cropped.png" id="190_713xj"]
+[ext_resource type="Texture2D" uid="uid://mvsd117dhwwc" path="res://YunoMod/scenes/rest/processed_frame_191_cropped.png" id="191_25osi"]
+[ext_resource type="Texture2D" uid="uid://c5f8xtng17nso" path="res://YunoMod/scenes/rest/processed_frame_192_cropped.png" id="192_cc6qo"]
+[ext_resource type="Texture2D" uid="uid://bcsbstpllcyg2" path="res://YunoMod/scenes/rest/processed_frame_193_cropped.png" id="193_x8xvx"]
+[ext_resource type="Texture2D" uid="uid://df6q4dvrhle5t" path="res://YunoMod/scenes/rest/processed_frame_194_cropped.png" id="194_bhsab"]
+[ext_resource type="Texture2D" uid="uid://dw3pyk0jdm325" path="res://YunoMod/scenes/rest/processed_frame_195_cropped.png" id="195_rcx1p"]
+[ext_resource type="Texture2D" uid="uid://b01reogudisoi" path="res://YunoMod/scenes/rest/processed_frame_196_cropped.png" id="196_u1bmm"]
+[ext_resource type="Texture2D" uid="uid://cng4hjjpoa6j6" path="res://YunoMod/scenes/rest/processed_frame_197_cropped.png" id="197_snmf7"]
+[ext_resource type="Texture2D" uid="uid://b0urwhrh1i4vn" path="res://YunoMod/scenes/rest/processed_frame_198_cropped.png" id="198_u70l3"]
+[ext_resource type="Texture2D" uid="uid://bqdyopvifpfyn" path="res://YunoMod/scenes/rest/processed_frame_199_cropped.png" id="199_411tm"]
+[ext_resource type="Texture2D" uid="uid://d2laept02aheo" path="res://YunoMod/scenes/rest/processed_frame_200_cropped.png" id="200_ivswx"]
+[ext_resource type="Texture2D" uid="uid://ddbyfvgu8rb1a" path="res://YunoMod/scenes/rest/processed_frame_201_cropped.png" id="201_x548s"]
+[ext_resource type="Texture2D" uid="uid://b0irxgrs2g6w4" path="res://YunoMod/scenes/rest/processed_frame_202_cropped.png" id="202_75eef"]
+[ext_resource type="Texture2D" uid="uid://ct4xfng2u3dka" path="res://YunoMod/scenes/rest/processed_frame_203_cropped.png" id="203_l74ss"]
+[ext_resource type="Texture2D" uid="uid://3kw6xmesgoru" path="res://YunoMod/scenes/rest/processed_frame_204_cropped.png" id="204_dje5b"]
+[ext_resource type="Texture2D" uid="uid://4hdigw7vtrtx" path="res://YunoMod/scenes/rest/processed_frame_205_cropped.png" id="205_ssrr1"]
+[ext_resource type="Texture2D" uid="uid://c0d845jwam6c6" path="res://YunoMod/scenes/rest/processed_frame_206_cropped.png" id="206_bkjqe"]
+[ext_resource type="Texture2D" uid="uid://cavqxgsijoocv" path="res://YunoMod/scenes/rest/processed_frame_207_cropped.png" id="207_231u2"]
+[ext_resource type="Texture2D" uid="uid://dghi242h6rbby" path="res://YunoMod/scenes/rest/processed_frame_208_cropped.png" id="208_fr3w7"]
+[ext_resource type="Texture2D" uid="uid://yxrl080ger5f" path="res://YunoMod/scenes/rest/processed_frame_209_cropped.png" id="209_t8epq"]
+[ext_resource type="Texture2D" uid="uid://brxhrid4t7c55" path="res://YunoMod/scenes/rest/processed_frame_210_cropped.png" id="210_pum37"]
+[ext_resource type="Texture2D" uid="uid://cwctbevt8aipu" path="res://YunoMod/scenes/rest/processed_frame_211_cropped.png" id="211_4s118"]
+[ext_resource type="Texture2D" uid="uid://bbk5fgqv5p5vb" path="res://YunoMod/scenes/rest/processed_frame_212_cropped.png" id="212_m3f02"]
+[ext_resource type="Texture2D" uid="uid://ueg4cfj7k7t1" path="res://YunoMod/scenes/rest/processed_frame_213_cropped.png" id="213_qb11d"]
+[ext_resource type="Texture2D" uid="uid://bfxcffg0csdab" path="res://YunoMod/scenes/rest/processed_frame_214_cropped.png" id="214_7haea"]
+[ext_resource type="Texture2D" uid="uid://c7gdbytmrlj8m" path="res://YunoMod/scenes/rest/processed_frame_215_cropped.png" id="215_mankg"]
+[ext_resource type="Texture2D" uid="uid://dgdtihqyrexas" path="res://YunoMod/scenes/rest/processed_frame_216_cropped.png" id="216_tvqpb"]
+[ext_resource type="Texture2D" uid="uid://cykl7utck3xkw" path="res://YunoMod/scenes/rest/processed_frame_217_cropped.png" id="217_feq5o"]
+[ext_resource type="Texture2D" uid="uid://1of5t0d4xhaf" path="res://YunoMod/scenes/rest/processed_frame_218_cropped.png" id="218_u6od3"]
+[ext_resource type="Texture2D" uid="uid://bvcewpdclmyj8" path="res://YunoMod/scenes/rest/processed_frame_219_cropped.png" id="219_7xehu"]
+[ext_resource type="Texture2D" uid="uid://ccxr8h2824mvp" path="res://YunoMod/scenes/rest/processed_frame_220_cropped.png" id="220_ke5bx"]
+[ext_resource type="Texture2D" uid="uid://bguxtwrgochvi" path="res://YunoMod/scenes/rest/processed_frame_221_cropped.png" id="221_nto2m"]
+[ext_resource type="Texture2D" uid="uid://cqnw0vmx8jk83" path="res://YunoMod/scenes/rest/processed_frame_222_cropped.png" id="222_y6ejb"]
+[ext_resource type="Texture2D" uid="uid://dagq40hwp51u0" path="res://YunoMod/scenes/rest/processed_frame_223_cropped.png" id="223_blno8"]
+[ext_resource type="Texture2D" uid="uid://df3d2gk2ny7rh" path="res://YunoMod/scenes/rest/processed_frame_224_cropped.png" id="224_b0hf4"]
+[ext_resource type="Texture2D" uid="uid://sfta34idpw2l" path="res://YunoMod/scenes/rest/processed_frame_225_cropped.png" id="225_jday2"]
+[ext_resource type="Texture2D" uid="uid://crx61k6fro058" path="res://YunoMod/scenes/rest/processed_frame_226_cropped.png" id="226_s6na5"]
+[ext_resource type="Texture2D" uid="uid://cp2uoxmuqn6t" path="res://YunoMod/scenes/rest/processed_frame_227_cropped.png" id="227_hcbn5"]
+[ext_resource type="Texture2D" uid="uid://drtdtjv1buuun" path="res://YunoMod/scenes/rest/processed_frame_228_cropped.png" id="228_8oe6h"]
+[ext_resource type="Texture2D" uid="uid://ia5b5x5sbcj2" path="res://YunoMod/scenes/rest/processed_frame_229_cropped.png" id="229_g5u47"]
+[ext_resource type="Texture2D" uid="uid://dawxooeqg8kal" path="res://YunoMod/scenes/rest/processed_frame_230_cropped.png" id="230_xm4r2"]
+[ext_resource type="Texture2D" uid="uid://bxhxdrhw4x33r" path="res://YunoMod/scenes/rest/processed_frame_231_cropped.png" id="231_hfql8"]
+[ext_resource type="Texture2D" uid="uid://mpe8nptjcdu7" path="res://YunoMod/scenes/rest/processed_frame_232_cropped.png" id="232_menm7"]
+[ext_resource type="Texture2D" uid="uid://bk7lre16u8lcq" path="res://YunoMod/scenes/rest/processed_frame_233_cropped.png" id="233_8nxnu"]
+[ext_resource type="Texture2D" uid="uid://be57c8b0vvj1i" path="res://YunoMod/scenes/rest/processed_frame_234_cropped.png" id="234_rve33"]
+[ext_resource type="Texture2D" uid="uid://divpka30mt34l" path="res://YunoMod/scenes/rest/processed_frame_235_cropped.png" id="235_m7x47"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gcbeh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("48_2ahji")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_uslbh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_6y064")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_yripg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_63lav")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_62w7j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_ouyfw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_qx1cm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_ns0j3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_g8cnf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_bsd3p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_m8ia0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_bdibn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_o8fpj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_d1fry")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_xj1oh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_aavwv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_dbwta")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_8crp6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_ohjd8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_ehkcb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_6mi1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_gbnjj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_pn5pr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_eaqqx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_78n1n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_754o0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_1yjaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_5k40n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_qwcs5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_fkenx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_bgv3w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_made2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_yf6fb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_q7rsg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_oe06j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_uv6yn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_nk462")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_ib6rj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_omw5i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_rxwfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_dwcie")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_184dd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_eyfhm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_43hl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_1gk1k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_rjl15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_c8nid")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_2mx2n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_jg1mb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_naxoy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_ddex3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_2218v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_r1kxc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_anjvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_xcq78")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_bl15k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_jeh5f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_ce2e8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_83nnf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_n74v4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_5lf48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_cnssv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_l5vos")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_4dp3y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_xtsgc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_40hxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_1vsr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_e4bmf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_3nv4d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118_mnopp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_vlgog")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_bfxrx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("121_krxde")
+}, {
+"duration": 1.0,
+"texture": ExtResource("122_6g3s7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("123_b10yp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("124_ogkyd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("125_2oktf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("126_85e2s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("127_7ahef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("128_euxr3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("129_bgn28")
+}, {
+"duration": 1.0,
+"texture": ExtResource("130_rmmgp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("131_pnm11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("132_vfvx3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("133_apo54")
+}, {
+"duration": 1.0,
+"texture": ExtResource("134_phevt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("135_8g5p6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("136_5sc2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("137_5ocic")
+}, {
+"duration": 1.0,
+"texture": ExtResource("138_by5qd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("139_8uh5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("140_smddb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("141_57cmi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("142_qrem8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("143_psty2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("144_r382i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("145_lecmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("146_otxee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("147_548ym")
+}, {
+"duration": 1.0,
+"texture": ExtResource("148_bv7i3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("149_77h6b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("150_1k7la")
+}, {
+"duration": 1.0,
+"texture": ExtResource("151_vrhg4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("152_y874l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("153_43cg4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("154_5uecq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("155_wvdo1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("156_v7w8r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("157_npn82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("158_mogb5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("159_tqogc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("160_05g62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("161_0i5uu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("162_8qydm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("163_81aol")
+}, {
+"duration": 1.0,
+"texture": ExtResource("164_6pvof")
+}, {
+"duration": 1.0,
+"texture": ExtResource("165_h7hl7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("166_u0gqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("167_weuwn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("168_rgxav")
+}, {
+"duration": 1.0,
+"texture": ExtResource("169_mogyk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("170_12gxn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("171_lc7et")
+}, {
+"duration": 1.0,
+"texture": ExtResource("172_etddd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("173_vog8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("174_bh4k5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("175_m8cjg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("176_q73y7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("177_cfu5o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("178_uf6sm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("179_ylc3i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("180_re4f7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("181_4av6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("182_1w81l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("183_jopyk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("184_g52fi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("185_dxe0k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("186_1fma0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("187_5i7qe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("188_aupbl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("189_dcyy2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("190_713xj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("191_25osi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("192_cc6qo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("193_x8xvx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("194_bhsab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("195_rcx1p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("196_u1bmm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("197_snmf7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("198_u70l3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("199_411tm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("200_ivswx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("201_x548s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("202_75eef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("203_l74ss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("204_dje5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("205_ssrr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("206_bkjqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("207_231u2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("208_fr3w7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("209_t8epq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("210_pum37")
+}, {
+"duration": 1.0,
+"texture": ExtResource("211_4s118")
+}, {
+"duration": 1.0,
+"texture": ExtResource("212_m3f02")
+}, {
+"duration": 1.0,
+"texture": ExtResource("213_qb11d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("214_7haea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("215_mankg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("216_tvqpb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("217_feq5o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("218_u6od3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("219_7xehu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("220_ke5bx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("221_nto2m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("222_y6ejb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("223_blno8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("224_b0hf4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("225_jday2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("226_s6na5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("227_hcbn5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("228_8oe6h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("229_g5u47")
+}, {
+"duration": 1.0,
+"texture": ExtResource("230_xm4r2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("231_hfql8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("232_menm7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("233_8nxnu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("234_rve33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("235_m7x47")
+}],
+"loop": true,
+"name": &"default",
+"speed": 24.0
+}]
 
 [node name="TestCharacterRestSite" type="Node2D"]
-
-[node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_74iws")
-
-[node name="Sprite2" type="Sprite2D" parent="."]
-position = Vector2(75, -58)
-texture = ExtResource("1_74iws")
 
 [node name="ControlRoot" type="Control" parent="."]
 layout_mode = 3
@@ -22,6 +775,7 @@ offset_left = -153.0
 offset_top = -350.0
 offset_right = 267.0
 offset_bottom = 320.0
+script = ExtResource("1_om8ub")
 
 [node name="Hitbox" type="Control" parent="ControlRoot"]
 unique_name_in_owner = true
@@ -46,3 +800,10 @@ offset_left = -113.0
 offset_top = -95.0
 offset_right = -113.0
 offset_bottom = -95.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-113, 40)
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_gcbeh")
+autoplay = "default"
+frame_progress = 0.43625256

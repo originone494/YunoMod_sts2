@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cs3a5onikvhi4"]
 
-[ext_resource type="Texture2D" uid="uid://hn2nofekpwrp" path="res://icon.svg" id="1_85qf2"]
+[ext_resource type="Texture2D" uid="uid://bn5tt5h8vr871" path="res://YunoMod/scenes/energy.png" id="1_via6t"]
 
 [node name="TestEnergyCounter" type="Control"]
 layout_mode = 3
@@ -35,7 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_85qf2")
+texture = ExtResource("1_via6t")
 expand_mode = 1
 
 [node name="EnergyVfxFront" type="Node2D" parent="."]
@@ -55,7 +55,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.9647059, 0.8862745, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.1882353)
-theme_override_colors/font_outline_color = Color(0.1, 0.1, 0.8, 1)
+theme_override_colors/font_outline_color = Color(0.4607309, 0.17673263, 0.20311543, 1)
 theme_override_constants/shadow_offset_x = 3
 theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 16

@@ -1,0 +1,20 @@
+{
+    "YUNO_MOD_POWER_ZHI_CAN_POWER.title": "致残",
+    "YUNO_MOD_POWER_ZHI_CAN_POWER.description": "致残的生物会在受到伤害时失去生命。",
+    "YUNO_MOD_POWER_ZHI_CAN_POWER.smartDescription": "受到伤害时，失去[gold]{Amount}[/gold]点生命。",
+    "YUNO_MOD_POWER_LIU_XUE_POWER.title": "流血",
+    "YUNO_MOD_POWER_LIU_XUE_POWER.description": "流血的生物会在回合开始时受到伤害。",
+    "YUNO_MOD_POWER_LIU_XUE_POWER.smartDescription": "回合开始时，受到[gold]{Amount}[/gold]点伤害。",
+    "YUNO_MOD_POWER_LOVE_POWER.title": "爱意",
+    "YUNO_MOD_POWER_LOVE_POWER.description": "爱意可以强化由乃的各种能力。",
+    "YUNO_MOD_POWER_LOVE_POWER.smartDescription": "强化相关能力，层数为[gold]{Amount}[/gold]。",
+    "YUNO_MOD_POWER_LOSE_BLOOD_POWER.title": "失血",
+    "YUNO_MOD_POWER_LOSE_BLOOD_POWER.description": "失血会导致生物持续损失生命。",
+    "YUNO_MOD_POWER_LOSE_BLOOD_POWER.smartDescription": "持续损失[gold]{Amount}[/gold]点生命。",
+    "YUNO_MOD_POWER_DIARY_POWER.title": "持有日记数",
+    "YUNO_MOD_POWER_DIARY_POWER.description": "拥有的日记数量，影响某些能力的强度。",
+    "YUNO_MOD_POWER_DIARY_POWER.smartDescription": "持有[gold]{Amount}[/gold]本日记。",
+    "YUNO_MOD_POWER_QIANG_XIE_POWER.title": "枪械",
+    "YUNO_MOD_POWER_QIANG_XIE_POWER.description": "枪械姿态，强化枪械相关能力。",
+    "YUNO_MOD_POWER_QIANG_XIE_POWER.smartDescription": "枪械层数为[gold]{Amount}[/gold]。"
+}
