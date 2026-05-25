@@ -11,10 +11,13 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
+using YunoMod.Scripts.Tool;
+using MegaCrit.Sts2.Core.HoverTips;
 
+using STS2RitsuLib.Keywords;
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class XueJianCard : AbstractTemplateBaseCard
+public class XueJianCard : YunoBaseCard
 {
 
 
@@ -29,6 +32,14 @@ public class XueJianCard : AbstractTemplateBaseCard
 
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Axe];
 
+        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Axe),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+    ];
+
+    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -37,18 +48,16 @@ public class XueJianCard : AbstractTemplateBaseCard
         bool getBlock = cardPlay.Target.GetPowerAmount<VulnerablePower>() > 0;
 
         var damage = DynamicVars.Damage.BaseValue;
-        AttackCommand attackCommand = await DamageCmd.Attack(damage)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_dramatic_stab")
-            .Execute(choiceContext);
+        AttackCommand attackCommand = await ToolCmd.AxeAttack(choiceContext,cardPlay.Target,this,DynamicVars.Damage.BaseValue);
 
         // 若目标有易伤，则获得与所造成伤害相等的格挡
         if (getBlock) await CreatureCmd.GainBlock(Owner.Creature, attackCommand.Results.Sum((DamageResult r) => r.TotalDamage + r.OverkillDamage), ValueProp.Move, cardPlay);
+
+        await ToolCmd.AxeStance(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }

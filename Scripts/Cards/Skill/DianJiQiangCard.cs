@@ -4,10 +4,11 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using YunoMod.Scripts.Base;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class DianJiQiangCard : AbstractTemplateBaseCard
+public class DianJiQiangCard : YunoBaseCard
 {
     
 
@@ -19,6 +20,12 @@ public class DianJiQiangCard : AbstractTemplateBaseCard
     public DianJiQiangCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
+    ];
+
+    
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

@@ -9,16 +9,19 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Tool;
+using MegaCrit.Sts2.Core.HoverTips;
+using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class YouNaiJiuWoCard : AbstractTemplateBaseCard
+public class YouNaiJiuWoCard : YunoBaseCard
 {
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(35m, ValueProp.Move),
+        new BlockVar(30m, ValueProp.Move),
+        new CardsVar(1),
         new PowerVar<VulnerablePower>(3),
         new PowerVar<WeakPower>(3)
     ];
@@ -26,6 +29,17 @@ public class YouNaiJiuWoCard : AbstractTemplateBaseCard
     public YouNaiJiuWoCard() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+    ];
+
+    
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

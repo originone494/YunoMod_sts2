@@ -5,10 +5,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Keywords;
 using YunoMod.Scripts.Base;
+using YunoMod.Scripts.Tool;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace YunoMod.Scripts.Cards.Power;
 
-public class LiangRenCard : AbstractTemplateBaseCard
+public class LiangRenCard : YunoBaseCard
 {
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -19,6 +21,17 @@ public class LiangRenCard : AbstractTemplateBaseCard
     public LiangRenCard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
+
+    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Sword];
+
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Sword),ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+    ];
+
+    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -35,6 +48,8 @@ public class LiangRenCard : AbstractTemplateBaseCard
         {
             await CardPileCmd.Add(card, PileType.Hand);
         }
+
+        await ToolCmd.SwordStance(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()

@@ -7,7 +7,7 @@ using YunoMod.Scripts.Base;
 
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class YunoStrikeCard : AbstractTemplateBaseCard
+public class YunoStrikeCard : YunoBaseCard
 {
     // 卡牌基础数值
     protected override IEnumerable<DynamicVar> CanonicalVars => [

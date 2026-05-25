@@ -6,10 +6,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
+using YunoMod.Scripts.Tool;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class QuKanXingXingCard : AbstractTemplateBaseCard
+public class QuKanXingXingCard : YunoBaseCard
 {
 
     private const string _discardKey = "Discard";
@@ -22,6 +24,12 @@ public class QuKanXingXingCard : AbstractTemplateBaseCard
     public QuKanXingXingCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<LovePower>(),
+    ];
+
+    
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -43,7 +51,7 @@ public class QuKanXingXingCard : AbstractTemplateBaseCard
 
         await CardCmd.Discard(choiceContext, selectedCards);
 
-        await PowerCmd.Apply<LovePower>(Owner.Creature, actualDiscardCount, Owner.Creature, this);
+        await ToolCmd.GainLovePower(choiceContext, Owner, this, actualDiscardCount);
 
 
         await CardPileCmd.Draw(choiceContext, actualDiscardCount, Owner);

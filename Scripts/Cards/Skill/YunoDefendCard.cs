@@ -11,7 +11,7 @@ using YunoMod.Scripts.Base;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class YunoDefendCard : AbstractTemplateBaseCard
+public class YunoDefendCard : YunoBaseCard
 {
  
 

@@ -3,6 +3,8 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib;
 using STS2RitsuLib.Interop;
+using STS2RitsuLib.Patching.Core;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts;
 
@@ -20,5 +22,10 @@ public class Entry
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
         // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+
+        // 注册Harmony补丁
+        var patcher = RitsuLibFramework.CreatePatcher(ModId, "core-patches");
+        patcher.RegisterPatch<LingHuoDiscardPatch>();
+        patcher.PatchAll();
     }
 }

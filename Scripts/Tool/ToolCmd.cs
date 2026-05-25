@@ -1,10 +1,20 @@
+using System.Globalization;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Extensions;
+using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Keywords;
+using YunoMod.Scripts.Custom;
 using YunoMod.Scripts.Hook;
 using YunoMod.Scripts.Power;
 
@@ -35,12 +45,19 @@ public static class ToolCmd
         if (amount <= 0) return;
 
         var drawPile = PileType.Draw.GetPile(player);
+
+        if (drawPile.Cards.Count == 0)
+        {
+            await CardPileCmd.ShuffleIfNecessary(choiceContext, player);
+            drawPile = PileType.Draw.GetPile(player);
+        }
+
         var cardsToScry = drawPile.Cards.Take(amount).ToList();
 
 
         if (cardsToScry.Count == 0) return;
         var prefs = new CardSelectorPrefs(
-            CardSelectorPrefs.DiscardSelectionPrompt,
+            YunoSelectorPrefs.ForeseeSelectionPrompt,
             0,
             cardsToScry.Count
         );
@@ -51,24 +68,310 @@ public static class ToolCmd
             player,
             prefs
         )).ToList();
-        foreach (var card in cardsToDiscard) await CardCmd.Discard(choiceContext, card);
+        foreach (var card in cardsToDiscard)
+        {
+            await CardCmd.Discard(choiceContext, card);
+        }
         await ForeseeHook.OnForesee(choiceContext, player, amount, cardsToDiscard.Count);
     }
 
-    public static async Task DaggerAttack(PlayerChoiceContext choiceContext, CardPlay cardPlay, decimal damage, CardModel cardSource, Creature player)
+    public static async Task ExitAllStance(Player player)
     {
-        await DamageCmd.Attack(damage)
+        if (player.Creature.HasPower<DaggerPower>())
+        {
+            await PowerCmd.Remove<DaggerPower>(player.Creature);
+        }
+
+        if (player.Creature.HasPower<AxePower>())
+        {
+            await PowerCmd.Remove<AxePower>(player.Creature);
+        }
+
+        if (player.Creature.HasPower<GunPower>())
+        {
+            await PowerCmd.Remove<GunPower>(player.Creature);
+        }
+
+        if (player.Creature.HasPower<SwordPower>())
+        {
+            await PowerCmd.Remove<SwordPower>(player.Creature);
+        }
+
+        await Cmd.CustomScaledWait(0.1f, 0.25f);
+    }
+
+    public static async Task DaggerStance(PlayerChoiceContext choiceContext, Player player, CardModel cardSource)
+    {
+        if (!player.Creature.HasPower<DaggerPower>())
+        {
+            await ExitAllStance(player);
+            await PowerCmd.Apply<DaggerPower>(player.Creature, 1, player.Creature, cardSource);
+            await StanceHook.OnStanceChange(choiceContext, player);
+        }
+    }
+
+    public static async Task AxeStance(PlayerChoiceContext choiceContext, Player player, CardModel cardSource)
+    {
+        if (!player.Creature.HasPower<AxePower>())
+        {
+            await ExitAllStance(player);
+            await PowerCmd.Apply<AxePower>(player.Creature, 1, player.Creature, cardSource);
+            await StanceHook.OnStanceChange(choiceContext, player);
+        }
+    }
+
+    public static async Task GunStance(PlayerChoiceContext choiceContext, Player player, CardModel cardSource)
+    {
+        if (!player.Creature.HasPower<GunPower>())
+        {
+            await ExitAllStance(player);
+            await PowerCmd.Apply<GunPower>(player.Creature, 1, player.Creature, cardSource);
+            await StanceHook.OnStanceChange(choiceContext, player);
+        }
+    }
+
+    public static async Task SwordStance(PlayerChoiceContext choiceContext, Player player, CardModel cardSource)
+    {
+        if (!player.Creature.HasPower<SwordPower>())
+        {
+            await ExitAllStance(player);
+            await PowerCmd.Apply<SwordPower>(player.Creature, 1, player.Creature, cardSource);
+            await StanceHook.OnStanceChange(choiceContext, player);
+        }
+    }
+
+    public static async Task<AttackCommand> DaggerAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, int repeat = 1)
+    {
+        var cmd = await DamageCmd.Attack(damage)
         .FromCard(cardSource)
-        .Targeting(cardPlay.Target!)
+        .Targeting(target)
+        .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_slash")
         .Execute(choiceContext);
 
-        await PowerCmd.Apply<LiuXuePower>(cardPlay.Target!, 1, player, cardSource);
+        for (int i = 0; i < repeat; i++)
+            await PowerCmd.Apply<LiuXuePower>(target, 1, cardSource.Owner.Creature, cardSource);
+
+        
+        return cmd;
     }
 
-    public static async Task ForeseeAndDraw(PlayerChoiceContext choiceContext, Player player, int ForeseeAmount = 5, int DrawAmount = 1)
+
+
+    public static async Task<AttackCommand> DaggerAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
     {
-        await ToolCmd.Foresee(choiceContext, player, ForeseeAmount);
-        await CardPileCmd.Draw(choiceContext, DrawAmount, player);
+        var cmd = await DamageCmd.Attack(damage)
+        .FromCard(cardSource)
+        .TargetingAllOpponents(cardSource.Owner.Creature.CombatState!)
+        .WithHitCount(repeat)
+        .WithHitFx("vfx/vfx_attack_slash")
+        .Execute(choiceContext);
+
+        for (int i = 0; i < repeat; i++)
+            foreach (Creature enemy in cardSource.Owner.Creature.CombatState!.HittableEnemies)
+                await PowerCmd.Apply<LiuXuePower>(enemy, 1, cardSource.Owner.Creature, cardSource);
+
+        return cmd;
+    }
+
+
+    public static async Task<AttackCommand> GunAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, int repeat = 1)
+    {
+        return await DamageCmd.Attack(damage)
+        .FromCard(cardSource)
+        .Targeting(target)
+        .WithHitCount(repeat)
+        .WithHitFx("vfx/vfx_attack_blunt")
+        .Execute(choiceContext);
+    }
+
+
+    public static async Task<AttackCommand> GunAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
+    {
+        return await DamageCmd.Attack(damage)
+        .FromCard(cardSource)
+        .TargetingAllOpponents(cardSource.Owner.Creature.CombatState!)
+        .WithHitCount(repeat)
+        .WithHitFx("vfx/vfx_attack_blunt")
+        .Execute(choiceContext);
+    }
+
+    public static async Task<AttackCommand> AxeAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, int repeat = 1)
+    {
+        return await DamageCmd.Attack(damage)
+       .FromCard(cardSource)
+       .Targeting(target)
+       .WithHitCount(repeat)
+       .WithHitFx("vfx/vfx_attack_blunt")
+       .Execute(choiceContext);
+    }
+
+    public static async Task<AttackCommand> AxeAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
+    {
+        return await DamageCmd.Attack(damage)
+        .FromCard(cardSource)
+        .TargetingAllOpponents(cardSource.Owner.Creature.CombatState!)
+        .WithHitCount(repeat)
+        .WithHitFx("vfx/vfx_attack_blunt")
+        .Execute(choiceContext);
+    }
+
+    public static async Task<IEnumerable<CardModel>> ForeseeAndDraw(PlayerChoiceContext choiceContext, Player player, int ForeseeAmount = 3, int DrawAmount = 1)
+    {
+        await Foresee(choiceContext, player, ForeseeAmount);
+        return await CardPileCmd.Draw(choiceContext, DrawAmount, player);
+
+    }
+
+    public static async Task GainLovePower(PlayerChoiceContext choiceContext, Player player, CardModel source, int amount)
+    {
+        await PowerCmd.Apply<LovePower>(player.Creature, amount, player.Creature, source);
+        await LovePowerHook.OnGetLove(choiceContext, player, amount);
+    }
+
+    public static async Task RetrieverDaggerCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
+    {
+
+        CardPoolModel list = player.Character.CardPool;
+
+        IReadOnlyList<CardModel> cards =
+        list.GetUnlockedCards(
+        player.UnlockState,
+        player.RunState.CardMultiplayerConstraint).Where(c => c.HasModKeyword(YunoKeywords.Dagger)).ToList();
+
+
+        List<CardModel> combatCopies = cards
+            .Select(c => player.Creature.CombatState!.CreateCard(c, player))
+            .ToList();
+
+        var prefs = new CardSelectorPrefs(
+            YunoSelectorPrefs.RetrieverSelectionPrompt,
+            0,
+            amount
+        );
+
+        var selectCards = (await CardSelectCmd.FromSimpleGrid(
+            choiceContext,
+            combatCopies,
+            player,
+            prefs
+        )).ToList();
+        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+    }
+
+    public static async Task RetrieverAnyCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
+    {
+
+        List<CardPoolModel> pools = player.UnlockState.CharacterCardPools.ToList();
+
+        IReadOnlyList<CardModel> cards = pools
+                .SelectMany(pool => pool.GetUnlockedCards(
+                    player.UnlockState,
+                    player.RunState.CardMultiplayerConstraint))
+                .ToList();
+
+
+        List<CardModel> combatCopies = cards
+    .Select(c => player.Creature.CombatState!.CreateCard(c, player))
+    .ToList();
+
+
+        var prefs = new CardSelectorPrefs(
+            YunoSelectorPrefs.RetrieverSelectionPrompt,
+            0,
+            amount
+        );
+
+        var selectCards = (await CardSelectCmd.FromSimpleGrid(
+            choiceContext,
+            combatCopies,
+            player,
+            prefs
+        )).ToList();
+        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+    }
+
+    public static async Task SelectCardFromDraw2Discard(Player player, PlayerChoiceContext choiceContext)
+    {
+        CardPile pile = PileType.Discard.GetPile(player);
+        CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, pile.Cards, player, new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1))).FirstOrDefault()!;
+        bool flag = cardModel != null;
+        bool flag2 = flag;
+        if (flag2)
+        {
+            bool flag3;
+            switch (cardModel!.Pile?.Type)
+            {
+                case PileType.Draw:
+                case PileType.Discard:
+                    flag3 = true;
+                    break;
+                default:
+                    flag3 = false;
+                    break;
+            }
+            flag2 = flag3;
+        }
+        if (flag2)
+        {
+            if (cardModel!.HasModKeyword(YunoKeywords.LingHuo))
+            {
+                await CardCmd.AutoPlay(choiceContext, cardModel!, player.Creature);
+            }
+
+            await CardCmd.Discard(choiceContext, cardModel!);
+            await LingHuoHook.OnLingHuo(choiceContext, player);
+        }
+    }
+
+    public static async Task<IEnumerable<CardModel>> DuiMu(PlayerChoiceContext choiceContext, Player player, int amount)
+    {
+
+        List<CardModel> list = new List<CardModel>();
+
+
+        for (int i = 0; i < amount; i++)
+        {
+            CardModel cardModel = PileType.Draw.GetPile(player).Cards.ToList().FirstOrDefault()!;
+            if (cardModel == null)
+            {
+                await CardPileCmd.ShuffleIfNecessary(choiceContext, player);
+                cardModel = PileType.Draw.GetPile(player).Cards.ToList().FirstOrDefault()!;
+            }
+            if (cardModel != null)
+            {
+                await CardCmd.Discard(choiceContext, cardModel!);
+
+                CardCmd.Preview(cardModel);
+
+                list.Add(cardModel);
+            }
+        }
+
+        return list;
+    }
+
+    public static async Task SelcetCardExhaust(PlayerChoiceContext choiceContext, Player player, PileType pileType, CardModel cardSource)
+    {
+        if (pileType != PileType.Hand)
+        {
+            List<CardModel> cardsIn = (from c in pileType.GetPile(player).Cards
+                                       orderby c.Rarity, c.Id
+                                       select c).ToList();
+            CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cardsIn, player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1))).FirstOrDefault()!;
+
+            if (cardModel != null)
+            {
+                await CardCmd.Exhaust(choiceContext, cardModel!);
+            }
+        }
+        else if (pileType == PileType.Hand)
+        {
+            CardModel cardModel = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1), context: choiceContext, player: player, filter: null, source: cardSource)).FirstOrDefault()!;
+            if (cardModel != null)
+            {
+                await CardCmd.Exhaust(choiceContext, cardModel);
+            }
+        }
     }
 }

@@ -1,16 +1,29 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using YunoMod.Scripts.Base;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class JieDuJiCard : AbstractTemplateBaseCard
+public class JieDuJiCard : YunoBaseCard
 {
     public JieDuJiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+    {
+        new CardsVar(2)
+    };
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<PoisonPower>(),
+    ];
+
+    
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -32,7 +45,7 @@ public class JieDuJiCard : AbstractTemplateBaseCard
         // 若房间内只有一个敌人，抽2张牌
         if (CombatState.HittableEnemies.Count == 1)
         {
-            await CardPileCmd.Draw(choiceContext, 2, Owner);
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
         }
     }
 

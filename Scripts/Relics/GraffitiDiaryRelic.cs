@@ -1,48 +1,65 @@
+using System.Linq;
+using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.Saves.Runs;
-using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
+using YunoMod.Scripts.Power;
 
 namespace YunoMod.Scripts.Relics;
 
 public class GraffitiDiaryRelic : YunoBaseRelic
 {
-    private Dictionary<Creature, bool> _diedFromPoisonMap = new Dictionary<Creature, bool>();
-
-    private int _savedPoisonCount;
-
-    [SavedProperty]
-    public int SavedPoisonCount
-    {
-        get { return _savedPoisonCount; }
-        set { _savedPoisonCount = value; }
-    }
-
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task BeforeCombatStart()
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
     {
-        _diedFromPoisonMap.Clear();
-        
-        if (Owner?.Creature == null)
+        if (side == base.Owner.Creature.Side && combatState.RoundNumber <= 1)
         {
-            return;
+            Flash();
+            await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
         }
-        
+    }
+
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    {
+        if (player != Owner) return;
+
         Flash();
-        
-        // 给予自己 1 层毒雾
-        await PowerCmd.Apply<NoxiousFumesPower>(Owner.Creature, 1m, Owner.Creature, null);
-        
-        // 给予所有敌人 1 层中毒（加上永久值）
-        if (Owner.Creature.CombatState != null)
+        await PowerCmd.Apply<PoisonPower>(Owner.Creature.CombatState!.HittableEnemies, 2, Owner.Creature, null);
+    }
+
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    {
+        if (!creature.IsMonster) return;
+
+        int poisonAmount = creature.GetPowerAmount<PoisonPower>();
+        if (poisonAmount <= 0) return;
+
+        var enemies = creature.CombatState!.HittableEnemies
+            .Where(e => e.IsAlive && e != creature)
+            .ToList();
+
+        if (enemies.Count == 0) return;
+
+        var target = Owner.RunState.Rng.CombatTargets.NextItem(enemies);
+        if (target == null) return;
+
+        Flash();
+        await PowerCmd.Apply<PoisonPower>(target, poisonAmount, Owner.Creature, null);
+    }
+
+    public override async Task AfterRemoved()
+    {
+        if (Owner.Creature.HasPower<DiaryPower>())
         {
-            await PowerCmd.Apply<PoisonPower>(Owner.Creature.CombatState.HittableEnemies, 1m, Owner.Creature, null);
+            await PowerCmd.Decrement(Owner.Creature.GetPower<DiaryPower>()!);
         }
     }
 }
+

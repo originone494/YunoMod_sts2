@@ -1,63 +1,48 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
+using YunoMod.Scripts.Power;
 
 namespace YunoMod.Scripts.Relics;
 
 public class KillingDiaryRelic : YunoBaseRelic
 {
-    private Dictionary<Creature, decimal> DamageMap { get; set; } = new Dictionary<Creature, decimal>();
-
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override Task BeforeCombatStart()
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
     {
-        DamageMap.Clear();
-        return Task.CompletedTask;
+        if (side == base.Owner.Creature.Side && combatState.RoundNumber <= 1)
+        {
+            Flash();
+            await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
+        }
     }
 
-    public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
+    public override decimal ModifyDamageMultiplicative(
+        Creature? target, decimal amount, ValueProp props,
+        Creature? dealer, CardModel? cardSource)
     {
-        if (dealer == Owner.Creature && !target.IsPlayer)
-        {
-            if (!DamageMap.ContainsKey(target))
-            {
-                DamageMap[target] = 0m;
-            }
-            if (result.TotalDamage > target.CurrentHp)
-            {
-                DamageMap[target] = result.TotalDamage;
-            }
-        }
-        await Task.CompletedTask;
+        if (target == null || !target.IsMonster)
+            return 1m;
+
+        if (!target.Monster!.IntendsToAttack)
+            return 1m;
+
+        return 1.5m;
     }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterRemoved()
     {
-        if (target.IsPlayer) return;
-        if (!DamageMap.ContainsKey(target)) return;
-
-        decimal damageAmount = DamageMap[target];
-        if (damageAmount <= 0m) return;
-        if (Owner?.Creature?.CombatState == null) return;
-
-        Flash();
-
-        foreach (Creature creature in Owner.Creature.CombatState.HittableEnemies)
+        if (Owner.Creature.HasPower<DiaryPower>())
         {
-            if (creature != target)
-            {
-                await CreatureCmd.Damage(choiceContext, creature, damageAmount, ValueProp.Move, Owner.Creature, null);
-            }
+            await PowerCmd.Decrement(Owner.Creature.GetPower<DiaryPower>()!);
         }
-
-        DamageMap.Remove(target);
     }
 }

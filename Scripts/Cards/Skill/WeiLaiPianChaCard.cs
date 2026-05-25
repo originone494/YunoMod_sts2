@@ -1,43 +1,62 @@
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
+using MegaCrit.Sts2.Core.HoverTips;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class WeiLaiPianChaCard : AbstractTemplateBaseCard
+public class WeiLaiPianChaCard : YunoBaseCard
 {
     public WeiLaiPianChaCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
-        
+
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CalculationBaseVar(12m),
-        new ExtraDamageVar(1m),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => (int)(Owner.Creature.CurrentHp > Owner.Creature.MaxHp * 0.4 ? Owner.Creature.CurrentHp - Owner.Creature.MaxHp * 0.4 : 0))
+        new CalculationBaseVar(0m),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) =>
+        {
+            if (!card.IsMutable || card.Owner == null) return 0;
+            var creature = card.Owner.Creature;
+            return (int)(creature.CurrentHp > creature.MaxHp * 0.4 ? creature.CurrentHp - creature.MaxHp * 0.4 : 0);
+        }),
+        new PowerVar<StrengthPower>(3),
+        new PowerVar<DexterityPower>(3)
     ];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<BaoZaPower>(),
+        HoverTipFactory.FromPower<StrengthPower>(),
+        HoverTipFactory.FromPower<DexterityPower>(),
+    ];
+
+    
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-
-        if (DynamicVars.CalculatedDamage.BaseValue > 0)
+        if (Owner.Creature.CurrentHp > Owner.Creature.MaxHp * 0.4)
         {
-            await CreatureCmd.Damage(choiceContext, Owner.Creature, DynamicVars.CalculatedDamage.BaseValue, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
 
-            await PowerCmd.Apply<BaoZaPower>(Owner.Creature, DynamicVars.CalculatedDamage.BaseValue, Owner.Creature, this);
+            int damage = (int)(Owner.Creature.CurrentHp - Owner.Creature.MaxHp * 0.4);
+
+            await CreatureCmd.Damage(choiceContext, Owner.Creature, damage, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
+
+            await PowerCmd.Apply<BaoZaPower>(Owner.Creature, damage, Owner.Creature, this);
 
         }
         else
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, 3, Owner.Creature, this);
-            await PowerCmd.Apply<DexterityPower>(Owner.Creature, 3, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars.Dexterity.IntValue, Owner.Creature, this);
         }
     }
 

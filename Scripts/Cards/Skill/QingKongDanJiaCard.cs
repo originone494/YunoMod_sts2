@@ -7,10 +7,12 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
+using MegaCrit.Sts2.Core.HoverTips;
+using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class QingKongDanJiaCard : AbstractTemplateBaseCard
+public class QingKongDanJiaCard : YunoBaseCard
 {
     public QingKongDanJiaCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
@@ -22,12 +24,21 @@ public class QingKongDanJiaCard : AbstractTemplateBaseCard
         new CardsVar(3)
     ];
 
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<StrengthPower>(),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+
+    ];
+
+    
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        if (Owner.Creature.HasPower<QiangXiePower>())
+        if (Owner.Creature.HasPower<GunPower>())
         {
-            QiangXiePower power = Owner.Creature.GetPower<QiangXiePower>()!;
+            GunPower power = Owner.Creature.GetPower<GunPower>()!;
 
             if (power != null)
             {
@@ -40,6 +51,8 @@ public class QingKongDanJiaCard : AbstractTemplateBaseCard
 
                 if (amount > 5) await PowerCmd.Apply<StrengthPower>(Owner.Creature, amount, Owner.Creature, this);
             }
+            
+            await PowerCmd.Remove(power);
         }
     }
 

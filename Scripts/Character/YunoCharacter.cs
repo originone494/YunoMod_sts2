@@ -43,9 +43,9 @@ public class YunoCharacter : ModCharacterTemplate<YunoCardPool, YunoRelicPool, Y
             ),
             Ui: new(
                 // 人物头像路径。
-                IconTexturePath: "res://icon.svg",
-                // 人物头像2号。
-                // IconPath: "res://scenes/ui/character_icons/ironclad_icon.tscn",
+                IconTexturePath: "res://yuno.png",
+                 // 人物头像2号。
+                 IconPath: "res://scenes/ui/character_icons/yuno_mod_character_yuno_character_icon.tscn",
                 // 人物选择背景。
                 CharacterSelectBgPath: "res://YunoMod/scenes/yuno_bg.tscn",
                 // 人物选择图标。
@@ -89,7 +89,7 @@ public class YunoCharacter : ModCharacterTemplate<YunoCardPool, YunoRelicPool, Y
     public override float CastAnimDelay => 0f;
 
     // 如果你的人物不需要时间线小故事，加上这句。
-   // public override bool RequiresEpochAndTimeline => false;
+    // public override bool RequiresEpochAndTimeline => false;
 
     // 自动转换人物场景，让你不需要手动挂脚本。复制即可。
     protected override NCreatureVisuals? TryCreateCreatureVisuals() => RitsuGodotNodeFactories.CreateFromScenePath<NCreatureVisuals>(AssetProfile.Scenes!.VisualsPath!);
@@ -98,7 +98,7 @@ public class YunoCharacter : ModCharacterTemplate<YunoCardPool, YunoRelicPool, Y
     [Obsolete]
     protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [
          new(typeof(YunoStrikeCard), 5),
-         new(typeof(YunoDefendCard), 1),
+         new(typeof(YunoDefendCard), 5),
          new(typeof(ChuXueCard), 1),
          new(typeof(YanHuSheJiCard), 1),
      ];

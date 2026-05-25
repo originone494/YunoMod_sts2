@@ -6,19 +6,30 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Tool;
+using MegaCrit.Sts2.Core.HoverTips;
+using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class CongZuoBianErLaiCard : AbstractTemplateBaseCard
+public class CongZuoBianErLaiCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(10m, ValueProp.Move),
+        new DamageVar(8m, ValueProp.Move),
+        new CardsVar(1),
     ];
 
     public CongZuoBianErLaiCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<WeakPower>(),
+        HoverTipFactory.FromPower<VulnerablePower>(),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+    ];
+
+    
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

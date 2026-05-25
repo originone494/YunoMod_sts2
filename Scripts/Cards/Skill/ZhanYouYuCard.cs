@@ -12,7 +12,7 @@ using YunoMod.Scripts.Power;
 
 namespace YunoMod.Scripts.Cards.Power;
 
-public class ZhanYouYuCard : AbstractTemplateBaseCard
+public class ZhanYouYuCard : YunoBaseCard
 {
 
     private const string _selfDamageIncreaseKey = "SelfDamageIncreasion";
@@ -20,7 +20,7 @@ public class ZhanYouYuCard : AbstractTemplateBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(_selfDamageIncreaseKey, 0.5m),
+        new DynamicVar(_selfDamageIncreaseKey, 0.25m),
         new DynamicVar(_selfDamageReductionKey, 0.5m),
     ];
 
@@ -32,14 +32,14 @@ public class ZhanYouYuCard : AbstractTemplateBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await PowerCmd.Apply<ZhanYouYuWanJiaPower>(Owner.Creature, DynamicVars[_selfDamageReductionKey].BaseValue * 100 / 25, Owner.Creature, this);
+        await PowerCmd.Apply<ZhanYouYuWanJiaPower>(Owner.Creature, 1, Owner.Creature, this);
 
-        await PowerCmd.Apply<ZhanYouYuWanJiaPower>(cardPlay.Target, DynamicVars[_selfDamageIncreaseKey].BaseValue * 100 / 25, Owner.Creature, this);
+        await PowerCmd.Apply<ZhanYouYuWanJiaPower>(cardPlay.Target, 1, Owner.Creature, this);
 
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_selfDamageIncreaseKey].UpgradeValueBy(0.25m);
+        EnergyCost.UpgradeBy(-1);
     }
 }

@@ -1,0 +1,14 @@
+using STS2RitsuLib.Interop.AutoRegistration;
+using STS2RitsuLib.Models;
+
+namespace YunoMod.Scripts;
+
+// 注册单例
+[RegisterSingleton]
+public class YunoSingleton : HookedSingletonModel
+{
+    public YunoSingleton() : base(true, true)
+    {
+    }
+
+}

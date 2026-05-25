@@ -1,0 +1,962 @@
+ERROR: System.Collections.Generic.KeyNotFoundException: The given key 'CalculationExtra' was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVarSet.get_CalculationExtra()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.GetExtraVar()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.Calculate(Creature target)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.ToString()
+   at System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[T](T value)
+   at MegaCrit.Sts2.Core.Localization.LocManager.<>c.<ToString>b__49_0(KeyValuePair`2 kp)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+   at System.String.Join(String separator, IEnumerable`1 values)
+   at MegaCrit.Sts2.Core.Localization.LocManager.ToString(Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.Holders.NCardHolder.ReassignToCard(CardModel cardModel, PileType pileType, Creature target, ModelVisibility visibility)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+[WARN] AtlasResourceLoader: Missing sprite 'yunomod/yuno_mod_card_pian_zhi_card' in card_atlas (requested: res://images/atlases/card_atlas.sprites/yunomod/yuno_mod_card_pian_zhi_card.tres)
+[WARN] AtlasResourceLoader: Missing sprite 'yunomod/yuno_mod_card_zhan_you_yu_card' in card_atlas (requested: res://images/atlases/card_atlas.sprites/yunomod/yuno_mod_card_zhan_you_yu_card.tres)
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[WARN] AtlasResourceLoader: Missing sprite 'yunomod/yuno_mod_card_ai_yi_yi_chu_card' in card_atlas (requested: res://images/atlases/card_atlas.sprites/yunomod/yuno_mod_card_ai_yi_yi_chu_card.tres)
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "StrengthPower" at 6
+敌人每获得{StrengthPower:diff()}点力量，你获得{StrengthPower:diff()}点力量。
+------^
+table=cards key=YUNO_MOD_CARD_NI_GEI_WO_XIAO_XIN_DIAN_CARD.description variables={IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[WARN] AtlasResourceLoader: Missing sprite 'yunomod/yuno_mod_card_xue_bai_card' in card_atlas (requested: res://images/atlases/card_atlas.sprites/yunomod/yuno_mod_card_xue_bai_card.tres)
+ERROR: System.Collections.Generic.KeyNotFoundException: The given key 'CalculationExtra' was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVarSet.get_CalculationExtra()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.GetExtraVar()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.Calculate(Creature target)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.ToString()
+   at System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[T](T value)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+   at System.String.Join(String separator, IEnumerable`1 values)
+   at MegaCrit.Sts2.Core.Localization.LocManager.ToString(Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "StrengthPower" at 6
+敌人每获得{StrengthPower:diff()}点力量，你获得{StrengthPower:diff()}点力量。
+------^
+table=cards key=YUNO_MOD_CARD_NI_GEI_WO_XIAO_XIN_DIAN_CARD.description variables={IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+ERROR: System.Collections.Generic.KeyNotFoundException: The given key 'CalculationExtra' was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVarSet.get_CalculationExtra()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.GetExtraVar()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.Calculate(Creature target)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.ToString()
+   at System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[T](T value)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+   at System.String.Join(String separator, IEnumerable`1 values)
+   at MegaCrit.Sts2.Core.Localization.LocManager.ToString(Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "Block" at 9
+每次进入姿态获得{Block:diff()}点[gold]格挡[/gold]。
+---------^
+table=cards key=YUNO_MOD_CARD_KAN_PO_CARD.description variables={GetBlock:4,IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+[ERROR] Localization formatting error! message=Error parsing format string: No source extension could handle the selector named "StrengthPower" at 6
+敌人每获得{StrengthPower:diff()}点力量，你获得{StrengthPower:diff()}点力量。
+------^
+table=cards key=YUNO_MOD_CARD_NI_GEI_WO_XIAO_XIN_DIAN_CARD.description variables={IfUpgraded:0,OnTable:False,InCombat:False,IsTargeting:False,TargetType:Self,energyPrefix:YunoMod,singleStarIcon:[img]res://images/packed/sprite_fonts/star_icon.png[/img]}
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+
+ERROR: System.Collections.Generic.KeyNotFoundException: The given key 'CalculationExtra' was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVarSet.get_CalculationExtra()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.GetExtraVar()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.Calculate(Creature target)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.ToString()
+   at System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[T](T value)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+   at System.String.Join(String separator, IEnumerable`1 values)
+   at MegaCrit.Sts2.Core.Localization.LocManager.ToString(Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateAbove(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+ERROR: System.Collections.Generic.KeyNotFoundException: The given key 'CalculationExtra' was not present in the dictionary.
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.DynamicVarSet.get_CalculationExtra()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.GetExtraVar()
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.Calculate(Creature target)
+   at MegaCrit.Sts2.Core.Localization.DynamicVars.CalculatedVar.ToString()
+   at System.Runtime.CompilerServices.DefaultInterpolatedStringHandler.AppendFormatted[T](T value)
+   at System.Linq.Enumerable.IEnumerableSelectIterator`2.MoveNext()
+   at System.String.Join(String separator, IEnumerable`1 values)
+   at MegaCrit.Sts2.Core.Localization.LocManager.ToString(Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Localization.LocManager.SmartFormat(LocString locString, Dictionary`2 variables)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile(PileType pileType, DescriptionPreviewType previewType, Creature target)
+   at MegaCrit.Sts2.Core.Models.CardModel.GetDescriptionForPile_Patch1(CardModel this, PileType pileType, Creature target)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCard.UpdateVisuals(PileType pileType, CardPreviewMode previewMode)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.AssignCardsToRow(List`1 row, Int32 startIndex)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.ReallocateBelow(List`1 row)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.AllocateCardHolders()
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.UpdateScrollPosition(Double delta)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid._Process(Double delta)
+   at Godot.Node.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Control.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Cards.NCardGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary.NCardLibraryGrid.InvokeGodotClassMethod(godot_string_name& method, NativeVariantPtrArgs args, godot_variant& ret)
+   at Godot.Bridge.CSharpInstanceBridge.Call(IntPtr godotObjectGCHandle, godot_string_name* method, godot_variant** args, Int32 argCount, godot_variant_call_error* refCallError, godot_variant* ret)
+   at: void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception) (:0)
+   C# backtrace (most recent call first):
+       [0] void Godot.GD.PushError(string)
+       [1] void Godot.NativeInterop.ExceptionUtils.LogException(System.Exception)
+       [2] Godot.NativeInterop.godot_bool Godot.Bridge.CSharpInstanceBridge.Call(nint, Godot.NativeInterop.godot_string_name*, Godot.NativeInterop.godot_variant**, int, Godot.NativeInterop.godot_variant_call_error*, Godot.NativeInterop.godot_variant*)
+[INFO] Limiting background FPS to 30

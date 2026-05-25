@@ -9,7 +9,7 @@ using YunoMod.Scripts.Power;
 
 namespace YunoMod.Scripts.Cards.Power;
 
-public class AiYiYiChuCard : AbstractTemplateBaseCard
+public class AiYiYiChuCard : YunoBaseCard
 {
 
     public AiYiYiChuCard() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
@@ -20,7 +20,6 @@ public class AiYiYiChuCard : AbstractTemplateBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
         await PowerCmd.Apply<AiYiYiChuPower>(Owner.Creature, 1, Owner.Creature, this);
-
     }
 
     protected override void OnUpgrade()

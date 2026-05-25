@@ -7,10 +7,12 @@ using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
 using YunoMod.Scripts.Tool;
+using MegaCrit.Sts2.Core.HoverTips;
 
+using STS2RitsuLib.Keywords;
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class ChuXueCard : AbstractTemplateBaseCard
+public class ChuXueCard : YunoBaseCard
 {
     private const string _LiuXuePowerKey = "LiuXueCount";
 
@@ -27,13 +29,23 @@ public class ChuXueCard : AbstractTemplateBaseCard
 
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
 
+        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<LiuXuePower>(),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+    ];
+
+    
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.DaggerAttack(choiceContext, cardPlay, DynamicVars.Damage.BaseValue, this, Owner.Creature);
+        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
 
         await PowerCmd.Apply<LiuXuePower>(cardPlay.Target!, DynamicVars[_LiuXuePowerKey].BaseValue, Owner.Creature, this);
+
+        await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()

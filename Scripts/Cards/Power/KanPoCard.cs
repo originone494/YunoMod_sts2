@@ -2,34 +2,35 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
 
 namespace YunoMod.Scripts.Cards.Power;
 
-public class KanPoCard : AbstractTemplateBaseCard
+public class KanPoCard : YunoBaseCard
 {
 
-    private const string _blockKey = "GetBlock";
+    private const string _BlockCount = "BlockCount";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(_blockKey, 4m),
+        new DynamicVar(_BlockCount,3)
     ];
 
-    public KanPoCard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public KanPoCard() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<KanPoPower>(Owner.Creature, DynamicVars[_blockKey].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<KanPoPower>(Owner.Creature, DynamicVars[_BlockCount].BaseValue, Owner.Creature, this);
 
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_blockKey].UpgradeValueBy(2m);
+        DynamicVars[_BlockCount].UpgradeValueBy(1m);
     }
 }

@@ -7,17 +7,21 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
+using YunoMod.Scripts.Tool;
+using MegaCrit.Sts2.Core.HoverTips;
 
+using STS2RitsuLib.Keywords;
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class BaoHuNiCard : AbstractTemplateBaseCard
+public class BaoHuNiCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CalculationBaseVar(12m),
+        new CalculationBaseVar(11m),
+        new CalculationExtraVar(1m),
         new ExtraDamageVar(1m),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => Owner.Creature?.GetPowerAmount<LovePower>() ?? 0),
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) =>Owner.Creature?.GetPowerAmount<LovePower>() ?? 0)
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => ( card.Owner != null) ? card.Owner.Creature.GetPowerAmount<LovePower>() : 0),
+        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => ( card.Owner != null) ? card.Owner.Creature.GetPowerAmount<LovePower>() : 0)
     ];
 
 
@@ -27,25 +31,28 @@ public class BaoHuNiCard : AbstractTemplateBaseCard
 
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
 
+        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromPower<LovePower>(),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+    ];
+
+    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
-            .Targeting(cardPlay.Target)
-            .WithHitFx("vfx/vfx_dramatic_stab")
-            .Execute(choiceContext);
+        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.CalculatedDamage.BaseValue);
 
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.CalculatedBlock.Calculate(cardPlay.Target), DynamicVars.CalculatedBlock.Props, cardPlay);
 
+        await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()
     {
         DynamicVars.CalculatedDamage.UpgradeValueBy(3m);
-        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
     }
 }

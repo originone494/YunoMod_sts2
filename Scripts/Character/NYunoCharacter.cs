@@ -4,11 +4,13 @@ namespace YunoMod.Scripts;
 
 public partial class NYunoCharacter : NMerchantCharacter
 {
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        PlayAnimation("default", loop: true);
-
+        try
+        {
+            PlayAnimation("default", loop: true);
+        }
+        catch (InvalidOperationException) { }
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
