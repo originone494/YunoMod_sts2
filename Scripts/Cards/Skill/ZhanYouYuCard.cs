@@ -34,7 +34,7 @@ public class ZhanYouYuCard : YunoBaseCard
 
         await PowerCmd.Apply<ZhanYouYuWanJiaPower>(Owner.Creature, 1, Owner.Creature, this);
 
-        await PowerCmd.Apply<ZhanYouYuWanJiaPower>(cardPlay.Target, 1, Owner.Creature, this);
+        await PowerCmd.Apply<ZhanYouYuDiRenPower>(cardPlay.Target, 1, Owner.Creature, this);
 
     }
 

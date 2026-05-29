@@ -19,7 +19,7 @@ public class ChuXueCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(5m, ValueProp.Move),
-        new DynamicVar(_LiuXuePowerKey, 4m),
+        new DynamicVar(_LiuXuePowerKey, 3m),
     ];
 
     public ChuXueCard() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)

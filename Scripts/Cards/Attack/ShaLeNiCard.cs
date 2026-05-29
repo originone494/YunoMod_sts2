@@ -24,37 +24,39 @@ public class ShaLeNiCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(5m, ValueProp.Move),
-        new DynamicVar(_growthKey, 2m),
+        new DynamicVar(_growthKey, 1m),
     };
 
-    public ShaLeNiCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public ShaLeNiCard() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
+       await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        .FromCard(this)
+        .Targeting(cardPlay.Target)
+        .WithHitFx("vfx/vfx_attack_slash")
+        .Execute(choiceContext);
 
-        if (IsUpgraded)
-            DynamicVars.Damage.BaseValue += DynamicVars[_growthKey].BaseValue;
 
-        await ToolCmd.DaggerStance(choiceContext, Owner, this);
+        DynamicVars.Damage.BaseValue += DynamicVars[_growthKey].BaseValue;
+
     }
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner == base.Owner && cardPlay.Card.Type == CardType.Attack && cardPlay.Card.HasModKeyword(YunoKeywords.Dagger) && Pile!.Type != PileType.Discard)
+        if (cardPlay.Card.Owner == base.Owner && cardPlay.Card.Type == CardType.Attack && cardPlay.Card.HasModKeyword(YunoKeywords.Dagger) && Pile!.Type == PileType.Discard)
         {
             await CardPileCmd.Add(this, PileType.Hand);
         }

@@ -19,7 +19,7 @@ public class XunQingCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new BlockVar(9m, ValueProp.Move),
-        new DynamicVar(_AiYi, 2)
+        new DynamicVar(_AiYi, 3)
     };
 
     public XunQingCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
@@ -41,7 +41,7 @@ public class XunQingCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars.Block.UpgradeValueBy(3m);
         DynamicVars[_AiYi].UpgradeValueBy(1);
     }
 }

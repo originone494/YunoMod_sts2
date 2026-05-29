@@ -40,7 +40,7 @@ public class LovePower : YunoBasePower
         {
             while (Amount >= 10)
             {
-                await PowerCmd.Apply<NiGeiWoXiaoXinDianPower>(Owner, -10, Owner, null);
+                await PowerCmd.Apply<LovePower>(Owner, -10, Owner, null);
                 await CreatureCmd.GainBlock(Owner, new BlockVar(5, ValueProp.Unpowered), null);
             }
         }

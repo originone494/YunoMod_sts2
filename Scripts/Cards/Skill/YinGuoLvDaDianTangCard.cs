@@ -49,8 +49,8 @@ public class YinGuoLvDaDianTangCard : YunoBaseCard
             var resultList = new List<CardPileAddResult>();
             for (int i = 0; i < amount; i++)
             {
-                CardModel card = Owner.RunState.CreateCard<QiuTiCard>(Owner);
-                var addResult = await CardPileCmd.Add(card, PileType.Deck);
+                CardModel card = Owner.Creature.CombatState!.CreateCard<QiuTiCard>(Owner);
+                var addResult = await CardPileCmd.Add(card, PileType.Draw);
                 resultList.Add(addResult);
             }
             CardCmd.PreviewCardPileAdd(resultList, 2f);

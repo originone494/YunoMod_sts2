@@ -18,9 +18,12 @@ public class ZhiShiYuanBoCard : YunoBaseCard
 
     ];
 
-    public ZhiShiYuanBoCard() : base(1, CardType.Skill, CardRarity.Token, TargetType.Self)
+    public ZhiShiYuanBoCard() : base(2, CardType.Skill, CardRarity.Token, TargetType.Self)
     {
     }
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Retriever)
@@ -34,5 +37,6 @@ public class ZhiShiYuanBoCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
+        EnergyCost.UpgradeBy(-1);
     }
 }

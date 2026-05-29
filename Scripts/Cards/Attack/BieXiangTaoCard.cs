@@ -20,7 +20,7 @@ public class BieXiangTaoCard : YunoBaseCard
         new DynamicVar(_GrtCardCount, 1)
     ];
 
-    public BieXiangTaoCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public BieXiangTaoCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 

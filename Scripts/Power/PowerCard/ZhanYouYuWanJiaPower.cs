@@ -1,3 +1,5 @@
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
@@ -18,5 +20,11 @@ public class ZhanYouYuWanJiaPower : YunoBasePower
         if (!props.IsPoweredAttack()) return 1m;
 
         return target.HasPower<ZhanYouYuDiRenPower>() ? 1.5m : 0.5m;
+    }
+
+    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    {
+        if (side == Owner.Side)
+            await PowerCmd.Remove(this);
     }
 }

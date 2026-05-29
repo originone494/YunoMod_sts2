@@ -16,11 +16,11 @@ public class ShaWanLeCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(10m, ValueProp.Move),
+        new DamageVar(12m, ValueProp.Move),
         new PowerVar<VulnerablePower>(1m),
     ];
 
-    public ShaWanLeCard() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
+    public ShaWanLeCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
     {
     }
 

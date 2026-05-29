@@ -26,7 +26,7 @@ public class ChaoFuHeCard : YunoBaseCard, IOnLingHuo
         new DynamicVar(_discardCount,3)
     };
 
-    public ChaoFuHeCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public ChaoFuHeCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

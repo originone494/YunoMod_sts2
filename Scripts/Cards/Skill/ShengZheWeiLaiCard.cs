@@ -17,7 +17,7 @@ public class ShengZheWeiLaiCard : YunoBaseCard
         new CardsVar(1),
     ];
 
-    public ShengZheWeiLaiCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public ShengZheWeiLaiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

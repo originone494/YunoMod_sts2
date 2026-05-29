@@ -13,7 +13,7 @@ namespace YunoMod.Scripts.Cards.Skill;
 
 public class QuSiCard : YunoBaseCard
 {
-    public QuSiCard() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+    public QuSiCard() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
     }
 

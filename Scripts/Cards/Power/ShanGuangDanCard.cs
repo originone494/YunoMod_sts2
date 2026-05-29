@@ -19,7 +19,7 @@ public class ShanGuangDanCard : YunoBaseCard
         new EnergyVar(1)
     };
 
-    public ShanGuangDanCard() : base(2, CardType.Power, CardRarity.Common, TargetType.Self)
+    public ShanGuangDanCard() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

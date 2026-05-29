@@ -15,7 +15,7 @@ namespace YunoMod.Scripts.Cards.Skill;
 public class XuZhaCard : YunoBaseCard
 {
 
-    public XuZhaCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public XuZhaCard() : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
 

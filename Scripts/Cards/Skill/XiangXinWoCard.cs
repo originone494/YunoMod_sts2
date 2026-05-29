@@ -20,7 +20,7 @@ public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo];
 
 
-    public XiangXinWoCard() : base(3, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public XiangXinWoCard() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

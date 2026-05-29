@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 
@@ -24,7 +25,10 @@ public class WanQianLunHuiCard : YunoBaseCard
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>  card.Owner != null ? card.Owner.UnlockState.NumberOfRuns : 0),
     };
 
-    public WanQianLunHuiCard() : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
+
+
+    public WanQianLunHuiCard() : base(2, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
     {
     }
 

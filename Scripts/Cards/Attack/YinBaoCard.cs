@@ -30,7 +30,7 @@ public class YinBaoCard : YunoBaseCard
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -43,9 +43,10 @@ public class YinBaoCard : YunoBaseCard
                 .Execute(choiceContext);
         foreach (var enemy in CombatState!.HittableEnemies)
         {
-            // 对敌人施加虚弱和易伤
+
+            if (enemy.HasPower<WeakPower>())
+                await PowerCmd.Apply<VulnerablePower>(enemy, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
             await PowerCmd.Apply<WeakPower>(enemy, DynamicVars.Weak.BaseValue, Owner.Creature, this);
-            await PowerCmd.Apply<VulnerablePower>(enemy, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
         }
     }
 

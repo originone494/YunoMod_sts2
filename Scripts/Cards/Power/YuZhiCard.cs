@@ -23,7 +23,7 @@ public class YuZhiCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new PowerVar<StrengthPower>(2)
+        new PowerVar<StrengthPower>(1)
     };
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

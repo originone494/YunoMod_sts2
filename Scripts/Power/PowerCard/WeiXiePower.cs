@@ -24,12 +24,13 @@ public class WeiXiePower : YunoBasePower
     CardModel? cardSource
 )
     {
-        await PowerCmd.Apply<DamageStorePower>(Owner, result.TotalDamage, Owner, null);
+        await PowerCmd.Apply<DamageStorePower>(Owner, (result.TotalDamage + 1) / 2, Owner, null);
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
     {
-        await PowerCmd.Remove(this);
+        if (side == Owner.Side)
+            await PowerCmd.Remove(this);
     }
 
 }

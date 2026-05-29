@@ -11,13 +11,14 @@ using YunoMod.Scripts.Tool;
 
 using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Keywords;
+using MegaCrit.Sts2.Core.Commands.Builders;
 namespace YunoMod.Scripts.Cards.Attack;
 
 public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar("BasePow", 2m),
+        new DynamicVar("BasePow", 4m),
         new CalculationBaseVar(0m),
         new ExtraDamageVar(1m),
         new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) =>
@@ -39,7 +40,7 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -62,4 +63,5 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
     {
         DynamicVars["BasePow"].UpgradeValueBy(1m);
     }
+
 }

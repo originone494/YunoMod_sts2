@@ -40,7 +40,10 @@
       "Bash(dir /s /b \"c:\\\\Users\\\\sline\\\\AppData\\\\Local\\\\Temp\\\\MetadataAsSource*\")",
       "Bash(dir /s /b \"c:\\\\Users\\\\sline\\\\AppData\\\\Local\\\\Temp\\\\*CardCmd*\")",
       "Read(//c/Users/sline/AppData/Local/**)",
-      "Bash(xargs grep -l \"CardSelectCmd\\\\|class.*CardSelect\")"
+      "Bash(xargs grep -l \"CardSelectCmd\\\\|class.*CardSelect\")",
+      "Read(//d/steam/steamapps/common/Slay the Spire 2/**)",
+      "Bash(xargs strings)",
+      "Read(//d/myProgram/GodotProgram/code/Cards/**)"
     ],
     "additionalDirectories": [
       "d:\\myProgram\\GodotProgram\\yuno-mod\\YunoMod\\localization\\zhs"

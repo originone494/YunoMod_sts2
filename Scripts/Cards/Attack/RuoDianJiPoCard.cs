@@ -34,6 +34,8 @@ public class RuoDianJiPoCard : YunoBaseCard, IOnLingHuo
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.LingHuo),
+
     ];
 
 
@@ -66,7 +68,5 @@ public class RuoDianJiPoCard : YunoBaseCard, IOnLingHuo
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
         await CardCmd.AutoPlay(ctx, this, player.Creature);
-
-        await CardPileCmd.Draw(ctx, 1, Owner);
     }
 }

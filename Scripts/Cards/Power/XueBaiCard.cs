@@ -12,7 +12,7 @@ public class XueBaiCard : YunoBaseCard
 {
     private const string _ZhiCanPowerCount = "ZhiCanPowerCount";
 
-    public XueBaiCard() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public XueBaiCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 

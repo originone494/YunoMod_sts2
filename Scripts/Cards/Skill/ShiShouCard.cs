@@ -19,7 +19,7 @@ public class ShiShouCard : YunoBaseCard
         new CardsVar(3)
     };
 
-    public ShiShouCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public ShiShouCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

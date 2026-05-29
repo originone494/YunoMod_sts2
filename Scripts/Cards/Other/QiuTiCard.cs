@@ -20,7 +20,7 @@ public class QiuTiCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(9m, ValueProp.Move),
-        new CalculationBaseVar(1m),
+        new CalculationBaseVar(0m),
         new ExtraDamageVar(1m),
         new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((card, _) =>
         {
@@ -44,19 +44,21 @@ public class QiuTiCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        int repeatCount = (int)DynamicVars.CalculatedDamage.BaseValue;
-
-        foreach (var enemy in CombatState!.HittableEnemies)
+        if (Owner.Creature.HasPower<DiaryPower>())
         {
+            int repeatCount = Owner.Creature.GetPowerAmount<DiaryPower>();
+
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .FromCard(this)
-                .Targeting(enemy)
+                .TargetingAllOpponents(Owner.Creature.CombatState!)
                 .WithHitCount(repeatCount)
                 .WithHitFx("vfx/vfx_dramatic_stab")
                 .Execute(choiceContext);
-        }
 
-        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+
+            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
+
+        }
     }
 
     protected override void OnUpgrade()

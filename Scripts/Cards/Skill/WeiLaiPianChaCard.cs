@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using STS2RitsuLib.Cards.DynamicVars;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -21,10 +22,9 @@ public class WeiLaiPianChaCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CalculationBaseVar(0m),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) =>
+        new ComputedDynamicVar("CalculatedDamage", 0m, card =>
         {
-            if (!card.IsMutable || card.Owner == null) return 0;
+            if (card == null || !card.IsMutable || card.Owner == null) return 0m;
             var creature = card.Owner.Creature;
             return (int)(creature.CurrentHp > creature.MaxHp * 0.4 ? creature.CurrentHp - creature.MaxHp * 0.4 : 0);
         }),

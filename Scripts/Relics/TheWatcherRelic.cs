@@ -47,7 +47,7 @@ public class TheWatcherRelic : YunoBaseRelic
         if (template == null) return;
 
         var card = combatState.CreateCard(template, Owner);
-        card.EnergyCost.AddThisCombat(-card.EnergyCost.GetWithModifiers(CostModifiers.None));
+        card.EnergyCost.AddThisTurn(-card.EnergyCost.GetWithModifiers(CostModifiers.None));
 
         Flash();
         await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);

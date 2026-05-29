@@ -38,7 +38,7 @@ public class XinNiYiCiCard : YunoBaseCard
 
         CardModel card = Owner.Creature.CombatState!.CreateCard<WeiLaiXunXiCard>(Owner);
 
-        var addResult = await CardPileCmd.Add(card, PileType.Deck);
+        var addResult = await CardPileCmd.Add(card, PileType.Draw);
         resultList.Add(addResult);
         CardCmd.PreviewCardPileAdd(resultList, 2f);
 

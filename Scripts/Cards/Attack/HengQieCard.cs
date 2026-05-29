@@ -29,13 +29,13 @@ public class HengQieCard : YunoBaseCard
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<LiuXuePower>(),
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    HoverTipFactory.FromPower<LiuXuePower>(),
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -54,6 +54,6 @@ public class HengQieCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-       RemoveKeyword(CardKeyword.Exhaust);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

@@ -19,7 +19,8 @@ public class ZhanHouBaoZaPower : YunoBasePower
     {
         if (target != Owner) return;
         if (result.UnblockedDamage <= 0) return;
-        
+        if (dealer == null) return;
+
         var ratio = 0m;
 
         if (dealer == Owner && cardSource != null)
@@ -28,7 +29,7 @@ public class ZhanHouBaoZaPower : YunoBasePower
             var HealAmount = result.UnblockedDamage * ratio * Amount;
             await PowerCmd.Apply<BaoZaPower>(Owner, HealAmount, Owner, null);
         }
-        else if (dealer != Owner && dealer!.IsMonster)
+        else if (cardSource == null && !dealer!.IsPlayer && dealer!.IsMonster)
         {
             ratio = Amount * 0.25m;
             var HealAmount = result.UnblockedDamage * ratio * Amount;
