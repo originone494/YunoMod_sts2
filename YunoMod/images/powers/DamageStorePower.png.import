@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxc7ma7kv50ws"
-path="res://.godot/imported/JiuShiNiPower.png-d5f2435f334356843a902f4819bb9e52.ctex"
+uid="uid://b2u1w32b3gooh"
+path="res://.godot/imported/DamageStorePower.png-f0a526165792d3d9b26d9fe90e72e329.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://YunoMod/images/powers/JiuShiNiPower.png"
-dest_files=["res://.godot/imported/JiuShiNiPower.png-d5f2435f334356843a902f4819bb9e52.ctex"]
+source_file="res://YunoMod/images/powers/DamageStorePower.png"
+dest_files=["res://.godot/imported/DamageStorePower.png-f0a526165792d3d9b26d9fe90e72e329.ctex"]
 
 [params]
 

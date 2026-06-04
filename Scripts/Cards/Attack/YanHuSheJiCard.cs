@@ -20,7 +20,7 @@ public class YanHuSheJiCard : YunoBaseCard
         new PowerVar<WeakPower>(1m),
     ];
 
-    public YanHuSheJiCard() : base(0, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+    public YanHuSheJiCard() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
     {
     }
 
@@ -52,7 +52,7 @@ public class YanHuSheJiCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
         DynamicVars.Weak.UpgradeValueBy(1m);
     }
 }

@@ -152,7 +152,7 @@ public static class ToolCmd
         for (int i = 0; i < repeat; i++)
             await PowerCmd.Apply<LiuXuePower>(target, 1, cardSource.Owner.Creature, cardSource);
 
-        
+
         return cmd;
     }
 
@@ -259,7 +259,7 @@ public static class ToolCmd
         foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
     }
 
-    public static async Task RetrieverAnyCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
+    public static async Task RetrieverRareCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
     {
 
         List<CardPoolModel> pools = player.UnlockState.CharacterCardPools.ToList();
@@ -267,7 +267,7 @@ public static class ToolCmd
         IReadOnlyList<CardModel> cards = pools
                 .SelectMany(pool => pool.GetUnlockedCards(
                     player.UnlockState,
-                    player.RunState.CardMultiplayerConstraint))
+                    player.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Rare))
                 .ToList();
 
 
@@ -314,13 +314,7 @@ public static class ToolCmd
         }
         if (flag2)
         {
-            if (cardModel!.HasModKeyword(YunoKeywords.LingHuo))
-            {
-                await CardCmd.AutoPlay(choiceContext, cardModel!, player.Creature);
-            }
-
             await CardCmd.Discard(choiceContext, cardModel!);
-            await LingHuoHook.OnLingHuo(choiceContext, player);
         }
     }
 
@@ -340,7 +334,7 @@ public static class ToolCmd
             }
             if (cardModel != null)
             {
-                await CardCmd.Discard(choiceContext, cardModel!);
+                await CardCmd.Discard(choiceContext, cardModel);
 
                 CardCmd.Preview(cardModel);
 
@@ -351,8 +345,9 @@ public static class ToolCmd
         return list;
     }
 
-    public static async Task SelcetCardExhaust(PlayerChoiceContext choiceContext, Player player, PileType pileType, CardModel cardSource)
+    public static async Task<IEnumerable<CardModel>> SelcetCardExhaust(PlayerChoiceContext choiceContext, Player player, PileType pileType, CardModel cardSource)
     {
+        IEnumerable<CardModel> res = new List<CardModel>();
         if (pileType != PileType.Hand)
         {
             List<CardModel> cardsIn = (from c in pileType.GetPile(player).Cards
@@ -363,6 +358,7 @@ public static class ToolCmd
             if (cardModel != null)
             {
                 await CardCmd.Exhaust(choiceContext, cardModel!);
+                res = res.Append(cardModel);
             }
         }
         else if (pileType == PileType.Hand)
@@ -371,7 +367,9 @@ public static class ToolCmd
             if (cardModel != null)
             {
                 await CardCmd.Exhaust(choiceContext, cardModel);
+                res = res.Append(cardModel);
             }
         }
+        return res;
     }
 }

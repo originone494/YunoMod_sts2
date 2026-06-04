@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
@@ -15,31 +17,34 @@ namespace YunoMod.Scripts.Cards.Power;
 public class ZhanYouYuCard : YunoBaseCard
 {
 
-    private const string _selfDamageIncreaseKey = "SelfDamageIncreasion";
-    private const string _selfDamageReductionKey = "SelfDamageReduction";
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DynamicVar(_selfDamageIncreaseKey, 0.25m),
-        new DynamicVar(_selfDamageReductionKey, 0.5m),
     ];
 
-    public ZhanYouYuCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public ZhanYouYuCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await PowerCmd.Apply<ZhanYouYuWanJiaPower>(Owner.Creature, 1, Owner.Creature, this);
+        List<CardModel> cardsIn = (from c in PileType.Hand.GetPile(Owner).Cards
+                                   orderby c.Rarity, c.Id
+                                   select c).ToList();
+        CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cardsIn, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).FirstOrDefault();
 
-        await PowerCmd.Apply<ZhanYouYuDiRenPower>(cardPlay.Target, 1, Owner.Creature, this);
+        if (cardModel != null)
+        {
+            cardModel.EnergyCost.AddThisCombat(cardModel.EnergyCost.Canonical);
+            cardModel.BaseReplayCount += 1;
+        }
 
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

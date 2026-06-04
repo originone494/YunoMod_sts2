@@ -30,7 +30,7 @@ public class NiShuoShenMeCard : YunoBaseCard
         new RepeatVar(1)
     };
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
+    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger,YunoKeywords.LingHuo];
 
         protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<LiuXuePower>(),

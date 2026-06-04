@@ -1,31 +1,72 @@
+
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Keywords;
-using STS2RitsuLib.Patching.Core;
-using STS2RitsuLib.Patching.Models;
-using GameHook = MegaCrit.Sts2.Core.Hooks.Hook;
-using LingHuo = YunoMod.Scripts.Hook.LingHuoHook;
+using YunoMod.Scripts.Hook;
 
 namespace YunoMod.Scripts.Tool;
 
-public sealed class LingHuoDiscardPatch : IPatchMethod
+[HarmonyPatch(typeof(CardCmd), nameof(CardCmd.DiscardAndDraw))]
+public class LingHuoDiscardPatch
 {
-    public static string PatchId => "yunomod_linghuo_discard";
-    public static string Description => "Trigger LingHuo effects per-card when discarded";
-    public static bool IsCritical => false;
+    [ThreadStatic]
+    private static bool _isProcessing;
 
-    public static ModPatchTarget[] GetTargets() =>
-        [new(typeof(GameHook), nameof(GameHook.AfterCardDiscarded))];
-
-    public static async void Postfix(PlayerChoiceContext choiceContext, CardModel card)
+    public static bool Prefix(PlayerChoiceContext choiceContext, IEnumerable<CardModel> cardsToDiscard, int cardsToDraw, ref Task __result)
     {
-        if (card.HasModKeyword(YunoKeywords.LingHuo))
+        // 重入检查：如果是我们自己调用的 DiscardAndDraw，直接放行
+        if (_isProcessing)
+            return true;
+
+        if (CombatManager.Instance.IsOverOrEnding)
+            return true;
+
+        List<CardModel> yunoDiscardCards = cardsToDiscard.ToList();
+        if (yunoDiscardCards.Count == 0)
+            return true;
+
+        // 检查是否有灵活关键词的卡牌
+        bool hasLingHuo = false;
+        foreach (CardModel card in yunoDiscardCards)
         {
-            await LingHuo.LingHuoSpecial(choiceContext, card.Owner);
-            await LingHuo.OnLingHuo(choiceContext, card.Owner);
+            if (card.HasModKeyword(YunoKeywords.LingHuo))
+            {
+                hasLingHuo = true;
+                break;
+            }
+        }
+
+        if (!hasLingHuo)
+            return true;
+
+        // 有灵活卡牌：跳过原方法，用我们的 Task 替换返回值，异步处理灵活效果
+        _isProcessing = true;
+        __result = ProcessLingHuoAsync(choiceContext, yunoDiscardCards, cardsToDraw);
+        return false;
+    }
+
+    private static async Task ProcessLingHuoAsync(PlayerChoiceContext choiceContext, List<CardModel> cardsToDiscard, int cardsToDraw)
+    {
+        try
+        {
+            foreach (CardModel card in cardsToDiscard)
+            {
+                if (card.HasModKeyword(YunoKeywords.LingHuo))
+                {
+                    await LingHuoHook.LingHuoSpecial(choiceContext, card.Owner, card);
+                    await LingHuoHook.OnLingHuo(choiceContext, card.Owner);
+                }
+            }
+
+            // 灵活效果处理完毕，执行原本的弃牌抽牌
+            await CardCmd.DiscardAndDraw(choiceContext, cardsToDiscard, cardsToDraw);
+        }
+        finally
+        {
+            _isProcessing = false;  
         }
     }
 }

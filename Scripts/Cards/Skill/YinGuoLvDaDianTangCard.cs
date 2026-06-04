@@ -40,7 +40,6 @@ public class YinGuoLvDaDianTangCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<DiaryPower>(Owner.Creature, DynamicVars[_diaryCount].BaseValue, Owner.Creature, this);
 
         if (Owner.Creature.HasPower<DiaryPower>())
         {

@@ -91,5 +91,8 @@
     "YUNO_MOD_POWER_YU_ZHI_POWER.smartDescription": "预见时所有敌人获得{Amount}点力量，然后失去{Amount}×2点力量。",
     "YUNO_MOD_POWER_JIAO_HUAN_POWER.title": "交换",
     "YUNO_MOD_POWER_JIAO_HUAN_POWER.description": "回合结束时，交换你的力量和敏捷。",
-    "YUNO_MOD_POWER_JIAO_HUAN_POWER.smartDescription": "回合结束时，交换你的力量和敏捷。"
+    "YUNO_MOD_POWER_JIAO_HUAN_POWER.smartDescription": "回合结束时，交换你的力量和敏捷。",
+    "YUNO_MOD_POWER_SHOU_HU_POWER.title": "守护",
+    "YUNO_MOD_POWER_SHOU_HU_POWER.description": "获得爱意时，对所有敌人造成伤害。",
+    "YUNO_MOD_POWER_SHOU_HU_POWER.smartDescription": "获得爱意时，对所有敌人造成{Amount}点伤害。"
 }

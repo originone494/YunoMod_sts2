@@ -45,7 +45,7 @@ public class PoTingCard : YunoBaseCard
 
         // 从抽牌堆检索1张攻击牌加入手牌
         CardModel attackCard = PileType.Draw.GetPile(Owner).Cards
-            .FirstOrDefault(card => card.Type == CardType.Attack)!;
+            .FirstOrDefault(card => card.Type == CardType.Attack);
         if (attackCard != null)
         {
             await CardPileCmd.Add(attackCard, PileType.Hand);

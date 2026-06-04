@@ -23,10 +23,9 @@ public class YiYaHuanYaPower : YunoBasePower
 
         if (dealer == Owner && cardSource != null)
         {
-            foreach (var enemy in CombatState.HittableEnemies)
-                await PowerCmd.Apply<FuChouPower>(enemy, Amount, Owner, null);
+            await PowerCmd.Apply<FuChouPower>(Owner.CombatState!.HittableEnemies, Amount, Owner, null);
         }
-        else if (dealer != null && dealer.IsMonster)
+        else if (dealer != null && dealer.IsMonster && result.UnblockedDamage > 0)
         {
             await PowerCmd.Apply<FuChouPower>(dealer, Amount, Owner, null);
         }

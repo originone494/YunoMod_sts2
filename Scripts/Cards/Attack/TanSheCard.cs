@@ -25,7 +25,7 @@ public class TanSheCard : YunoBaseCard, IOnLingHuo
 
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo, YunoKeywords.Gun];
 
-    public TanSheCard() : base(2, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+    public TanSheCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
     {
     }
 

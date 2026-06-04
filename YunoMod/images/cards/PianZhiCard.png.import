@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgyp1utw3udd6"
-path="res://.godot/imported/KanPoPower.png-442d64cacc722572ebd4283ab8722d54.ctex"
+uid="uid://trj0h2bsbvov"
+path="res://.godot/imported/PianZhiCard.png-df9c53c23e22d017e43b5ea392da2c9e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://YunoMod/images/powers/KanPoPower.png"
-dest_files=["res://.godot/imported/KanPoPower.png-442d64cacc722572ebd4283ab8722d54.ctex"]
+source_file="res://YunoMod/images/cards/PianZhiCard.png"
+dest_files=["res://.godot/imported/PianZhiCard.png-df9c53c23e22d017e43b5ea392da2c9e.ctex"]
 
 [params]
 

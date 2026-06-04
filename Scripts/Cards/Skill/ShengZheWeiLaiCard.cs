@@ -40,7 +40,7 @@ public class ShengZheWeiLaiCard : YunoBaseCard
         if (targetCard.Type == CardType.Attack)
         {
             targetCard.BaseReplayCount += 1;
-            cardModels.Add(targetCard);            
+            cardModels.Add(targetCard);
         }
 
     }
@@ -57,7 +57,8 @@ public class ShengZheWeiLaiCard : YunoBaseCard
             if (cardModels.Contains(cardPlay.Card))
             {
                 cardPlay.Card.BaseReplayCount -= 1;
-                cardModels.Remove(cardPlay.Card);
+                if (cardPlay.Card.BaseReplayCount == 0)
+                    cardModels.Remove(cardPlay.Card);
             }
         }
         return Task.CompletedTask;

@@ -25,7 +25,7 @@ public class YiJiBiShaCard : YunoBaseCard
         new EnergyVar(3)
     };
 
-    public YiJiBiShaCard() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+    public YiJiBiShaCard() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 

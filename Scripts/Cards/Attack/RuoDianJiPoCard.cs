@@ -28,7 +28,7 @@ public class RuoDianJiPoCard : YunoBaseCard, IOnLingHuo
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo, YunoKeywords.Dagger];
 
 
-    public RuoDianJiPoCard() : base(2, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy)
+    public RuoDianJiPoCard() : base(3, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy)
     {
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

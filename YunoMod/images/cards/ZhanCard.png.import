@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctw6bl1eggxt4"
-path="res://.godot/imported/QiZhaCard.png-a5cc70e9c9c3a75abf20ed38a39ef66c.ctex"
+uid="uid://37vmog0g2bhm"
+path="res://.godot/imported/ZhanCard.png-e7e32faa8709e5bc0ea07c5f7503e037.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://YunoMod/images/cards/QiZhaCard.png"
-dest_files=["res://.godot/imported/QiZhaCard.png-a5cc70e9c9c3a75abf20ed38a39ef66c.ctex"]
+source_file="res://YunoMod/images/cards/ZhanCard.png"
+dest_files=["res://.godot/imported/ZhanCard.png-e7e32faa8709e5bc0ea07c5f7503e037.ctex"]
 
 [params]
 

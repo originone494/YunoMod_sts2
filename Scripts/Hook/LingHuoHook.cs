@@ -27,17 +27,11 @@ public static class LingHuoHook
         }
     }
 
-    public static async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
+    public static async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player, CardModel card)
     {
-        var combatState = player.Creature.CombatState;
-        if (combatState == null) return;
-
-        foreach (var model in combatState.IterateHookListeners().OfType<IOnLingHuo>())
+        if (card is IOnLingHuo listener)
         {
-            var abstractModel = (AbstractModel)(object)model;
-            ctx.PushModel(abstractModel);
-            await model.LingHuoSpecial(ctx, player);
-            ctx.PopModel(abstractModel);
+            await listener.LingHuoSpecial(ctx, player);
         }
     }
 

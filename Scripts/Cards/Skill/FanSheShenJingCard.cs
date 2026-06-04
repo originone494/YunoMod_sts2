@@ -46,8 +46,6 @@ public class FanSheShenJingCard : YunoBaseCard, IOnLingHuo
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
         await CardPileCmd.Draw(ctx, DynamicVars[_LingHuoCard].IntValue, Owner);
-
-
     }
 
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyhfs4j2wrmf1"
-path="res://.godot/imported/WeiXiePower.png-ea3b3fae9207d1e517f6d7b1fd52ae96.ctex"
+uid="uid://ddcgk05erggmk"
+path="res://.godot/imported/ZhanYouYuCard.png-0491831f24a2ad77a75594e85af2f797.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://YunoMod/images/powers/WeiXiePower.png"
-dest_files=["res://.godot/imported/WeiXiePower.png-ea3b3fae9207d1e517f6d7b1fd52ae96.ctex"]
+source_file="res://YunoMod/images/cards/ZhanYouYuCard.png"
+dest_files=["res://.godot/imported/ZhanYouYuCard.png-0491831f24a2ad77a75594e85af2f797.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7kh4d5ch0mpw"
-path="res://.godot/imported/WuYiZhongTingPower.png-40067b5d6de8ccc47ba19ae416a7a533.ctex"
+uid="uid://dxqvi651ock7w"
+path="res://.godot/imported/FuChouPower.png-f30e87b7c09c4cf1b3003ec5e6f31974.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://YunoMod/images/powers/WuYiZhongTingPower.png"
-dest_files=["res://.godot/imported/WuYiZhongTingPower.png-40067b5d6de8ccc47ba19ae416a7a533.ctex"]
+source_file="res://YunoMod/images/powers/FuChouPower.png"
+dest_files=["res://.godot/imported/FuChouPower.png-f30e87b7c09c4cf1b3003ec5e6f31974.ctex"]
 
 [params]
 

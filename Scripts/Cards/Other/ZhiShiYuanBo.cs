@@ -32,7 +32,7 @@ public class ZhiShiYuanBoCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ToolCmd.RetrieverAnyCard(choiceContext, Owner);
+        await ToolCmd.RetrieverRareCard(choiceContext, Owner);
     }
 
     protected override void OnUpgrade()

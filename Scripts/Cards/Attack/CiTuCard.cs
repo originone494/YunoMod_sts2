@@ -14,10 +14,13 @@ namespace YunoMod.Scripts.Cards.Attack;
 
 public class CiTuCard : YunoBaseCard
 {
+
+    private const string _DuiMuCount = "DuiMuCount";
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(4m, ValueProp.Move),
-        new RepeatVar(1)
+        new RepeatVar(1),
+        new DynamicVar(_DuiMuCount,3)
     ];
 
     public CiTuCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
@@ -37,13 +40,10 @@ public class CiTuCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        AttackCommand attackCommand = await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
 
-        int amount = attackCommand.Results.Sum((DamageResult r) => r.TotalDamage + r.OverkillDamage);
+        IEnumerable<CardModel> list = await ToolCmd.DuiMu(choiceContext, Owner, DynamicVars[_DuiMuCount].IntValue);
 
-        IEnumerable<CardModel> list = await ToolCmd.DuiMu(choiceContext, Owner, amount);
-
-        amount = 0;
+        int amount = 0;
 
         foreach (CardModel card in list)
         {
@@ -55,9 +55,10 @@ public class CiTuCard : YunoBaseCard
         }
 
         if (amount > 0)
-            await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+            await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue + 1);
+        else
 
-
+            await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }

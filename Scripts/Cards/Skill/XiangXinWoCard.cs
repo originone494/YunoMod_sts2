@@ -12,38 +12,36 @@ using YunoMod.Scripts.Base;
 using MegaCrit.Sts2.Core.HoverTips;
 using YunoMod.Scripts.Hook;
 using MegaCrit.Sts2.Core.Entities.Players;
+using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
 public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+   {
+        new BlockVar(14m, ValueProp.Move),
+        new DynamicVar("LingHuoBlock", 8m),
+   };
+
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo];
 
-
-    public XiangXinWoCard() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public XiangXinWoCard() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<ArtifactPower>(),
+        ModKeywordRegistry.CreateHoverTip(YunoKeywords.LingHuo),
     ];
-
-
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (Owner.Creature.HasPower<ArtifactPower>() && IsUpgraded)
-        {
-            await PowerCmd.Apply<BufferPower>(Owner.Creature, 1, Owner.Creature, this);
-
-        }
-        await PowerCmd.Apply<ArtifactPower>(Owner.Creature, 1, Owner.Creature, this);
-
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
     }
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["LingHuoBlock"].UpgradeValueBy(3m);
     }
 
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
@@ -53,8 +51,7 @@ public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
-        await CardCmd.AutoPlay(ctx, this, player.Creature);
 
-        await CardPileCmd.Draw(ctx, 1, Owner);
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars["LingHuoBlock"].BaseValue, ValueProp.Move, null);
     }
 }

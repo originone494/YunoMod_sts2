@@ -9,6 +9,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Tool;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
@@ -27,15 +28,20 @@ public class ShiShouCard : YunoBaseCard
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ToolCmd.DuiMu(choiceContext, Owner, (int)DynamicVars.Cards.BaseValue);
 
-        await Cmd.CustomScaledWait(1f, 1f);
 
-        await ToolCmd.SelcetCardExhaust(choiceContext, Owner, PileType.Discard, this);
+        List<CardModel> selectedCards = (await ToolCmd.SelcetCardExhaust(choiceContext, Owner, PileType.Discard, this)).ToList();
+
+
+        if (selectedCards.Count > 0)
+        {
+            await ToolCmd.DuiMu(choiceContext, Owner, (int)DynamicVars.Cards.BaseValue);
+
+        }
     }
 
     protected override void OnUpgrade()

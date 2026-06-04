@@ -19,7 +19,7 @@ public class NiXiangMingYunCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(1),
-        new DynamicVar(_ForeseeCount,15)
+        new DynamicVar(_ForeseeCount,10)
     ];
 
     public NiXiangMingYunCard() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
@@ -30,7 +30,7 @@ public class NiXiangMingYunCard : YunoBaseCard
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
