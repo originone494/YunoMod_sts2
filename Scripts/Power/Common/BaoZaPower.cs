@@ -21,7 +21,11 @@ public class BaoZaPower : YunoBasePower
         {
             amount += 1;
         }
-        if (amount == 0) await CreatureCmd.Heal(Owner, Amount);
+        if (amount == 0)
+        {
+            await CreatureCmd.Heal(Owner, Amount);
+            await PowerCmd.Remove(this);
+        }
     }
 
 

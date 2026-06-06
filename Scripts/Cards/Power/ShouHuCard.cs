@@ -18,7 +18,7 @@ public class ShouHuCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(4,ValueProp.Unpowered)
+        new DamageVar(6,ValueProp.Unpowered)
     };
 
     public ShouHuCard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)

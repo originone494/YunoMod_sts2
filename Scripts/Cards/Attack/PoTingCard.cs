@@ -14,6 +14,7 @@ using YunoMod.Scripts.Tool;
 
 using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Keywords;
+using MegaCrit.Sts2.Core.CardSelection;
 namespace YunoMod.Scripts.Cards.Attack;
 
 public class PoTingCard : YunoBaseCard
@@ -34,7 +35,7 @@ public class PoTingCard : YunoBaseCard
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -43,13 +44,27 @@ public class PoTingCard : YunoBaseCard
 
         await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
 
-        // 从抽牌堆检索1张攻击牌加入手牌
-        CardModel attackCard = PileType.Draw.GetPile(Owner).Cards
-            .FirstOrDefault(card => card.Type == CardType.Attack);
-        if (attackCard != null)
+        var drawPile = PileType.Draw.GetPile(Owner);
+        var drawCard = await CardSelectCmd.FromSimpleGrid(choiceContext, drawPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1));
+        if (drawCard != null)
         {
-            await CardPileCmd.Add(attackCard, PileType.Hand);
+            await CardPileCmd.Add(drawCard, PileType.Hand);
         }
+
+        List<CardModel> selectedCards = [.. await CardSelectCmd.FromHandForDiscard(
+            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1),
+            context: choiceContext,
+            player: Owner,
+            filter: null,
+            source: this
+        )];
+
+        int actualDiscardCount = selectedCards.Count;
+        if (actualDiscardCount > 0)
+        {
+            await CardCmd.Discard(choiceContext, selectedCards);
+        }
+
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
     }

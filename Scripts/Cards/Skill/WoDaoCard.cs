@@ -21,7 +21,7 @@ public class WoDaoCard : YunoBaseCard
     };
 
 
-    public WoDaoCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+    public WoDaoCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

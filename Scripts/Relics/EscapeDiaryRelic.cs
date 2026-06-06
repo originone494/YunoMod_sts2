@@ -1,8 +1,8 @@
 using System;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
-using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -40,15 +40,32 @@ public class EscapeDiaryRelic : YunoBaseRelic
         }
     }
 
-    public override decimal ModifyDamageMultiplicative(
-        Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (target != Owner.Creature) return 1m;
-        if (!IsPrime((int)amount)) return 1m;
+        if (player != Owner) return;
+
+        int diaryAmount = (int)Owner.Creature.GetPowerAmount<DiaryPower>();
+        if (diaryAmount <= 0) return;
+
+        // 检查是否有敌人意图攻击
+        bool enemyAttacking = false;
+        int attackAmount = 0;
+        foreach (Creature enemy in Owner.Creature.CombatState!.HittableEnemies)
+        {
+            if (enemy.Monster?.IntendsToAttack == true)
+            {
+                enemyAttacking = true;
+                attackAmount += 1;
+            }
+        }
+
+        if (!enemyAttacking) return;
+
+        int round = Owner.Creature.CombatState!.RoundNumber;
+        int blockAmount = IsPrime(round) ? diaryAmount * 2 * attackAmount : diaryAmount * attackAmount;
 
         Flash();
-        return 0.5m;
+        await CreatureCmd.GainBlock(Owner.Creature, blockAmount, ValueProp.Unpowered, null);
     }
 
     public override async Task AfterRemoved()

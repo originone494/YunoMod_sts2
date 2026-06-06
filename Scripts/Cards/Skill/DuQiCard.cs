@@ -5,7 +5,6 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.Saves.Runs;
 using YunoMod.Scripts.Base;
 using MegaCrit.Sts2.Core.HoverTips;
 
@@ -14,38 +13,11 @@ namespace YunoMod.Scripts.Cards.Skill;
 public class DuQiCard : YunoBaseCard
 {
     private const string _poisonPerTurnKey = "PoisonPerTurn";
-    private const string _basePoisonKey = "TotalPoison";
-    private const int _basePoison = 1;
-
-    private int _currentPoison = 1;
-    private int _increasedPoison;
-
-    [SavedProperty]
-    public int CurrentPoison
-    {
-        get => _currentPoison;
-        set
-        {
-            AssertMutable();
-            _currentPoison = value;
-            DynamicVars[_basePoisonKey].BaseValue = _currentPoison;
-        }
-    }
-
-    [SavedProperty]
-    public int IncreasedPoison
-    {
-        get => _increasedPoison;
-        set
-        {
-            AssertMutable();
-            _increasedPoison = value;
-        }
-    }
+    private const string _totalPoisonKey = "TotalPoison";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DynamicVar(_basePoisonKey, CurrentPoison),
+        new DynamicVar(_totalPoisonKey, 1m),
         new DynamicVar(_poisonPerTurnKey, 1m),
     };
 
@@ -63,13 +35,12 @@ public class DuQiCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        int totalPoison = DynamicVars[_basePoisonKey].IntValue;
+        int totalPoison = DynamicVars[_totalPoisonKey].IntValue;
 
         await PowerCmd.Apply<PoisonPower>(CombatState!.HittableEnemies, totalPoison, Owner.Creature, this);
 
         int increaseAmount = DynamicVars[_poisonPerTurnKey].IntValue;
         BuffFromPlay(increaseAmount);
-        (DeckVersion as DuQiCard)?.BuffFromPlay(increaseAmount);
     }
 
     protected override void OnUpgrade()
@@ -79,7 +50,13 @@ public class DuQiCard : YunoBaseCard
 
     private void BuffFromPlay(int extraAmount)
     {
-        IncreasedPoison += extraAmount;
-        CurrentPoison = _basePoison + IncreasedPoison;
+        int newValue = DynamicVars[_totalPoisonKey].IntValue + extraAmount;
+        DynamicVars[_totalPoisonKey].BaseValue = newValue;
+
+        // 同步到牌组版本（DeckVersion 是独立实例，需要单独更新 DynamicVar）
+        if (DeckVersion != null)
+        {
+            DeckVersion.DynamicVars[_totalPoisonKey].BaseValue = newValue;
+        }
     }
 }

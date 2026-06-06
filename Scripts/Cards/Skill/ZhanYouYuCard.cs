@@ -30,14 +30,12 @@ public class ZhanYouYuCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        List<CardModel> cardsIn = (from c in PileType.Hand.GetPile(Owner).Cards
-                                   orderby c.Rarity, c.Id
-                                   select c).ToList();
-        CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cardsIn, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).FirstOrDefault();
+
+        CardModel cardModel = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1), context: choiceContext, player: base.Owner, filter: null, source: this)).FirstOrDefault();
 
         if (cardModel != null)
         {
-            cardModel.EnergyCost.AddThisCombat(cardModel.EnergyCost.Canonical);
+            cardModel.EnergyCost.AddThisCombat(cardModel.EnergyCost.GetWithModifiers(CostModifiers.None));
             cardModel.BaseReplayCount += 1;
         }
 

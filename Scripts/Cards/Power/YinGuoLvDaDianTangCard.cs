@@ -16,7 +16,7 @@ namespace YunoMod.Scripts.Cards.Skill;
 public class YinGuoLvDaDianTangCard : YunoBaseCard
 {
     private const string _diaryCount = "DiaryCount";
-    public YinGuoLvDaDianTangCard() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self)
+    public YinGuoLvDaDianTangCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
 
     }
@@ -32,30 +32,13 @@ public class YinGuoLvDaDianTangCard : YunoBaseCard
         HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
         HoverTipFactory.FromCard<QiuTiCard>(),
         HoverTipFactory.FromPower<DiaryPower>(),
-
     ];
-
-
-
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        if (Owner.Creature.HasPower<DiaryPower>())
-        {
-
-            int amount = Owner.Creature.GetPowerAmount<DiaryPower>();
-            var resultList = new List<CardPileAddResult>();
-            for (int i = 0; i < amount; i++)
-            {
-                CardModel card = Owner.Creature.CombatState!.CreateCard<QiuTiCard>(Owner);
-                var addResult = await CardPileCmd.Add(card, PileType.Draw);
-                resultList.Add(addResult);
-            }
-            CardCmd.PreviewCardPileAdd(resultList, 2f);
-        }
-
-        await CardCmd.Exhaust(choiceContext, this);
+        await PowerCmd.Apply<YinGuoLvDaDianTangPower>(Owner.Creature, DynamicVars[_diaryCount].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

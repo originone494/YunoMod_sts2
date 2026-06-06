@@ -26,7 +26,7 @@
     "YUNO_MOD_RELIC_EXCHANGE_DIARY_RELIC.selectionScreenPrompt": "选择1张手牌放至抽牌堆",
     "YUNO_MOD_RELIC_EXCHANGE_DIARY_RELIC.flavor": " ",
     "YUNO_MOD_RELIC_ESCAPE_DIARY_RELIC.title": "逃亡日记",
-    "YUNO_MOD_RELIC_ESCAPE_DIARY_RELIC.description": "受到的伤害若为素数，则减少50%。",
+    "YUNO_MOD_RELIC_ESCAPE_DIARY_RELIC.description": "回合开始时，若敌人拥有攻击意图，每名敌人使你获得等同于持有日记数量的格挡。这个效果会在素数回合翻倍。",
     "YUNO_MOD_RELIC_ESCAPE_DIARY_RELIC.flavor": " ",
     "YUNO_MOD_RELIC_JUSTICE_DIARY_RELIC.title": "正义日记",
     "YUNO_MOD_RELIC_JUSTICE_DIARY_RELIC.description": "失去生命时，对所有敌人造成等额伤害。",

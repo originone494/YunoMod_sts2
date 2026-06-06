@@ -15,18 +15,18 @@ public class LingHuoDiscardPatch
     [ThreadStatic]
     private static bool _isProcessing;
 
-    public static bool Prefix(PlayerChoiceContext choiceContext, IEnumerable<CardModel> cardsToDiscard, int cardsToDraw, ref Task __result)
+    public static void Postfix(PlayerChoiceContext choiceContext, IEnumerable<CardModel> cardsToDiscard, int cardsToDraw)
     {
         // 重入检查：如果是我们自己调用的 DiscardAndDraw，直接放行
         if (_isProcessing)
-            return true;
+            return;
 
         if (CombatManager.Instance.IsOverOrEnding)
-            return true;
+            return;
 
         List<CardModel> yunoDiscardCards = cardsToDiscard.ToList();
         if (yunoDiscardCards.Count == 0)
-            return true;
+            return;
 
         // 检查是否有灵活关键词的卡牌
         bool hasLingHuo = false;
@@ -40,15 +40,15 @@ public class LingHuoDiscardPatch
         }
 
         if (!hasLingHuo)
-            return true;
+            return;
 
         // 有灵活卡牌：跳过原方法，用我们的 Task 替换返回值，异步处理灵活效果
         _isProcessing = true;
-        __result = ProcessLingHuoAsync(choiceContext, yunoDiscardCards, cardsToDraw);
-        return false;
+        ProcessLingHuoAsync(choiceContext, yunoDiscardCards, cardsToDraw);
+        return;
     }
 
-    private static async Task ProcessLingHuoAsync(PlayerChoiceContext choiceContext, List<CardModel> cardsToDiscard, int cardsToDraw)
+    private static async void ProcessLingHuoAsync(PlayerChoiceContext choiceContext, List<CardModel> cardsToDiscard, int cardsToDraw)
     {
         try
         {
@@ -61,8 +61,7 @@ public class LingHuoDiscardPatch
                 }
             }
 
-            // 灵活效果处理完毕，执行原本的弃牌抽牌
-            await CardCmd.DiscardAndDraw(choiceContext, cardsToDiscard, cardsToDraw);
+            // 灵活效果处理完毕
         }
         finally
         {

@@ -38,7 +38,7 @@ public class JiuShiNiCard : YunoBaseCard
 
         if (cardPlay.Target.HasPower<StrengthPower>())
         {
-            int amount = -cardPlay.Target.GetPowerAmount<StrengthPower>();
+            int amount = cardPlay.Target.GetPowerAmount<StrengthPower>();
 
             await PowerCmd.Apply<StrengthPower>(cardPlay.Target, -amount, Owner.Creature, this);
 

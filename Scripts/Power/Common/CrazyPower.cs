@@ -21,19 +21,13 @@ public class CrazyPower : YunoBasePower
         Creature? target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource)
     {
-        if (!props.IsPoweredAttack())
-        {
-            return 1m;
-        }
-        if (cardSource == null)
-        {
-            return 1m;
-        }
-        if (dealer != base.Owner && !base.Owner.Pets.Contains<Creature>(dealer!))
-        {
-            return 1m;
-        }
-        return 2m;
+
+        if (dealer == Owner && cardSource != null && target != null && target.IsMonster && props.IsPoweredAttack())
+            return 2m;
+        if (cardSource == null && dealer != null && dealer.IsMonster && target == Owner)
+            return 2m;
+
+        return 1m;
     }
 
     public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)

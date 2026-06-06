@@ -24,7 +24,7 @@ public class TiaoFeiCard : YunoBaseCard
         new BlockVar(8m, ValueProp.Move),
     ];
 
-    public TiaoFeiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public TiaoFeiCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];

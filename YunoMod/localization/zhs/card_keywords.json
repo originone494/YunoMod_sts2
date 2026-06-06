@@ -5,7 +5,7 @@
     "YUNO_MOD_KEYWORD_AXE.title": "斧头",
     "YUNO_MOD_KEYWORD_GUN.description": "一种[gold]姿态[/gold]。带有[gold]枪械[/gold]字段的牌一般拥有较低的伤害和较多的攻击次数。打出带有[gold]枪械[/gold]字段的牌获得1层[gold]枪械[/gold]，上限6层。退出时，对所有敌人造成4点伤害，重复[gold]枪械层数[/gold]次。",
     "YUNO_MOD_KEYWORD_GUN.title": "枪械",
-    "YUNO_MOD_KEYWORD_SWORD.description": "一种[gold]姿态[/gold]。打出带有[gold]刃[/gold]字段的牌获得1层[gold]刃[/gold]，上限1层。退出时，抽2张牌，获得2费。",
+    "YUNO_MOD_KEYWORD_SWORD.description": "一种[gold]姿态[/gold]。打出带有[gold]刃[/gold]字段的牌获得1层[gold]刃[/gold]，上限1层。退出时，抽2张牌，获得2费，一回合仅可触发一次。",
     "YUNO_MOD_KEYWORD_SWORD.title": "刃",
     "YUNO_MOD_KEYWORD_LING_HUO.description": "拥有[gold]灵活[/gold]字段的牌，从[gold]抽牌堆[/gold]或[gold]手牌[/gold]被送入[gold]弃牌堆[/gold]时，将其打出。若[gold]灵活[/gold]后注有效果，则不会打出，而是改为触发那些效果。",
     "YUNO_MOD_KEYWORD_LING_HUO.title": "灵活",

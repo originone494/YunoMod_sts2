@@ -608,5 +608,5 @@ unique_name_in_owner = true
 position = Vector2(1, -148)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_pscwk")
-animation = &"idle_loop"
+animation = &"die"
 autoplay = "idle_loop"

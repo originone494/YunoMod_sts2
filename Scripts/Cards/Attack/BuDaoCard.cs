@@ -31,13 +31,13 @@ public class BuDaoCard : YunoBaseCard
 
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
 
-        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<WeakPower>(),
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    HoverTipFactory.FromPower<WeakPower>(),
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -50,10 +50,9 @@ public class BuDaoCard : YunoBaseCard
 
         if (cardPlay.Target.IsAlive &&
             cardPlay.Target.GetPowerAmount<WeakPower>() > 0 &&
-            cardPlay.Target.CurrentHp < threshold)
+            cardPlay.Target.CurrentHp <= threshold)
         {
-            await CreatureCmd.Damage(choiceContext, cardPlay.Target, cardPlay.Target.CurrentHp,
-                ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this);
+            await CreatureCmd.Kill(cardPlay.Target);
         }
 
         await ToolCmd.GunStance(choiceContext, Owner, this);

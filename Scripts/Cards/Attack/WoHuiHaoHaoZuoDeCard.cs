@@ -30,7 +30,7 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
         }),
     ];
 
-    public WoHuiHaoHaoZuoDeCard() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public WoHuiHaoHaoZuoDeCard() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 

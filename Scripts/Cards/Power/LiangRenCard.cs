@@ -30,19 +30,20 @@ public class LiangRenCard : YunoBaseCard
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Sword),ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await PowerCmd.Apply<StrengthPower>(Owner.Creature, (int)DynamicVars.Strength.BaseValue, Owner.Creature, this);
 
+
         var bladeCards = PileType.Draw.GetPile(Owner).Cards
             .Concat(PileType.Discard.GetPile(Owner).Cards)
             .Concat(PileType.Exhaust.GetPile(Owner).Cards)
-            .Where(card => card.Id.Entry != null && (
-                card.Keywords.HasModKeyword(YunoKeywords.Sword)
-            )).ToList();
+            .Where(card =>
+                card.HasModKeyword(YunoKeywords.Sword)
+            ).ToList();
 
         foreach (var card in bladeCards)
         {

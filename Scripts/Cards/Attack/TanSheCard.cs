@@ -25,7 +25,7 @@ public class TanSheCard : YunoBaseCard, IOnLingHuo
 
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo, YunoKeywords.Gun];
 
-    public TanSheCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+    public TanSheCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 
@@ -36,14 +36,14 @@ public class TanSheCard : YunoBaseCard, IOnLingHuo
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.GunAttack(choiceContext, Owner.Creature, this, DynamicVars.Damage.BaseValue);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["LingHuoDamage"].UpgradeValueBy(1m);
+        DynamicVars.Repeat.UpgradeValueBy(1m);
         DynamicVars.Damage.UpgradeValueBy(3);
     }
 
@@ -54,7 +54,12 @@ public class TanSheCard : YunoBaseCard, IOnLingHuo
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
-        await ToolCmd.GunAttackAllEnemy(ctx, this, DynamicVars["LingHuoDamage"].BaseValue, DynamicVars.Repeat.IntValue);
+        await DamageCmd.Attack(DynamicVars["LingHuoDamage"].BaseValue)
+         .FromCard(this)
+         .TargetingRandomOpponents(CombatState!)
+         .WithHitCount(DynamicVars.Repeat.IntValue)
+         .WithHitFx("vfx/vfx_attack_blunt")
+         .Execute(ctx);
 
         await ToolCmd.GunStance(ctx, Owner, this);
     }

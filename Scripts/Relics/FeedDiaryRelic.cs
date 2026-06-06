@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -20,20 +21,18 @@ public class FeedDiaryRelic : YunoBaseRelic
 
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        CombatState combatState)
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
-        if (side != Owner.Creature.Side) return;
-        if (combatState.RoundNumber > 1) return;
+        if (player != Owner) return;
+        if (Owner.Creature.CombatState!.RoundNumber > 1)
+            return;
 
         await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
 
         List<CardModel> selected = (from c in PileType.Draw.GetPile(Owner).Cards
-                                   where c.DynamicVars.ContainsKey("Damage") || c.DynamicVars.ContainsKey("Block")
-                                   orderby c.Rarity, c.Id
-                                   select c).ToList();
+                                    where c.DynamicVars.ContainsKey("Damage") || c.DynamicVars.ContainsKey("Block")
+                                    orderby c.Rarity, c.Id
+                                    select c).ToList();
         CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, selected, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).FirstOrDefault()!;
 
         _fedCard = cardModel;

@@ -23,7 +23,7 @@ public class SaoSheCard : YunoBaseCard
         new RepeatVar(6),
     };
 
-    public SaoSheCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
+    public SaoSheCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
     {
     }
 
