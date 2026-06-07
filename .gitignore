@@ -1,9 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
-.godot
+*.godot
 /android/
 .claude/
 .trae/
 .vscode/
-.md
-.import
+*.md
+*.import
