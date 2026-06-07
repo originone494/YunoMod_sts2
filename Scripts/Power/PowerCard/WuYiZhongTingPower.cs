@@ -14,7 +14,7 @@ public class WuYiZhongTingPower : YunoBasePower, IOnStanceChange
     // 叠加类型，Counter表示可叠加，Single表示不可叠加
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public async Task OnStanceChange(PlayerChoiceContext ctx, Player player)
+    public async Task OnStanceChange(PlayerChoiceContext ctx, Player player,Stance oldStance, Stance newStance)
     {
         if (player == Owner.Player)
             await CardPileCmd.Draw(ctx, Amount, player);

@@ -15,7 +15,7 @@ namespace YunoMod.Scripts.Relics;
 
 public class TheWatcherRelic : YunoBaseRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Rare;
 
     public override async Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,

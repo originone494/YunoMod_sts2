@@ -2,7 +2,7 @@
 
 ## Godot原生
 
-由于是`RichTextLabel`，Godot原生的bbcode都可以使用，参考 https://docs.godotengine.org/zh-cn/4.x/tutorials/ui/bbcode_in_richtextlabel.html 。
+由于描述是`RichTextLabel`，Godot原生的bbcode都可以使用，参考 https://docs.godotengine.org/zh-cn/4.x/tutorials/ui/bbcode_in_richtextlabel.html 。
 
 速览：
 
@@ -13,13 +13,13 @@
 | `[u]...[/u]` | 下划线 | `[u]underline[/u]` |
 | `[color=...]...[/color]` | 文字颜色 | `[color=red]red text[/color]` |
 | `[font=...]...[/font]` | 字体 | `[font=Arial]Arial text[/font]` |
-| `[size=...]...[/size]` | 字号 | `[size=24]large text[/size]` |
+| `[font_size=...]...[/font_size]` | 字号 | `[font_size=24]large text[/font_size]` |
 
 ## 游戏自定义tag
 
 | 标签名 | 作用 |
 | - | - |
-| `[ancient_banner]...[/ancient_banner]` | 古代横幅风格 |
+| `[ancient_banner]...[/ancient_banner]` | 先古之民横幅风格 |
 | `[aqua]...[/aqua]` | 水绿色文字 |
 | `[blue]...[/blue]` | 蓝色文字 |
 | `[fade_in]...[/fade_in]` | 渐显动画效果 |
@@ -33,6 +33,7 @@
 | `[red]...[/red]` | 红色文字 |
 | `[sine]...[/sine]` | 正弦波动动画效果 |
 | `[thinky_dots]...[/thinky_dots]` | 思考点点动画效果 |
+| `[rainbow freq=0.3 sat=0.8 val=1]...[/rainbow]` | 彩虹文字 |
 
 ## 占位变量
 
@@ -100,13 +101,77 @@ https://github.com/axuno/SmartFormat/wiki
 
 | 名称 | 含义 | 典型写法 |
 | - | - | - |
-| `singleStarIcon` | 星星图标 | `每获得{singleStarIcon}时` |
+| `singleStarIcon` | 星星图标 | `每当你获得{singleStarIcon}时` |
 | `InCombat` | 是否处于战斗 | `{InCombat:\n（命中{CalculatedHits:diff()}次）\|}` |
-| `IsTargeting` | 当前是否有目标 | `{IsTargeting:\n（造成{CalculatedDamage:diff()}）\|}` |
-| `OnTable` | 牌是否在手牌或出牌区 | `{OnTable:cond:true?在场上\|不在场上}` |
+| `IsTargeting` | 当前是否有目标 | `{IsTargeting:\n（造成{CalculatedDamage:diff()}点伤害）\|}` |
+| `OnTable` | 牌是否在手牌或出牌区 | `{OnTable:在场上\|不在场上}` |
 | `IfUpgraded` | 是否升级 | `[gold]升级[/gold]你[gold]手牌[/gold]中的{IfUpgraded:show:所有牌\|一张牌}。` |
 
+## 能力独有
+
+能力的提示本地化里通常写三条：`description`、`smartDescription`，联机时还可写 `remoteDescription`。
+
+- **`description`**：静态描述。能力非可变（例如从卡牌弹出的这个能力的提示显示非smart文本）使用，没有任何独有变量。
+- **`smartDescription`**：动态描述。能力可变（悬浮玩家角色弹出的提示）且配置了 `smartDescription` 时使用，会注入下文列出的运行时变量并叠加 `DynamicVars`。
+- **`remoteDescription`**：联机专用。当能力由他人施加（`Applier` 存在且不是本地玩家）且配置了该键时，用其替换 `smartDescription`。
+
+`smartDescription` / `remoteDescription` 可用的运行时变量：
+
+| 名称 | 含义 | 典型写法 |
+| - | - | - |
+| `Amount` | 当前层数/数值 | `获得[blue]{Amount}[/blue]点[gold]力量[/gold]。` |
+| `OnPlayer` | 持有者是否为玩家 | `{OnPlayer:你\|该敌人}获得{Amount}点力量。` |
+| `IsMultiplayer` | 本场战斗是否多人 | `{IsMultiplayer:（联机）\|}` |
+| `PlayerCount` | 本场战斗玩家数量 | `场上共有{PlayerCount}名玩家。` |
+| `OwnerName` | 持有者名称 | `{OwnerName}获得{Amount}点力量。` |
+| `ApplierName` | 施加者名称 | `由{ApplierName}施加。` |
+| `TargetName` | 目标名称 | `对{TargetName}生效。` |
 
 ## DynamicVar
 
-TODO: 如何进行各种复杂的伤害计算
+`DynamicVar`是记录在一个model上的指定值。使用`CanonicalVars`指定这个model的各种初始值，例如：
+
+```csharp
+protected override IEnumerable<DynamicVar> CanonicalVars => [
+        new DamageVar(12, ValueProp.Move)
+    ];
+```
+
+- 那之后就可以用`DynamicVars["Damage"].BaseValue`来获得或者修改这个值，因为`DamageVar`的ID是"Damage"。
+
+- 你可以反编译查看每个var的id是什么。一般这些var也可以通过传入第一个参数设置ID，例如`new DamageVar("TestDamage", 12, ValueProp.Move)`。
+
+- 特殊的，`DynamicVars`有便捷的方法来获得原版的属性，例如`DynamicVars.Damage`。
+
+## CalculatedVar
+
+此外有一种特殊的var为`CalculatedVar`，其公式为`base + extra * calculated`，例如全身撞击：
+
+```csharp
+	protected override IEnumerable<DynamicVar> CanonicalVars => new global::_003C_003Ez__ReadOnlyArray<DynamicVar>(new DynamicVar[3]
+	{
+		new CalculationBaseVar(0m),
+		new ExtraDamageVar(1m),
+		new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => card.Owner.Creature.Block)
+	});
+```
+
+就是基础值为0，额外增加1倍自己格挡值的伤害。如果你要使用一个`CalculatedVar`，那么另外两个`base`和`extra`的var必须也要写。
+
+由于其设计过于繁琐而且问题不少，一般不推荐使用。如果你前置库为`ritsulib`可以使用`ComputedDynamicVar`，或者自行写一个传入双回调函数的自定义var也可，例如：（仅供思路展示，不可完全正常运作）
+
+```csharp
+// 仅供思路展示，不可完全正常运作
+public class VariableVar(string name, Func<CardModel, CardPreviewMode, Creature?, bool, decimal> baseValueFunc, Func<CardModel, CardPreviewMode, Creature?, bool, decimal>? previewValueFunc = null) : DynamicVar(name, 0)
+{
+    private readonly Func<CardModel, CardPreviewMode, Creature?, bool, decimal> _valueFunc = baseValueFunc;
+    private readonly Func<CardModel, CardPreviewMode, Creature?, bool, decimal>? _previewValueFunc = previewValueFunc;
+
+    public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature? target, bool runGlobalHooks)
+    {
+        _baseValue = _valueFunc(card, previewMode, target, runGlobalHooks);
+        if (_previewValueFunc != null)
+            _previewValue = _previewValueFunc(card, previewMode, target, runGlobalHooks);
+    }
+}
+```

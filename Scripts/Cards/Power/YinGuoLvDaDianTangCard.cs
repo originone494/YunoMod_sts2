@@ -25,7 +25,7 @@ public class YinGuoLvDaDianTangCard : YunoBaseCard
         new DynamicVar(_diaryCount, 1)
         };
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),

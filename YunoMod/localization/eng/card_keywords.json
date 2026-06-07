@@ -1,0 +1,18 @@
+{
+    "YUNO_MOD_KEYWORD_DAGGER.description": "A [gold]Stance[/gold]. When you attack with a [gold]Dagger[/gold] card, apply 1 [gold]Bleed[/gold] to the target. Playing a [gold]Dagger[/gold] card grants 1 [gold]Dagger[/gold] stack, up to 12. On exit, deal 4 damage to a random enemy, repeated equal to your [gold]Dagger[/gold] stacks.",
+    "YUNO_MOD_KEYWORD_DAGGER.title": "Dagger",
+    "YUNO_MOD_KEYWORD_AXE.description": "A [gold]Stance[/gold]. [gold]Axe[/gold] cards generally have high damage. Playing an [gold]Axe[/gold] card grants 1 [gold]Axe[/gold] stack, up to 8. On exit, deal [gold]Axe[/gold] stacks × 8 damage to the enemy with the highest HP.",
+    "YUNO_MOD_KEYWORD_AXE.title": "Axe",
+    "YUNO_MOD_KEYWORD_GUN.description": "A [gold]Stance[/gold]. [gold]Gun[/gold] cards generally have low damage with high hit counts. Playing a [gold]Gun[/gold] card grants 1 [gold]Gun[/gold] stack, up to 6. On exit, deal 4 damage to ALL enemies, repeated equal to your [gold]Gun[/gold] stacks.",
+    "YUNO_MOD_KEYWORD_GUN.title": "Gun",
+    "YUNO_MOD_KEYWORD_SWORD.description": "A [gold]Stance[/gold]. Playing a [gold]Sword[/gold] card grants 1 [gold]Sword[/gold] stack, up to 1. On exit, draw 2 cards and gain 2 Energy. Can only trigger once per turn.",
+    "YUNO_MOD_KEYWORD_SWORD.title": "Sword",
+    "YUNO_MOD_KEYWORD_LING_HUO.description": "When a card with [gold]LingHuo[/gold] is sent from your [gold]draw pile[/gold] or [gold]hand[/gold] to your [gold]discard pile[/gold], play it. If the card has a post-[gold]LingHuo[/gold] effect, it is not played and instead triggers that effect.",
+    "YUNO_MOD_KEYWORD_LING_HUO.title": "Nimble",
+    "YUNO_MOD_KEYWORD_FORESEE.description": "Look at the top X cards of your [gold]draw pile[/gold]. You may send any number of them to your [gold]discard pile[/gold]. The rest remain on top in their original order.",
+    "YUNO_MOD_KEYWORD_FORESEE.title": "Foresee",
+    "YUNO_MOD_KEYWORD_STANCE.description": "There are four [gold]Stances[/gold]: [gold]Dagger[/gold], [gold]Axe[/gold], [gold]Gun[/gold], and [gold]Sword[/gold]. You can only have one [gold]Stance[/gold] at a time. Playing a card with a [gold]Stance[/gold] keyword enters that stance. If you already have another [gold]Stance[/gold], you first exit it, triggering its exit effect, then enter the new [gold]Stance[/gold].",
+    "YUNO_MOD_KEYWORD_STANCE.title": "Stance",
+    "YUNO_MOD_KEYWORD_RETRIEVER.description": "Select a number of cards from a specific [gold]card pool[/gold] and add them to your hand.",
+    "YUNO_MOD_KEYWORD_RETRIEVER.title": "Retrieve"
+}

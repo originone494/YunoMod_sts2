@@ -18,7 +18,7 @@ public class ZhiShiYuanBoCard : YunoBaseCard
 
     ];
 
-    public ZhiShiYuanBoCard() : base(2, CardType.Skill, CardRarity.Token, TargetType.Self)
+    public ZhiShiYuanBoCard() : base(2, CardType.Skill, CardRarity.Event, TargetType.Self)
     {
     }
 

@@ -175,7 +175,7 @@
   "YUNO_MOD_CARD_ZHAN_HOU_BAO_ZA_CARD.title": "战后包扎",
   "YUNO_MOD_CARD_ZHAN_HOU_BAO_ZA_CARD.description": "受到来自敌人伤害时，获得{IfUpgraded:show:50%|25%}数值的[gold]包扎[/gold]。受到来自自己的伤害时，获得相同数值的[gold]包扎[/gold]。",
   "YUNO_MOD_CARD_ZHI_SHI_YUAN_BO_CARD.title": "知识渊博",
-  "YUNO_MOD_CARD_ZHI_SHI_YUAN_BO_CARD.description": "[gold]检索[/gold]1张稀有牌。",
+  "YUNO_MOD_CARD_ZHI_SHI_YUAN_BO_CARD.description": "[gold]检索[/gold]随机职业的1张稀有牌。",
   "YUNO_MOD_CARD_CI_TU_CARD.title": "刺突",
   "YUNO_MOD_CARD_CI_TU_CARD.description": "造成{Damage:diff()}点伤害。从抽牌堆顶将3张牌送入弃牌堆，若其中存在攻击牌，则额外造成{Repeat:diff()}次伤害。",
   "YUNO_MOD_CARD_FAN_SHE_SHEN_JING_CARD.title": "反射神经",

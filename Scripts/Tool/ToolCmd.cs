@@ -75,38 +75,45 @@ public static class ToolCmd
         await ForeseeHook.OnForesee(choiceContext, player, amount, cardsToDiscard.Count);
     }
 
-    public static async Task ExitAllStance(Player player)
+    public static async Task<Stance> ExitAllStance(Player player)
     {
+        Stance stance = Stance.Not;
         if (player.Creature.HasPower<DaggerPower>())
         {
+            stance = Stance.Dagger;
             await PowerCmd.Remove<DaggerPower>(player.Creature);
         }
 
         if (player.Creature.HasPower<AxePower>())
         {
+            stance = Stance.Axe;
             await PowerCmd.Remove<AxePower>(player.Creature);
         }
 
         if (player.Creature.HasPower<GunPower>())
         {
+            stance = Stance.Gun;
             await PowerCmd.Remove<GunPower>(player.Creature);
         }
 
         if (player.Creature.HasPower<SwordPower>())
         {
+            stance = Stance.SWord;
             await PowerCmd.Remove<SwordPower>(player.Creature);
         }
 
         await Cmd.CustomScaledWait(0.1f, 0.25f);
+
+        return stance;
     }
 
     public static async Task DaggerStance(PlayerChoiceContext choiceContext, Player player, CardModel cardSource)
     {
         if (!player.Creature.HasPower<DaggerPower>())
         {
-            await ExitAllStance(player);
+            Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<DaggerPower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player);
+            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.Dagger);
         }
     }
 
@@ -114,9 +121,9 @@ public static class ToolCmd
     {
         if (!player.Creature.HasPower<AxePower>())
         {
-            await ExitAllStance(player);
+            Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<AxePower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player);
+            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.Axe);
         }
     }
 
@@ -124,9 +131,9 @@ public static class ToolCmd
     {
         if (!player.Creature.HasPower<GunPower>())
         {
-            await ExitAllStance(player);
+            Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<GunPower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player);
+            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.Gun);
         }
     }
 
@@ -134,9 +141,9 @@ public static class ToolCmd
     {
         if (!player.Creature.HasPower<SwordPower>())
         {
-            await ExitAllStance(player);
+            Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<SwordPower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player);
+            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.SWord);
         }
     }
 
@@ -261,20 +268,19 @@ public static class ToolCmd
 
     public static async Task RetrieverRareCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
     {
-
         List<CardPoolModel> pools = player.UnlockState.CharacterCardPools.ToList();
 
-        IReadOnlyList<CardModel> cards = pools
-                .SelectMany(pool => pool.GetUnlockedCards(
-                    player.UnlockState,
-                    player.RunState.CardMultiplayerConstraint).Where(c => c.Rarity == CardRarity.Rare))
-                .ToList();
+        // 随机选择一个职业的卡池
+        var randomPool = pools[Random.Shared.Next(pools.Count)];
 
+        IReadOnlyList<CardModel> cards = randomPool
+            .GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint)
+            .Where(c => c.Rarity == CardRarity.Rare)
+            .ToList();
 
         List<CardModel> combatCopies = cards
-    .Select(c => player.Creature.CombatState!.CreateCard(c, player))
-    .ToList();
-
+            .Select(c => player.Creature.CombatState!.CreateCard(c, player))
+            .ToList();
 
         var prefs = new CardSelectorPrefs(
             YunoSelectorPrefs.RetrieverSelectionPrompt,

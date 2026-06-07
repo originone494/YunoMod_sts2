@@ -21,11 +21,10 @@ public class FeedDiaryRelic : YunoBaseRelic
 
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, CombatState combatState)
     {
         if (player != Owner) return;
-        if (Owner.Creature.CombatState!.RoundNumber > 1)
-            return;
+        if (Owner.Creature.CombatState!.RoundNumber > 1) return;
 
         await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
 

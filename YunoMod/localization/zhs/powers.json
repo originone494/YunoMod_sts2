@@ -97,5 +97,5 @@
     "YUNO_MOD_POWER_SHOU_HU_POWER.smartDescription": "获得爱意时，对所有敌人造成{Amount}点伤害。",
     "YUNO_MOD_POWER_YIN_GUO_LV_DA_DIAN_TANG_POWER.title": "因果律大殿堂",
     "YUNO_MOD_POWER_YIN_GUO_LV_DA_DIAN_TANG_POWER.description": "回合开始时，将球体加入抽牌堆。",
-    "YUNO_MOD_POWER_YIN_GUO_LV_DA_DIAN_TANG_POWER.smartDescription": "回合开始时，将{Amount}张球体加入球体。"
+    "YUNO_MOD_POWER_YIN_GUO_LV_DA_DIAN_TANG_POWER.smartDescription": "回合开始时，将{Amount}张球体加入抽牌堆。"
 }

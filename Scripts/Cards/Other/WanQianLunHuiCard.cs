@@ -28,7 +28,7 @@ public class WanQianLunHuiCard : YunoBaseCard
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
 
 
-    public WanQianLunHuiCard() : base(2, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
+    public WanQianLunHuiCard() : base(2, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
     {
     }
 

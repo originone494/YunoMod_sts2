@@ -36,7 +36,10 @@ public class TanSheCard : YunoBaseCard, IOnLingHuo
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ToolCmd.GunAttack(choiceContext, Owner.Creature, this, DynamicVars.Damage.BaseValue);
+
+        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+
+        await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
     }

@@ -18,7 +18,7 @@ public class GunPower : YunoBasePower
 
     private const string _maxCount = "MaxCount";
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new DamageVar(6, ValueProp.Unpowered),
+        new DamageVar(4, ValueProp.Unpowered),
         new DynamicVar(_maxCount, 6),
     ];
 

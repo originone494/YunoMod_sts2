@@ -12,7 +12,7 @@ namespace YunoMod.Scripts.Relics;
 
 public class BreedDiaryRelic : YunoBaseRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Rare;
 
     private bool Used = false;
 

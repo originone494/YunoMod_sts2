@@ -11,7 +11,7 @@ namespace YunoMod.Scripts.Relics;
 
 public class RadarDiaryRelic : YunoBaseRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
 
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
