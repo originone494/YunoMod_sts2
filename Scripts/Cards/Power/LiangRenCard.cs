@@ -18,7 +18,7 @@ public class LiangRenCard : YunoBaseCard
         new PowerVar<StrengthPower>(2),
     ];
 
-    public LiangRenCard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public LiangRenCard() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

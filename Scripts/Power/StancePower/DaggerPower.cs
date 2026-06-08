@@ -45,8 +45,7 @@ public class DaggerPower : YunoBasePower
         modifiedAmount = amount;
         return false;
     }
-
-    public override async Task AfterRemoved(Creature oldOwner)  
+    public override async Task AfterRemoved(Creature oldOwner)
     {
         for (int i = 0; i < Amount; i++)
         {

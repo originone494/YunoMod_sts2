@@ -11,24 +11,19 @@ using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class YanHuSheJiCard : YunoBaseCard
+public class AncientYanHuSheJiCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(1m, ValueProp.Move),
-        new RepeatVar(3),
-        new PowerVar<WeakPower>(1m),
+        new RepeatVar(4),
+        new PowerVar<WeakPower>(3m),
     ];
 
-    public YanHuSheJiCard() : base(0, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy)
+    public AncientYanHuSheJiCard() : base(0, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
     {
     }
-
-
-
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
-
-
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
@@ -49,6 +44,7 @@ public class YanHuSheJiCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Weak.UpgradeValueBy(1m);
+        DynamicVars.Weak.UpgradeValueBy(2m);
+        DynamicVars.Repeat.UpgradeValueBy(2);
     }
 }

@@ -23,7 +23,7 @@ public class NiGeiWoXiaoXinDianPower : YunoBasePower
     )
     {
 
-        if (amount > 0 && canonicalPower is StrengthPower && target.IsMonster && !target.IsPlayer)
+        if (amount > 0 && canonicalPower is StrengthPower && target.IsMonster)
         {
             for (int i = 0; i < Amount; i++)
             {

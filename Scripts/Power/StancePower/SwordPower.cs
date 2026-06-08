@@ -22,14 +22,15 @@ public class SwordPower : YunoBasePower
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
+        if (player.Creature != Owner) return;
         _isExited = false;
     }
 
     public override async Task AfterRemoved(Creature oldOwner)
     {
-        if (Owner.Player != null && !_isExited)
+        if (Owner.IsPlayer && !_isExited)
         {
-            await PlayerCmd.GainEnergy((int)DynamicVars.Energy.BaseValue, Owner.Player);
+            await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner.Player);
             await CardPileCmd.Draw(new ThrowingPlayerChoiceContext(), DynamicVars.Cards.BaseValue, Owner.Player);
             _isExited = true;
         }

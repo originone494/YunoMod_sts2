@@ -113,7 +113,11 @@ public static class ToolCmd
         {
             Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<DaggerPower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.Dagger);
+            await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.Dagger);
+        }
+        else
+        {
+            await PowerCmd.Apply<DaggerPower>(player.Creature, 1, player.Creature, cardSource);
         }
     }
 
@@ -123,7 +127,11 @@ public static class ToolCmd
         {
             Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<AxePower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.Axe);
+            await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.Axe);
+        }
+        else
+        {
+            await PowerCmd.Apply<AxePower>(player.Creature, 1, player.Creature, cardSource);
         }
     }
 
@@ -133,7 +141,11 @@ public static class ToolCmd
         {
             Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<GunPower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.Gun);
+            await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.Gun);
+        }
+        else
+        {
+            await PowerCmd.Apply<GunPower>(player.Creature, 1, player.Creature, cardSource);
         }
     }
 
@@ -143,7 +155,7 @@ public static class ToolCmd
         {
             Stance stance = await ExitAllStance(player);
             await PowerCmd.Apply<SwordPower>(player.Creature, 1, player.Creature, cardSource);
-            await StanceHook.OnStanceChange(choiceContext, player,stance,Stance.SWord);
+            await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.SWord);
         }
     }
 

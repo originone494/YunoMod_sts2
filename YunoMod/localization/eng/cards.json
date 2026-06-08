@@ -193,5 +193,9 @@
   "YUNO_MOD_CARD_ZHU_MU_CARD.title": "Attention",
   "YUNO_MOD_CARD_ZHU_MU_CARD.description": "Auto-play when you gain [gold]Love[/gold]. Deal {Damage:diff()} damage to ALL enemies.",
   "YUNO_MOD_CARD_ZHAN_CARD.title": "Slash",
-  "YUNO_MOD_CARD_ZHAN_CARD.description": "Deal {Damage:diff()} damage. Damage increases by the sum of the previous two times this card's base damage was dealt."
+  "YUNO_MOD_CARD_ZHAN_CARD.description": "Deal {Damage:diff()} damage. Damage increases by the sum of the previous two times this card's base damage was dealt.",
+  "YUNO_MOD_CARD_ANCIENT_YAN_HU_SHE_JI_CARD.title": "Covering Fire",
+  "YUNO_MOD_CARD_ANCIENT_YAN_HU_SHE_JI_CARD.description": "Deal {Damage:diff()} damage {Repeat:diff()} times. Apply {WeakPower:diff()} [gold]Weak[/gold].",
+  "YUNO_MOD_CARD_QI_DAO_CARD.title": "Pray",
+  "YUNO_MOD_CARD_QI_DAO_CARD.description": "Add all cards from your [gold]discard pile[/gold] to your [gold]draw pile[/gold], then send all cards from your [gold]draw pile[/gold] to your [gold]discard pile[/gold]."
 }

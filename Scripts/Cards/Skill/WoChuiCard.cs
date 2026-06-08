@@ -13,10 +13,13 @@ namespace YunoMod.Scripts.Cards.Skill;
 
 public class WoChuiCard : YunoBaseCard
 {
-    
+
     private const string _strengthKey = "DownStrength";
 
     private const string _strengthAloneKey = "DownAloneStrength";
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -31,26 +34,21 @@ public class WoChuiCard : YunoBaseCard
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>(),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         int strengthLoss = DynamicVars[_strengthKey].IntValue;
-        
+
         // 如果只有一个敌人，失去更多力量
         if (CombatState!.HittableEnemies.Count == 1)
         {
             strengthLoss = DynamicVars[_strengthAloneKey].IntValue;
         }
-        
-        // 使敌人失去力量
-        foreach (var enemy in CombatState.HittableEnemies)
-        {
-            await PowerCmd.Apply<StrengthPower>(enemy, -strengthLoss, Owner.Creature, this);
-        }
+
+        await PowerCmd.Apply<PiercingWailPower>(CombatState!.HittableEnemies, strengthLoss, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

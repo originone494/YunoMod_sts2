@@ -39,7 +39,7 @@ public class YouNaiJiuWoCard : YunoBaseCard
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -56,5 +56,6 @@ public class YouNaiJiuWoCard : YunoBaseCard
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(10m);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

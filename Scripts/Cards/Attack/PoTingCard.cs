@@ -22,7 +22,7 @@ public class PoTingCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(2m, ValueProp.Move),
+        new DamageVar(1m, ValueProp.Move),
         new RepeatVar(4),
     };
 

@@ -193,5 +193,8 @@
   "YUNO_MOD_CARD_ZHU_MU_CARD.title": "注目",
   "YUNO_MOD_CARD_ZHU_MU_CARD.description": "获得爱意时自动打出。对所有敌人造成{Damage:diff()}点伤害。",
   "YUNO_MOD_CARD_ZHAN_CARD.title": "斩",
-  "YUNO_MOD_CARD_ZHAN_CARD.description": "造成{Damage:diff()}点伤害，伤害提升前两次打出此卡时此卡的基础伤害。"
+  "YUNO_MOD_CARD_ZHAN_CARD.description": "造成{Damage:diff()}点伤害，伤害提升前两次打出此卡时此卡的基础伤害。",
+  "YUNO_MOD_CARD_ANCIENT_YAN_HU_SHE_JI_CARD.title": "掩护射击",
+  "YUNO_MOD_CARD_ANCIENT_YAN_HU_SHE_JI_CARD.description": "造成{Damage:diff()}点伤害{Repeat:diff()}次，给予{WeakPower:diff()}层[gold]虚弱[/gold]。",  "YUNO_MOD_CARD_QI_DAO_CARD.title": "祈祷",
+  "YUNO_MOD_CARD_QI_DAO_CARD.description": "将弃牌堆的所有牌加入抽牌堆，然后抽牌堆的所有牌送入弃牌堆。"
 }

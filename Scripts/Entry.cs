@@ -4,6 +4,8 @@ using System.Reflection;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using STS2RitsuLib.Interop;
+using YunoMod.Scripts.Cards.Attack;
+using YunoMod.Scripts.Relics;
 
 namespace YunoMod.Scripts;
 
@@ -19,6 +21,10 @@ public class Entry
 
         var assembly = Assembly.GetExecutingAssembly();
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
+        RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<YanHuSheJiCard, AncientYanHuSheJiCard>();
+        RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<SearchDiaryRelic, AncientSearchDiaryRelic>();
+
+
         // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
 
