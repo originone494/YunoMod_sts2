@@ -31,14 +31,11 @@ public class JinJiZhengYiHuHuanCard : YunoBaseCard
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
-    
-
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
         int damageAmount = Owner.Creature.CurrentHp;
-        if (!IsUpgraded) damageAmount /= 2 + 1;
+        if (IsUpgraded) damageAmount = Owner.Creature.MaxHp;
 
         await DamageCmd.Attack(damageAmount)
             .FromCard(this)

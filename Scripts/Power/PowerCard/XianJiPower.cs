@@ -15,7 +15,7 @@ public class XianJiPower : YunoBasePower
 
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
-        if (!fromHandDraw) return;
+        if (fromHandDraw) return;
         if (card.Owner?.Creature != Owner) return;
         Flash();
         await PowerCmd.Apply<LiuXuePower>(CombatState.HittableEnemies, Amount, Owner, null);

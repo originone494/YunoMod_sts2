@@ -33,7 +33,7 @@
     "YUNO_MOD_RELIC_JUSTICE_DIARY_RELIC.description": "When you lose HP, deal that much damage to ALL enemies.",
     "YUNO_MOD_RELIC_JUSTICE_DIARY_RELIC.flavor": "Victory is justice! The defeated are evil!",
     "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.title": "Clairvoyance Diary",
-    "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.description": "At the start of combat, temporarily gain a random Common relic for this combat.",
+    "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.description": "At the start of your first two turns, if there is an enemy with Attacking intent, gain 1 [gold]Dexterity[/gold]. If not, gain 1 [gold]Strength[/gold].",
     "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.flavor": " ",
     "YUNO_MOD_RELIC_FEED_DIARY_RELIC.title": "Feed Diary",
     "YUNO_MOD_RELIC_FEED_DIARY_RELIC.description": "At the start of combat, choose [blue]1[/blue] card from your draw pile. When you play it, if it is an Attack, its base damage +[blue]1[/blue]; if it is a Skill, its base Block +[blue]1[/blue]. Lasts this combat only.",

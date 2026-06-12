@@ -35,23 +35,19 @@ public class PoTingCard : YunoBaseCard
         ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
     ];
 
-
-
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
         await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
 
-        var drawPile = PileType.Draw.GetPile(Owner);
-        var drawCard = await CardSelectCmd.FromSimpleGrid(choiceContext, drawPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1));
+        var drawPile = PileType.Draw.GetPile(Owner).Cards.Where(card => card.Type == CardType.Attack).ToList();
+        var drawCard = await CardSelectCmd.FromSimpleGrid(choiceContext, drawPile, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1));
         if (drawCard != null)
         {
             await CardPileCmd.Add(drawCard, PileType.Hand);
-        }
 
-        List<CardModel> selectedCards = [.. await CardSelectCmd.FromHandForDiscard(
+            List<CardModel> selectedCards = [.. await CardSelectCmd.FromHandForDiscard(
             prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
@@ -59,11 +55,14 @@ public class PoTingCard : YunoBaseCard
             source: this
         )];
 
-        int actualDiscardCount = selectedCards.Count;
-        if (actualDiscardCount > 0)
-        {
-            await CardCmd.Discard(choiceContext, selectedCards);
+            int actualDiscardCount = selectedCards.Count;
+            if (actualDiscardCount > 0)
+            {
+                await CardCmd.Discard(choiceContext, selectedCards);
+            }
         }
+
+
 
 
         await ToolCmd.GunStance(choiceContext, Owner, this);

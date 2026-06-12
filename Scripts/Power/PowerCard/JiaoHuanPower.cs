@@ -18,6 +18,7 @@ public class JiaoHuanPower : YunoBasePower
 
     public override async Task AfterTurnEnd(PlayerChoiceContext playerChoiceContext, CombatSide combatSide)
     {
+        if (combatSide != CombatSide.Player) return;
 
         int strengthAmount = 0;
         if (Owner.HasPower<StrengthPower>())
@@ -39,5 +40,8 @@ public class JiaoHuanPower : YunoBasePower
         {
             await PowerCmd.Apply<DexterityPower>(Owner, strengthAmount, Owner, null);
         }
+
+        await PowerCmd.Remove(this);
     }
+
 }

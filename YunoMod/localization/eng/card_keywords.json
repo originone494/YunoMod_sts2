@@ -5,7 +5,7 @@
     "YUNO_MOD_KEYWORD_AXE.title": "Axe",
     "YUNO_MOD_KEYWORD_GUN.description": "A [gold]Stance[/gold]. [gold]Gun[/gold] cards generally have low damage with high hit counts. Playing a [gold]Gun[/gold] card grants 1 [gold]Gun[/gold] stack, up to 6. On exit, deal 4 damage to ALL enemies, repeated equal to your [gold]Gun[/gold] stacks.",
     "YUNO_MOD_KEYWORD_GUN.title": "Gun",
-    "YUNO_MOD_KEYWORD_SWORD.description": "A [gold]Stance[/gold]. Playing a [gold]Sword[/gold] card grants 1 [gold]Sword[/gold] stack, up to 1. On exit, draw 2 cards and gain 2 Energy. Can only trigger once per turn.",
+    "YUNO_MOD_KEYWORD_SWORD.description": "A [gold]Stance[/gold]. Playing a [gold]Sword[/gold] card grants 1 [gold]Sword[/gold] stack, up to 1. On exit, gain 2 Energy. ",
     "YUNO_MOD_KEYWORD_SWORD.title": "Sword",
     "YUNO_MOD_KEYWORD_LING_HUO.description": "When a card with [gold]LingHuo[/gold] is sent from your [gold]draw pile[/gold] or [gold]hand[/gold] to your [gold]discard pile[/gold], play it. If the card has a post-[gold]LingHuo[/gold] effect, it is not played and instead triggers that effect.",
     "YUNO_MOD_KEYWORD_LING_HUO.title": "Nimble",

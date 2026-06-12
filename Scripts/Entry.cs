@@ -21,12 +21,15 @@ public class Entry
 
         var assembly = Assembly.GetExecutingAssembly();
         RitsuLibFramework.EnsureGodotScriptsRegistered(assembly, Logger);
+
+        // 先自动注册所有内容
+
+        // 在注册完成后，再设置映射
         RitsuLibFramework.RegisterArchaicToothTranscendenceMapping<YanHuSheJiCard, AncientYanHuSheJiCard>();
         RitsuLibFramework.RegisterTouchOfOrobasRefinementMapping<SearchDiaryRelic, AncientSearchDiaryRelic>();
 
-
-        // 自动注册内容
         ModTypeDiscoveryHub.RegisterModAssembly(ModId, assembly);
+
 
         var harmony = new Harmony("com.YunoMod.patch");
         harmony.PatchAll();

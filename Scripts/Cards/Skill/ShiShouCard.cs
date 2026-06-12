@@ -17,7 +17,7 @@ public class ShiShouCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new CardsVar(3)
+        new CardsVar(5)
     };
 
     public ShiShouCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -39,7 +39,7 @@ public class ShiShouCard : YunoBaseCard
 
         if (selectedCards.Count > 0)
         {
-            await ToolCmd.DuiMu(choiceContext, Owner, (int)DynamicVars.Cards.BaseValue);
+            await ToolCmd.DuiMu(choiceContext, Owner, DynamicVars.Cards.IntValue);
 
         }
     }

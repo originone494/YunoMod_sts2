@@ -15,7 +15,7 @@ public class CongZuoBianErLaiCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(8m, ValueProp.Move),
+        new DamageVar(6m, ValueProp.Move),
         new CardsVar(1),
     ];
 

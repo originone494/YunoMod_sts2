@@ -29,7 +29,7 @@ public class JiuShiNiCard : YunoBaseCard
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -40,9 +40,12 @@ public class JiuShiNiCard : YunoBaseCard
         {
             int amount = cardPlay.Target.GetPowerAmount<StrengthPower>();
 
-            await PowerCmd.Apply<StrengthPower>(cardPlay.Target, -amount, Owner.Creature, this);
+            if (amount > 0)
+            {
+                await PowerCmd.Apply<StrengthPower>(cardPlay.Target, -amount, Owner.Creature, this);
 
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, amount, Owner.Creature, this);
+                await PowerCmd.Apply<StrengthPower>(Owner.Creature, amount, Owner.Creature, this);
+            }
         }
     }
 

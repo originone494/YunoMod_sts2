@@ -37,7 +37,7 @@ public class ShengZheWeiLaiCard : YunoBaseCard
     {
         var cards = await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
         var targetCard = cards.First();
-        if (targetCard.Type == CardType.Attack)
+        if (targetCard.Type == CardType.Attack && targetCard.BaseReplayCount == 0)
         {
             targetCard.BaseReplayCount += 1;
             cardModels.Add(targetCard);

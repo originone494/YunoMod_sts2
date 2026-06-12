@@ -18,7 +18,7 @@ public class XunQingCard : YunoBaseCard
     private const string _AiYi = "AiYi";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new BlockVar(9m, ValueProp.Move),
+        new BlockVar(7m, ValueProp.Move),
         new DynamicVar(_AiYi, 3)
     };
 

@@ -24,7 +24,7 @@ public class NiMeiYongLeCard : YunoBaseCard
         new MaxHpVar(5m)
     };
 
-    public NiMeiYongLeCard() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+    public NiMeiYongLeCard() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
 

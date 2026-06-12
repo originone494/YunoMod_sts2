@@ -22,7 +22,7 @@ public class ChengShengZhuiJiCard : YunoBaseCard, IOnForesee
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(6m, ValueProp.Move),
-        new DynamicVar(_growthKey, 2m),
+        new DynamicVar(_growthKey, 3m),
     };
 
     public ChengShengZhuiJiCard() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
@@ -51,7 +51,7 @@ public class ChengShengZhuiJiCard : YunoBaseCard, IOnForesee
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_growthKey].UpgradeValueBy(1m);
+        DynamicVars[_growthKey].UpgradeValueBy(2m);
     }
 
     public Task OnForesee(PlayerChoiceContext ctx, Player player, int amount, int discardedAmount)

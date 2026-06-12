@@ -20,7 +20,7 @@ public class BuDaoCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(2m, ValueProp.Move),
+        new DamageVar(1m, ValueProp.Move),
         new RepeatVar(4),
         new DynamicVar(_thresholdKey, 20m),
     };

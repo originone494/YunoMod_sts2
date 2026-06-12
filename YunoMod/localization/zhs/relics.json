@@ -33,7 +33,7 @@
     "YUNO_MOD_RELIC_JUSTICE_DIARY_RELIC.description": "失去生命时，对所有敌人造成等额伤害。",
     "YUNO_MOD_RELIC_JUSTICE_DIARY_RELIC.flavor": "胜利的即为正义！被打倒的就是邪恶！",
     "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.title": "千里眼日记",
-    "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.description": "战斗开始时，在本场战斗临时获得一个随机普通遗物。",
+    "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.description": "前两个回合开始时，若存在拥有攻击意图的敌人，获得1点敏捷，若不存在，则获得1点力量。",
     "YUNO_MOD_RELIC_CLAIRVOYANCE_RELIC.flavor": " ",
     "YUNO_MOD_RELIC_FEED_DIARY_RELIC.title": "饲养日记",
     "YUNO_MOD_RELIC_FEED_DIARY_RELIC.description": "战斗开始时，选择抽牌堆的[blue]1[/blue]张牌，打出那张牌时，若为攻击牌则基础伤害+[blue]1[/blue]，若为技能牌则基础格挡+[blue]1[/blue]，仅在本场战斗生效。",

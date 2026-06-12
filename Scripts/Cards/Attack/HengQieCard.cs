@@ -22,7 +22,7 @@ public class HengQieCard : YunoBaseCard
         new DamageVar(5m, ValueProp.Move),
     };
 
-    public HengQieCard() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+    public HengQieCard() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
     protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];

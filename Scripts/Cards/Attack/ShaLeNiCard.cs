@@ -24,7 +24,7 @@ public class ShaLeNiCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(5m, ValueProp.Move),
-        new DynamicVar(_growthKey, 1m),
+        new DynamicVar(_growthKey, 3m),
     };
 
     public ShaLeNiCard() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
@@ -64,6 +64,6 @@ public class ShaLeNiCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_growthKey].UpgradeValueBy(1m);
+        DynamicVars[_growthKey].UpgradeValueBy(2m);
     }
 }

@@ -42,6 +42,9 @@ public class QiDaoCard : YunoBaseCard
             }
         }
 
+        await Cmd.CustomScaledWait(0.1f, 0.25f);
+
+
         await ToolCmd.DuiMu(choiceContext, Owner, PileType.Draw.GetPile(Owner).Cards.ToList().Count());
     }
 

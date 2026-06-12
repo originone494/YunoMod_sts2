@@ -56,6 +56,5 @@ public class YouNaiJiuWoCard : YunoBaseCard
     protected override void OnUpgrade()
     {
         DynamicVars.Block.UpgradeValueBy(10m);
-        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

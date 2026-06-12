@@ -23,7 +23,7 @@ public class ChaoFuHeCard : YunoBaseCard, IOnLingHuo
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new CardsVar(3),
-        new DynamicVar(_discardCount,3)
+        new DynamicVar(_discardCount,5)
     };
 
     public ChaoFuHeCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -59,7 +59,6 @@ public class ChaoFuHeCard : YunoBaseCard, IOnLingHuo
     protected override void OnUpgrade()
     {
         DynamicVars.Cards.UpgradeValueBy(1m);
-        DynamicVars[_discardCount].UpgradeValueBy(1);
     }
 
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)

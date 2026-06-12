@@ -21,7 +21,7 @@ public class XiePoCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(11m, ValueProp.Move),
+        new DamageVar(12m, ValueProp.Move),
     };
 
     public XiePoCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)

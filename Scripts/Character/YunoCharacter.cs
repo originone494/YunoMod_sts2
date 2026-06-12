@@ -97,8 +97,8 @@ public class YunoCharacter : ModCharacterTemplate<YunoCardPool, YunoRelicPool, Y
     // 初始卡组，或者在卡牌类上用RegisterCharacterStarterCard就不用写这个
     [Obsolete]
     protected override IEnumerable<StartingDeckEntry> StartingDeckEntries => [
-         new(typeof(YunoStrikeCard), 5),
-         new(typeof(YunoDefendCard), 5),
+         new(typeof(YunoStrikeCard), 4),
+         new(typeof(YunoDefendCard), 4),
          new(typeof(ChuXueCard), 1),
          new(typeof(YanHuSheJiCard), 1),
      ];

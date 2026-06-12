@@ -22,7 +22,7 @@ public class WuYiZhongTingCard : YunoBaseCard
         new DynamicVar(_drawKey, 1m),
     ];
 
-    public WuYiZhongTingCard() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public WuYiZhongTingCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 

@@ -43,8 +43,7 @@ public class AiMuCard : YunoBaseCard
 
             if (((Owner.PlayerCombatState!.Hand.Cards.Count + 1) * 2 + Owner.PlayerCombatState.DiscardPile.Cards.Count) % num == 0)
             {
-                if (IsUpgraded) num *= 2;
-
+                
                 await CardPileCmd.Draw(choiceContext, num, Owner);
 
                 await PowerCmd.Apply<LovePower>(Owner.Creature, IsUpgraded ? 2 * num : num, Owner.Creature, this);

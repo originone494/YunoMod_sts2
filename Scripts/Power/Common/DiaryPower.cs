@@ -17,10 +17,6 @@ namespace YunoMod.Scripts.Power;
 public class DiaryPower : YunoBasePower
 {
 
-    private bool _isApplyStrength = false;
-
-    private bool _isApplyDex = false;
-
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
@@ -86,13 +82,11 @@ public class DiaryPower : YunoBasePower
         {
             if (Amount == 2)
             {
-                _isApplyStrength = true;
                 Flash();
                 await PowerCmd.Apply<StrengthPower>(Owner, 1, Owner, null);
             }
             if (Amount == 3)
             {
-                _isApplyDex = true;
                 Flash();
                 await PowerCmd.Apply<DexterityPower>(Owner, 1, Owner, null);
             }
