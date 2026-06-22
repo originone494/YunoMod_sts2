@@ -112,12 +112,12 @@ public static class ToolCmd
         if (!player.Creature.HasPower<DaggerPower>())
         {
             Stance stance = await ExitAllStance(player);
-            await PowerCmd.Apply<DaggerPower>(player.Creature, 1, player.Creature, cardSource);
+            await PowerCmd.Apply<DaggerPower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
             await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.Dagger);
         }
         else
         {
-            await PowerCmd.Apply<DaggerPower>(player.Creature, 1, player.Creature, cardSource);
+            await PowerCmd.Apply<DaggerPower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
         }
     }
 
@@ -126,12 +126,12 @@ public static class ToolCmd
         if (!player.Creature.HasPower<AxePower>())
         {
             Stance stance = await ExitAllStance(player);
-            await PowerCmd.Apply<AxePower>(player.Creature, 1, player.Creature, cardSource);
+            await PowerCmd.Apply<AxePower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
             await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.Axe);
         }
         else
         {
-            await PowerCmd.Apply<AxePower>(player.Creature, 1, player.Creature, cardSource);
+            await PowerCmd.Apply<AxePower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
         }
     }
 
@@ -140,12 +140,12 @@ public static class ToolCmd
         if (!player.Creature.HasPower<GunPower>())
         {
             Stance stance = await ExitAllStance(player);
-            await PowerCmd.Apply<GunPower>(player.Creature, 1, player.Creature, cardSource);
+            await PowerCmd.Apply<GunPower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
             await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.Gun);
         }
         else
         {
-            await PowerCmd.Apply<GunPower>(player.Creature, 1, player.Creature, cardSource);
+            await PowerCmd.Apply<GunPower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
         }
     }
 
@@ -154,7 +154,7 @@ public static class ToolCmd
         if (!player.Creature.HasPower<SwordPower>())
         {
             Stance stance = await ExitAllStance(player);
-            await PowerCmd.Apply<SwordPower>(player.Creature, 1, player.Creature, cardSource);
+            await PowerCmd.Apply<SwordPower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
             await StanceHook.OnStanceChange(choiceContext, player, stance, Stance.SWord);
         }
     }
@@ -169,7 +169,7 @@ public static class ToolCmd
         .Execute(choiceContext);
 
         for (int i = 0; i < repeat; i++)
-            await PowerCmd.Apply<LiuXuePower>(target, 1, cardSource.Owner.Creature, cardSource);
+            await PowerCmd.Apply<LiuXuePower>(choiceContext, target, 1, cardSource.Owner.Creature, cardSource);
 
 
         return cmd;
@@ -188,7 +188,7 @@ public static class ToolCmd
 
         for (int i = 0; i < repeat; i++)
             foreach (Creature enemy in cardSource.Owner.Creature.CombatState!.HittableEnemies)
-                await PowerCmd.Apply<LiuXuePower>(enemy, 1, cardSource.Owner.Creature, cardSource);
+                await PowerCmd.Apply<LiuXuePower>(choiceContext, enemy, 1, cardSource.Owner.Creature, cardSource);
 
         return cmd;
     }
@@ -210,6 +210,16 @@ public static class ToolCmd
         return await DamageCmd.Attack(damage)
         .FromCard(cardSource)
         .TargetingAllOpponents(cardSource.Owner.Creature.CombatState!)
+        .WithHitCount(repeat)
+        .WithHitFx("vfx/vfx_attack_blunt")
+        .Execute(choiceContext);
+    }
+
+    public static async Task<AttackCommand> GunAttackRandomEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
+    {
+        return await DamageCmd.Attack(damage)
+        .FromCard(cardSource)
+        .TargetingRandomOpponents(cardSource.Owner.Creature.CombatState!)
         .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_blunt")
         .Execute(choiceContext);
@@ -244,7 +254,7 @@ public static class ToolCmd
 
     public static async Task GainLovePower(PlayerChoiceContext choiceContext, Player player, CardModel source, int amount)
     {
-        await PowerCmd.Apply<LovePower>(player.Creature, amount, player.Creature, source);
+        await PowerCmd.Apply<LovePower>(choiceContext, player.Creature, amount, player.Creature, source);
         await LovePowerHook.OnGetLove(choiceContext, player, amount);
     }
 
@@ -256,7 +266,7 @@ public static class ToolCmd
         IReadOnlyList<CardModel> cards =
         list.GetUnlockedCards(
         player.UnlockState,
-        player.RunState.CardMultiplayerConstraint).Where(c => c.HasModKeyword(YunoKeywords.Dagger)).ToList();
+        player.RunState.CardMultiplayerConstraint).Where(c => c.Keywords.Contains(YunoKeywords.Dagger)).ToList();
 
 
         List<CardModel> combatCopies = cards
@@ -275,7 +285,7 @@ public static class ToolCmd
             player,
             prefs
         )).ToList();
-        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
     }
 
     public static async Task RetrieverRareCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
@@ -306,7 +316,7 @@ public static class ToolCmd
             player,
             prefs
         )).ToList();
-        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
     }
 
     public static async Task SelectCardFromDraw2Discard(Player player, PlayerChoiceContext choiceContext)

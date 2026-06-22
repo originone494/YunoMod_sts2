@@ -18,14 +18,14 @@ public class KanPoCard : YunoBaseCard
         new DynamicVar(_BlockCount,3)
     ];
 
-    public KanPoCard() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+    public KanPoCard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<KanPoPower>(Owner.Creature, DynamicVars[_BlockCount].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<KanPoPower>(choiceContext, Owner.Creature, DynamicVars[_BlockCount].BaseValue, Owner.Creature, this);
 
     }
 

@@ -28,6 +28,6 @@ public class DiamondRingRelic : YunoBaseRelic
 
         _triggered = true;
         Flash();
-        await PowerCmd.Apply<BufferPower>(Owner.Creature, 1, Owner.Creature, null);
+        await PowerCmd.Apply<BufferPower>(new ThrowingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, null);
     }
 }

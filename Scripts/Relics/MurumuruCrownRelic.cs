@@ -15,7 +15,7 @@ public class MurumuruCrownRelic : YunoBaseRelic
     {
         Flash();
         var card = Owner.Creature.CombatState!.CreateCard<QiuTiCard>(Owner);
-        var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, addedByPlayer: true);
+        var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, Owner);
         CardCmd.PreviewCardPileAdd(addResult, 2f);
 
     }

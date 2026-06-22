@@ -46,7 +46,7 @@ public class AiMuCard : YunoBaseCard
                 
                 await CardPileCmd.Draw(choiceContext, num, Owner);
 
-                await PowerCmd.Apply<LovePower>(Owner.Creature, IsUpgraded ? 2 * num : num, Owner.Creature, this);
+                await PowerCmd.Apply<LovePower>(choiceContext, Owner.Creature, IsUpgraded ? 2 * num : num, Owner.Creature, this);
 
                 await PlayerCmd.GainEnergy(num, Owner);
             }

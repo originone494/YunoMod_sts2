@@ -27,13 +27,13 @@ public class ZhanHouBaoZaPower : YunoBasePower
         {
             ratio = 1m;
             var HealAmount = result.UnblockedDamage * ratio * Amount;
-            await PowerCmd.Apply<BaoZaPower>(Owner, HealAmount, Owner, null);
+            await PowerCmd.Apply<BaoZaPower>(choiceContext, Owner, HealAmount, Owner, null);
         }
         else if (cardSource == null && !dealer!.IsPlayer && dealer!.IsMonster)
         {
             ratio = Amount * 0.25m;
             var HealAmount = result.UnblockedDamage * ratio * Amount;
-            await PowerCmd.Apply<BaoZaPower>(Owner, HealAmount, Owner, null);
+            await PowerCmd.Apply<BaoZaPower>(choiceContext, Owner, HealAmount, Owner, null);
         }
 
 

@@ -17,12 +17,12 @@ public class AncientSearchDiaryRelic : YunoBaseRelic
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
 
-    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == base.Owner.Creature.Side && combatState.RoundNumber <= 1)
         {
             Flash();
-            await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
+            await PowerCmd.Apply<DiaryPower>(choiceContext, Owner.Creature, 1, base.Owner.Creature, null);
         }
     }
 
@@ -33,7 +33,7 @@ public class AncientSearchDiaryRelic : YunoBaseRelic
         int amount = Owner.Creature.GetPowerAmount<DiaryPower>();
 
         if (amount > 0)
-            await PowerCmd.Apply<VigorPower>(Owner.Creature, amount, Owner.Creature, null);
+            await PowerCmd.Apply<VigorPower>(choiceContext, Owner.Creature, amount, Owner.Creature, null);
     }
 
     public override async Task AfterRemoved()

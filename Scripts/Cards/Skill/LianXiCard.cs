@@ -38,7 +38,8 @@ public class LianXiCard : YunoBaseCard, IOnLingHuo
 
     ];
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.LingHuo];
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {

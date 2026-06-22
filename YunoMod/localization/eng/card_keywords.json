@@ -9,7 +9,7 @@
     "YUNO_MOD_KEYWORD_SWORD.title": "Sword",
     "YUNO_MOD_KEYWORD_LING_HUO.description": "When a card with [gold]LingHuo[/gold] is sent from your [gold]draw pile[/gold] or [gold]hand[/gold] to your [gold]discard pile[/gold], play it. If the card has a post-[gold]LingHuo[/gold] effect, it is not played and instead triggers that effect.",
     "YUNO_MOD_KEYWORD_LING_HUO.title": "Nimble",
-    "YUNO_MOD_KEYWORD_FORESEE.description": "Look at the top X cards of your [gold]draw pile[/gold]. You may send any number of them to your [gold]discard pile[/gold]. The rest remain on top in their original order.",
+    "YUNO_MOD_KEYWORD_FORESEE.description": "Look at the top X cards of your [gold]draw pile[/gold]. send any number of them to your [gold]discard pile[/gold]. The rest remain on top in their original order.",
     "YUNO_MOD_KEYWORD_FORESEE.title": "Foresee",
     "YUNO_MOD_KEYWORD_STANCE.description": "There are four [gold]Stances[/gold]: [gold]Dagger[/gold], [gold]Axe[/gold], [gold]Gun[/gold], and [gold]Sword[/gold]. You can only have one [gold]Stance[/gold] at a time. Playing a card with a [gold]Stance[/gold] keyword enters that stance. If you already have another [gold]Stance[/gold], you first exit it, triggering its exit effect, then enter the new [gold]Stance[/gold].",
     "YUNO_MOD_KEYWORD_STANCE.title": "Stance",

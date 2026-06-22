@@ -1,3 +1,4 @@
+using MegaCrit.Sts2.Core.Entities.Cards;
 using STS2RitsuLib.Content;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
@@ -24,18 +25,19 @@ namespace YunoMod.Scripts;
 
 public class YunoKeywords
 {
-    public static readonly string Dagger = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Dagger));
-    public static readonly string Axe = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Axe));
-    public static readonly string Gun = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Gun));
-    public static readonly string Sword = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Sword));
-    public static readonly string LingHuo = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(LingHuo));
+    public static readonly CardKeyword Dagger = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Dagger)).GetModCardKeyword();
 
-    public static readonly string Foresee = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Foresee));
+    public static readonly CardKeyword Axe = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Axe)).GetModCardKeyword();
+    public static readonly CardKeyword Gun = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Gun)).GetModCardKeyword();
+    public static readonly CardKeyword Sword = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Sword)).GetModCardKeyword();
+    public static readonly CardKeyword LingHuo = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(LingHuo)).GetModCardKeyword();
 
-    public static readonly string Stance = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Stance));
+    public static readonly CardKeyword Foresee = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Foresee)).GetModCardKeyword();
 
-    public static readonly string Retriever = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Retriever));
+    public static readonly CardKeyword Stance = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Stance)).GetModCardKeyword();
 
-    
+    public static readonly CardKeyword Retriever = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Retriever)).GetModCardKeyword();
+
+
 
 }

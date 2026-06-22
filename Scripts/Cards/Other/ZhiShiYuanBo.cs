@@ -22,11 +22,11 @@ public class ZhiShiYuanBoCard : YunoBaseCard
     {
     }
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, CardKeyword.Ethereal];
 
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Retriever)
+        HoverTipFactory.FromKeyword(YunoKeywords.Retriever)
 
     ];
 

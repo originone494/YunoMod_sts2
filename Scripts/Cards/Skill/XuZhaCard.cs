@@ -34,7 +34,7 @@ public class XuZhaCard : YunoBaseCard
         if (heavyInjuryAmount > 0)
         {
             await PowerCmd.Remove<ZhiCanPower>(Owner.Creature);
-            await PowerCmd.Apply<ZhiCanPower>(cardPlay.Target, heavyInjuryAmount, Owner.Creature, this);
+            await PowerCmd.Apply<ZhiCanPower>(choiceContext, cardPlay.Target, heavyInjuryAmount, Owner.Creature, this);
         }
 
         if (cardPlay.Target.HasPower<ZhiCanPower>())
@@ -43,7 +43,7 @@ public class XuZhaCard : YunoBaseCard
 
             if (heavyInjuryAmount > 0)
             {
-                await PowerCmd.Apply<ZhiCanPower>(cardPlay.Target, heavyInjuryAmount, Owner.Creature, this);
+                await PowerCmd.Apply<ZhiCanPower>(choiceContext, cardPlay.Target, heavyInjuryAmount, Owner.Creature, this);
             }
         }
 

@@ -25,7 +25,7 @@ public class YiYaHuanYaCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<YiYaHuanYaPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<YiYaHuanYaPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
 
     }
 

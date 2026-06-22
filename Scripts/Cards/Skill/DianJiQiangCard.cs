@@ -35,13 +35,13 @@ public class DianJiQiangCard : YunoBaseCard
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
         // 先给予基础虚弱层数
-        await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
 
         // 获取当前虚弱总层数，再施加等量虚弱（翻倍）
         int currentWeak = cardPlay.Target.GetPowerAmount<WeakPower>();
         if (currentWeak > 0)
         {
-            await PowerCmd.Apply<WeakPower>(cardPlay.Target, currentWeak, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, currentWeak, Owner.Creature, this);
         }
     }
 

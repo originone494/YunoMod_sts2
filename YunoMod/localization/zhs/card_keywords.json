@@ -9,7 +9,7 @@
     "YUNO_MOD_KEYWORD_SWORD.title": "刃",
     "YUNO_MOD_KEYWORD_LING_HUO.description": "拥有[gold]灵活[/gold]字段的牌，从[gold]抽牌堆[/gold]或[gold]手牌[/gold]被送入[gold]弃牌堆[/gold]时，将其打出。若[gold]灵活[/gold]后注有效果，则不会打出，而是改为触发那些效果。",
     "YUNO_MOD_KEYWORD_LING_HUO.title": "灵活",
-    "YUNO_MOD_KEYWORD_FORESEE.description": "查看[gold]抽牌堆顶[/gold]部的X张牌，可以选择任意数量送入[gold]弃牌堆[/gold]，剩余牌按原顺序放回牌组顶部。",
+    "YUNO_MOD_KEYWORD_FORESEE.description": "查看[gold]抽牌堆顶[/gold]部的X张牌，选择任意张牌送入[gold]弃牌堆[/gold]，剩余牌按原顺序放回牌组顶部。",
     "YUNO_MOD_KEYWORD_FORESEE.title": "预见",
     "YUNO_MOD_KEYWORD_STANCE.description": "[gold]姿态[/gold]有四种，分别为：[gold]匕首[/gold]、[gold]斧头[/gold]、[gold]枪械[/gold]和[gold]刃[/gold]。你只能拥有其中一种[gold]姿态[/gold]。打出其中一种[gold]姿态[/gold]的牌时，会进入该状态。若你已拥有其他[gold]姿态[/gold]，则先退出原[gold]姿态[/gold]，触发其退出效果，再进入新[gold]姿态[/gold]。",
     "YUNO_MOD_KEYWORD_STANCE.title": "姿态",

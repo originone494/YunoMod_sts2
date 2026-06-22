@@ -33,7 +33,7 @@ public class ZhanHouBaoZaCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<ZhanHouBaoZaPower>(Owner.Creature, DynamicVars[_powerCount].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ZhanHouBaoZaPower>(choiceContext, Owner.Creature, DynamicVars[_powerCount].BaseValue, Owner.Creature, this);
 
     }
 

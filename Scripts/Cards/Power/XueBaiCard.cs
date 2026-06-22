@@ -31,7 +31,7 @@ public class XueBaiCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<XueBaiPower>(Owner.Creature, DynamicVars[_ZhiCanPowerCount].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<XueBaiPower>(choiceContext, Owner.Creature, DynamicVars[_ZhiCanPowerCount].BaseValue, Owner.Creature, this);
 
 
     }

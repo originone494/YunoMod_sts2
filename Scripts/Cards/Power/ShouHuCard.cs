@@ -31,7 +31,7 @@ public class ShouHuCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ShouHuPower>(Owner.Creature, DynamicVars.Damage.IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<ShouHuPower>(choiceContext, Owner.Creature, DynamicVars.Damage.IntValue, Owner.Creature, this);
     }
 
 

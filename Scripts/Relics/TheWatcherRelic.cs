@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -17,15 +18,12 @@ public class TheWatcherRelic : YunoBaseRelic
 {
     public override RelicRarity Rarity => RelicRarity.Rare;
 
-    public override async Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        CombatState combatState)
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Creature.Side) return;
         if (combatState.RoundNumber > 1) return;
 
-        await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
+        await PowerCmd.Apply<DiaryPower>(choiceContext, Owner.Creature, 1, base.Owner.Creature, null);
 
 
         var otherPools = Owner.UnlockState.CharacterCardPools
@@ -50,7 +48,7 @@ public class TheWatcherRelic : YunoBaseRelic
         card.EnergyCost.AddThisTurn(-card.EnergyCost.GetWithModifiers(CostModifiers.None));
 
         Flash();
-        await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, addedByPlayer: true);
+        await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);
     }
 
     public override async Task AfterRemoved()

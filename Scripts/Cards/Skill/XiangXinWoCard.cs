@@ -24,14 +24,15 @@ public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
         new DynamicVar("LingHuoBlock", 8m),
    };
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.LingHuo];
 
     public XiangXinWoCard() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.LingHuo),
+        HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

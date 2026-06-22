@@ -23,8 +23,8 @@ public class LiuXuePower : YunoBasePower
     {
         if (Owner == dealer && target.IsPlayer && cardSource == null)
         {
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), base.Owner, base.Amount, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
-            await BleedHook.OnBleedDamage(new ThrowingPlayerChoiceContext(), Owner.CombatState!, Owner, Amount);
+            await CreatureCmd.Damage(choiceContext, base.Owner, base.Amount, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+            await BleedHook.OnBleedDamage(choiceContext, Owner.CombatState!, Owner, Amount);
             await PowerCmd.Decrement(this);
         }
     }

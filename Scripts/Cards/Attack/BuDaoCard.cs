@@ -21,7 +21,7 @@ public class BuDaoCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(1m, ValueProp.Move),
-        new RepeatVar(4),
+        new RepeatVar(3),
         new DynamicVar(_thresholdKey, 20m),
     };
 
@@ -29,12 +29,12 @@ public class BuDaoCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
     HoverTipFactory.FromPower<WeakPower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Gun),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
 
@@ -61,5 +61,6 @@ public class BuDaoCard : YunoBaseCard
     protected override void OnUpgrade()
     {
         DynamicVars[_thresholdKey].UpgradeValueBy(10m);
+        DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

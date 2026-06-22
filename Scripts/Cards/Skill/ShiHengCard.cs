@@ -39,13 +39,13 @@ public class ShiHengCard : YunoBaseCard
         int strengthDiff = higherAmount - strengthAmount;
         if (strengthDiff != 0)
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, strengthDiff, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, strengthDiff, Owner.Creature, this);
         }
 
         int dexterityDiff = higherAmount - dexterityAmount;
         if (dexterityDiff != 0)
         {
-            await PowerCmd.Apply<DexterityPower>(Owner.Creature, dexterityDiff, Owner.Creature, this);
+            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, dexterityDiff, Owner.Creature, this);
         }
     }
 

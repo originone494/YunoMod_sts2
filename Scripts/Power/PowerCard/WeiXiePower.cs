@@ -25,10 +25,10 @@ public class WeiXiePower : YunoBasePower
 )
     {
         if (target == Owner)
-            await PowerCmd.Apply<DamageStorePower>(Owner, (result.TotalDamage + 1) / 2, Owner, null);
+            await PowerCmd.Apply<DamageStorePower>(choiceContext, Owner, (result.TotalDamage + 1) / 2, Owner, null);
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == Owner.Side)
             await PowerCmd.Remove(this);

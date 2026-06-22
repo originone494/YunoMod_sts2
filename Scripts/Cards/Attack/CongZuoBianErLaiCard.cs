@@ -26,7 +26,7 @@ public class CongZuoBianErLaiCard : YunoBaseCard
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+        HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
     ];
 
     
@@ -65,12 +65,12 @@ public class CongZuoBianErLaiCard : YunoBaseCard
 
         if (selfVulnerable > 0)
         {
-            await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, selfVulnerable, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, selfVulnerable, Owner.Creature, this);
         }
 
         if (selfWeak > 0)
         {
-            await PowerCmd.Apply<WeakPower>(cardPlay.Target, selfWeak, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, selfWeak, Owner.Creature, this);
         }
     }
 

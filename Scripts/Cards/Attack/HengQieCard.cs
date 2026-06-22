@@ -25,14 +25,13 @@ public class HengQieCard : YunoBaseCard
     public HengQieCard() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, YunoKeywords.Dagger];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
     HoverTipFactory.FromPower<LiuXuePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
 
@@ -46,7 +45,7 @@ public class HengQieCard : YunoBaseCard
         foreach (var enemy in CombatState!.HittableEnemies)
         {
             int currentBleed = enemy.GetPowerAmount<LiuXuePower>();
-            await PowerCmd.Apply<LiuXuePower>(enemy, currentBleed, Owner.Creature, this);
+            await PowerCmd.Apply<LiuXuePower>(choiceContext, enemy, currentBleed, Owner.Creature, this);
         }
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);

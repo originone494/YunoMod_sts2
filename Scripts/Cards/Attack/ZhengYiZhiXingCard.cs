@@ -49,7 +49,7 @@ public class ZhengYiZhiXingCard : YunoBaseCard
 
         await CreatureCmd.Damage(choiceContext, Owner.Creature, damage, ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this);
 
-        await PowerCmd.Apply<BaoZaPower>(Owner.Creature, damage, Owner.Creature, this);
+        //await PowerCmd.Apply<BaoZaPower>(choiceContext, Owner.Creature, damage, Owner.Creature, this);
 
     }
 

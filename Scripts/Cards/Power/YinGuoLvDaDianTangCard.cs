@@ -38,7 +38,7 @@ public class YinGuoLvDaDianTangCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<YinGuoLvDaDianTangPower>(Owner.Creature, DynamicVars[_diaryCount].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<YinGuoLvDaDianTangPower>(choiceContext, Owner.Creature, DynamicVars[_diaryCount].IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

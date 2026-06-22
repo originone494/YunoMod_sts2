@@ -18,29 +18,29 @@ public class ClairvoyanceRelic : YunoBaseRelic
 {
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == base.Owner.Creature.Side)
         {
             if (combatState.RoundNumber <= 1)
             {
                 Flash();
-                await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
+                await PowerCmd.Apply<DiaryPower>(choiceContext, Owner.Creature, 1, base.Owner.Creature, null);
 
 
                 bool haveAttack = false;
 
                 foreach (var enemy in Owner.Creature.CombatState!.HittableEnemies)
                 {
-                    if (enemy.Monster.IntendsToAttack)
+                    if (enemy.Monster!.IntendsToAttack)
                     {
                         haveAttack = true;
                     }
                 }
                 if (haveAttack)
-                    await PowerCmd.Apply<DexterityPower>(Owner.Creature, 1, Owner.Creature, null);
+                    await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
                 else
-                    await PowerCmd.Apply<StrengthPower>(Owner.Creature, 1, Owner.Creature, null);
+                    await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
             }
 
             if (combatState.RoundNumber == 2)
@@ -49,15 +49,16 @@ public class ClairvoyanceRelic : YunoBaseRelic
 
                 foreach (var enemy in Owner.Creature.CombatState!.HittableEnemies)
                 {
-                    if (enemy.Monster.IntendsToAttack)
+
+                    if (enemy != null && enemy.Monster != null && enemy.Monster.IntendsToAttack)
                     {
                         haveAttack = true;
                     }
                 }
                 if (haveAttack)
-                    await PowerCmd.Apply<DexterityPower>(Owner.Creature, 1, Owner.Creature, null);
+                    await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
                 else
-                    await PowerCmd.Apply<StrengthPower>(Owner.Creature, 1, Owner.Creature, null);
+                    await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);
             }
 
         }

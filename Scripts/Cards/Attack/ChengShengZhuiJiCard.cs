@@ -30,7 +30,7 @@ public class ChengShengZhuiJiCard : YunoBaseCard, IOnForesee
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+        HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
     ];
 
     
@@ -45,7 +45,7 @@ public class ChengShengZhuiJiCard : YunoBaseCard, IOnForesee
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
 
-        // 每使用一次永久成长
+        // 每使用一次永久成�?
         DynamicVars.Damage.BaseValue += DynamicVars[_growthKey].BaseValue;
     }
 

@@ -25,7 +25,7 @@ public class NaQiWeiLaiCard : YunoBaseCard
     {
     }
 
-    
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -34,7 +34,7 @@ public class NaQiWeiLaiCard : YunoBaseCard
 
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -44,7 +44,7 @@ public class NaQiWeiLaiCard : YunoBaseCard
         for (int i = 0; i < addCount; i++)
         {
             CardModel card = Owner.Creature.CombatState!.CreateCard<WeiLaiXunXiCard>(Owner);
-            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, addedByPlayer: true);
+            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, cardPlay.Card.Owner);
             resultList.Add(addResult);
         }
         CardCmd.PreviewCardPileAdd(resultList, 2f);

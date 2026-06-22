@@ -17,7 +17,7 @@ public class ZheYiCanXianGeiNiCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<ZheYiCanXianGeiNiPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<ZheYiCanXianGeiNiPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
 
     }
 

@@ -30,12 +30,12 @@ public class BoomerangRelic : YunoBaseRelic
         if (weakAmount > 0)
         {
             Flash();
-            await PowerCmd.Apply<WeakPower>(target, weakAmount, Owner.Creature, null);
+            await PowerCmd.Apply<WeakPower>(choiceContext, target, weakAmount, Owner.Creature, null);
         }
         if (vulnAmount > 0)
         {
             Flash();
-            await PowerCmd.Apply<VulnerablePower>(target, vulnAmount, Owner.Creature, null);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, target, vulnAmount, Owner.Creature, null);
         }
     }
 }

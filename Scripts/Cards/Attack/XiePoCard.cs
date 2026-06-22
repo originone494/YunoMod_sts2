@@ -28,12 +28,13 @@ public class XiePoCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Axe];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Axe];
 
         protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Axe),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Axe),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     

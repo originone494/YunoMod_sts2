@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -8,12 +6,11 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Tool;
 using MegaCrit.Sts2.Core.HoverTips;
-
 using STS2RitsuLib.Keywords;
+
 namespace YunoMod.Scripts.Cards.Attack;
 
 public class NiMeiYongLeCard : YunoBaseCard
@@ -28,18 +25,15 @@ public class NiMeiYongLeCard : YunoBaseCard
     {
     }
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, YunoKeywords.Sword];
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Sword];
 
-        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Sword),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Sword),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
+
     ];
-
-    
-
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -49,7 +43,7 @@ public class NiMeiYongLeCard : YunoBaseCard
         AttackCommand attackCommand = await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
-        if (shouldTriggerFatal && attackCommand.Results.Any((DamageResult r) => r.WasTargetKilled))
+        if (shouldTriggerFatal && attackCommand.Results.SelectMany((List<DamageResult> r) => r).Any((DamageResult r) => r.WasTargetKilled))
         {
             await CreatureCmd.GainMaxHp(base.Owner.Creature, base.DynamicVars.MaxHp.IntValue);
         }

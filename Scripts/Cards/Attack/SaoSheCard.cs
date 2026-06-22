@@ -23,14 +23,14 @@ public class SaoSheCard : YunoBaseCard
         new RepeatVar(6),
     };
 
-    public SaoSheCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+    public SaoSheCard() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Gun),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     

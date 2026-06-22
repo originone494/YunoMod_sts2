@@ -17,12 +17,12 @@ public class SeekDiaryRelic : YunoBaseRelic
 {
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, CombatState combatState)
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
         if (player != Owner) return;
         if (Owner.Creature.CombatState!.RoundNumber > 1) return;
 
-        await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
+        await PowerCmd.Apply<DiaryPower>(choiceContext, Owner.Creature, 1, base.Owner.Creature, null);
 
         var skillCards = PileType.Draw.GetPile(Owner).Cards
             .Where(c => c.Type == CardType.Skill)

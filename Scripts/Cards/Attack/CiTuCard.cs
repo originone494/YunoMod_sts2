@@ -20,7 +20,7 @@ public class CiTuCard : YunoBaseCard
     [
         new DamageVar(5m, ValueProp.Move),
         new RepeatVar(1),
-        new DynamicVar(_DuiMuCount,5)
+        new DynamicVar(_DuiMuCount,3)
     ];
 
     public CiTuCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
@@ -28,10 +28,10 @@ public class CiTuCard : YunoBaseCard
 
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
 
@@ -66,5 +66,6 @@ public class CiTuCard : YunoBaseCard
     protected override void OnUpgrade()
     {
         DynamicVars.Repeat.UpgradeValueBy(1);
+        DynamicVars[_DuiMuCount].UpgradeValueBy(2);
     }
 }

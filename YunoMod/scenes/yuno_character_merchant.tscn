@@ -1050,7 +1050,7 @@ animations = [{
 [node name="IroncladMerchant" type="Node2D"]
 
 [node name="YunoCharacterMerchant" type="AnimatedSprite2D" parent="."]
-position = Vector2(231, -153)
+position = Vector2(231, -156)
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_171y2")
 autoplay = "default"

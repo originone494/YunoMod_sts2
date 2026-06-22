@@ -30,15 +30,16 @@ public class XueJianCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Axe];
 
-        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<VulnerablePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Axe),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Axe];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    HoverTipFactory.FromPower<VulnerablePower>(),
+        HoverTipFactory.FromKeyword(YunoKeywords.Axe),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -48,10 +49,9 @@ public class XueJianCard : YunoBaseCard
         bool getBlock = cardPlay.Target.GetPowerAmount<VulnerablePower>() > 0;
 
         var damage = DynamicVars.Damage.BaseValue;
-        AttackCommand attackCommand = await ToolCmd.AxeAttack(choiceContext,cardPlay.Target,this,DynamicVars.Damage.BaseValue);
+        AttackCommand attackCommand = await ToolCmd.AxeAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
 
-        // 若目标有易伤，则获得与所造成伤害相等的格挡
-        if (getBlock) await CreatureCmd.GainBlock(Owner.Creature, attackCommand.Results.Sum((DamageResult r) => r.TotalDamage + r.OverkillDamage), ValueProp.Move, cardPlay);
+        if (getBlock) await CreatureCmd.GainBlock(Owner.Creature, attackCommand.Results.SelectMany((List<DamageResult> r) => r).Sum((DamageResult r) => r.TotalDamage + r.OverkillDamage), ValueProp.Move, cardPlay);
 
         await ToolCmd.AxeStance(choiceContext, Owner, this);
     }

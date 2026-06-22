@@ -17,7 +17,7 @@ public class ShiShouCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new CardsVar(5)
+        new CardsVar(3)
     };
 
     public ShiShouCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)

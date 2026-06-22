@@ -21,9 +21,9 @@ public class QuSiCard : YunoBaseCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Retriever),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Retriever),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
 
     ];
 

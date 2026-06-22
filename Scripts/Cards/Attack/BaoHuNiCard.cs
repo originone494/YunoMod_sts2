@@ -29,12 +29,13 @@ public class BaoHuNiCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
 
         protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<LovePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     
@@ -53,6 +54,7 @@ public class BaoHuNiCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculatedDamage.UpgradeValueBy(3m);
+        DynamicVars.CalculationExtra.UpgradeValueBy(1m);
+        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
     }
 }

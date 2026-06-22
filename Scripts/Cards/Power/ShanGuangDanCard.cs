@@ -25,7 +25,7 @@ public class ShanGuangDanCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ShanGuangDanPower>(Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ShanGuangDanPower>(choiceContext, Owner.Creature, DynamicVars.Energy.BaseValue, Owner.Creature, this);
     }
 
 

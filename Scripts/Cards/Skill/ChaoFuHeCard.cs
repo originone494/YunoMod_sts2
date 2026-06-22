@@ -23,21 +23,21 @@ public class ChaoFuHeCard : YunoBaseCard, IOnLingHuo
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new CardsVar(3),
-        new DynamicVar(_discardCount,5)
+        new DynamicVar(_discardCount,3)
     };
 
-    public ChaoFuHeCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public ChaoFuHeCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.LingHuo];
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        // 先抽牌
-        int drawCount = (int)DynamicVars.Cards.BaseValue;
+        int drawCount = DynamicVars.Cards.IntValue;
         await CardPileCmd.Draw(choiceContext, drawCount, Owner);
 
 
@@ -59,6 +59,7 @@ public class ChaoFuHeCard : YunoBaseCard, IOnLingHuo
     protected override void OnUpgrade()
     {
         DynamicVars.Cards.UpgradeValueBy(1m);
+        DynamicVars[_discardCount].UpgradeValueBy(2);
     }
 
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)

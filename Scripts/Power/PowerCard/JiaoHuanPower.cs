@@ -16,9 +16,9 @@ public class JiaoHuanPower : YunoBasePower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext playerChoiceContext, CombatSide combatSide)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (combatSide != CombatSide.Player) return;
+        if (side != CombatSide.Player) return;
 
         int strengthAmount = 0;
         if (Owner.HasPower<StrengthPower>())
@@ -34,11 +34,11 @@ public class JiaoHuanPower : YunoBasePower
 
         if (dexterityAmount > 0)
         {
-            await PowerCmd.Apply<StrengthPower>(Owner, dexterityAmount, Owner, null);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner, dexterityAmount, Owner, null);
         }
         if (strengthAmount > 0)
         {
-            await PowerCmd.Apply<DexterityPower>(Owner, strengthAmount, Owner, null);
+            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner, strengthAmount, Owner, null);
         }
 
         await PowerCmd.Remove(this);

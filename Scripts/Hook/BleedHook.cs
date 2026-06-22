@@ -8,12 +8,12 @@ namespace YunoMod.Scripts.Hook;
 
 public interface IOnBleedDamage
 {
-    Task OnBleedDamage(PlayerChoiceContext ctx, CombatState combatState, Creature target, int amount);
+    Task OnBleedDamage(PlayerChoiceContext ctx, Creature target, int amount);
 }
 
 public static class BleedHook
 {
-    public static async Task OnBleedDamage(PlayerChoiceContext ctx, CombatState combatState, Creature target, int amount)
+    public static async Task OnBleedDamage(PlayerChoiceContext ctx, ICombatState combatState, Creature target, int amount)
     {
         if (combatState == null) return;
 
@@ -21,7 +21,7 @@ public static class BleedHook
         {
             var abstractModel = (AbstractModel)(object)model;
             ctx.PushModel(abstractModel);
-            await model.OnBleedDamage(ctx, combatState, target, amount);
+            await model.OnBleedDamage(ctx, target, amount);
             ctx.PopModel(abstractModel);
         }
     }

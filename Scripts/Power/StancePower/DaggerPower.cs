@@ -50,7 +50,7 @@ public class DaggerPower : YunoBasePower
         for (int i = 0; i < Amount; i++)
         {
             await Cmd.CustomScaledWait(0.1f, 0.2f);
-            Creature creature = base.Owner.Player.RunState.Rng.CombatTargets.NextItem(base.Owner.CombatState.HittableEnemies);
+            Creature? creature = Owner.Player!.RunState.Rng.CombatTargets.NextItem(Owner.CombatState!.HittableEnemies);
             if (creature != null)
             {
                 await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, base.Owner);

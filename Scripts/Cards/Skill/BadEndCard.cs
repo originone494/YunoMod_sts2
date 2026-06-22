@@ -48,7 +48,7 @@ public class BadEndCard : YunoBaseCard
                 // 攻击牌: 所有敌人获得1层流血(BleedingPower)
                 foreach (Creature enemy in CombatState!.HittableEnemies)
                 {
-                    await PowerCmd.Apply<LiuXuePower>(enemy, 1, base.Owner.Creature, this);
+                    await PowerCmd.Apply<LiuXuePower>(choiceContext, enemy, 1, base.Owner.Creature, this);
                 }
             }
             else if (card.Type == CardType.Skill)

@@ -34,7 +34,7 @@ public class ZiShangCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        await PowerCmd.Apply<ZhiCanPower>(Owner.Creature, DynamicVars[_zhiCanPower].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<ZhiCanPower>(choiceContext, Owner.Creature, DynamicVars[_zhiCanPower].BaseValue, Owner.Creature, this);
         // 获得能量
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
 

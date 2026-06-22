@@ -15,7 +15,7 @@ public class YuZhiMengCard : YunoBaseCard
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+        HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
     ];
 
     
@@ -23,7 +23,7 @@ public class YuZhiMengCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<YuZhiMengPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<YuZhiMengPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

@@ -32,7 +32,8 @@ public class LingHuoDiscardPatch
         bool hasLingHuo = false;
         foreach (CardModel card in yunoDiscardCards)
         {
-            if (card.HasModKeyword(YunoKeywords.LingHuo))
+            if (card.Keywords.Contains(YunoKeywords.LingHuo))
+
             {
                 hasLingHuo = true;
                 break;
@@ -54,7 +55,7 @@ public class LingHuoDiscardPatch
         {
             foreach (CardModel card in cardsToDiscard)
             {
-                if (card.HasModKeyword(YunoKeywords.LingHuo))
+                if (card.Keywords.Contains(YunoKeywords.LingHuo))
                 {
                     await LingHuoHook.LingHuoSpecial(choiceContext, card.Owner, card);
                     await LingHuoHook.OnLingHuo(choiceContext, card.Owner);

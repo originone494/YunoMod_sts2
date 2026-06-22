@@ -27,12 +27,13 @@ public class TiaoFeiCard : YunoBaseCard
     public TiaoFeiCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
     {
     }
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
 
         protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     
@@ -57,6 +58,6 @@ public class TiaoFeiCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(4m);
+        DynamicVars.Block.UpgradeValueBy(3m);
     }
 }

@@ -18,6 +18,6 @@ public class XianJiPower : YunoBasePower
         if (fromHandDraw) return;
         if (card.Owner?.Creature != Owner) return;
         Flash();
-        await PowerCmd.Apply<LiuXuePower>(CombatState.HittableEnemies, Amount, Owner, null);
+        await PowerCmd.Apply<LiuXuePower>(choiceContext, CombatState.HittableEnemies, Amount, Owner, null);
     }
 }

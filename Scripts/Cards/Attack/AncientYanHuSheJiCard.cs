@@ -23,12 +23,13 @@ public class AncientYanHuSheJiCard : YunoBaseCard
     public AncientYanHuSheJiCard() : base(0, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
     {
     }
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
-
+        HoverTipFactory.FromKeyword(YunoKeywords.Gun),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -37,7 +38,7 @@ public class AncientYanHuSheJiCard : YunoBaseCard
 
         await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
 
-        await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
     }

@@ -1,69 +1,67 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using STS2RitsuLib.CardTags;
+using STS2RitsuLib.Cards.DynamicVars;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Keywords;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Tool;
 
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Commands.Builders;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 namespace YunoMod.Scripts.Cards.Attack;
 
 public class ShaLeNiCard : YunoBaseCard
 {
-    private const string _growthKey = "Growth";
+    private const string _HealKey = "Heal";
 
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-    {
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
         new DamageVar(5m, ValueProp.Move),
-        new DynamicVar(_growthKey, 3m),
-    };
+        new RepeatVar(2),
+        new DynamicVar(_HealKey,4)
+    ];
 
-    public ShaLeNiCard() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public ShaLeNiCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
-
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-       await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-        .FromCard(this)
-        .Targeting(cardPlay.Target)
-        .WithHitFx("vfx/vfx_attack_slash")
-        .Execute(choiceContext);
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, new DamageVar(2, ValueProp.Unpowered | ValueProp.Unblockable), this);
 
+        bool shouldTriggerFatal = cardPlay.Target.Powers.All((PowerModel p) => p.ShouldOwnerDeathTriggerFatal());
 
-        DynamicVars.Damage.BaseValue += DynamicVars[_growthKey].BaseValue;
+        AttackCommand attackCommand = await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
 
-    }
-
-    public override async Task AfterCardPlayedLate(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-    {
-        if (cardPlay.Card.Owner == base.Owner && cardPlay.Card.Type == CardType.Attack && cardPlay.Card.HasModKeyword(YunoKeywords.Dagger) && Pile!.Type == PileType.Discard)
+        if (shouldTriggerFatal && attackCommand.Results.SelectMany((List<DamageResult> r) => r).Any((DamageResult r) => r.WasTargetKilled))
         {
-            await CardPileCmd.Add(this, PileType.Hand);
+            await CreatureCmd.Heal(Owner.Creature, DynamicVars[_HealKey].IntValue);
         }
+
+        await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_growthKey].UpgradeValueBy(2m);
+        DynamicVars.Repeat.UpgradeValueBy(1);
+        DynamicVars[_HealKey].UpgradeValueBy(2);
     }
 }

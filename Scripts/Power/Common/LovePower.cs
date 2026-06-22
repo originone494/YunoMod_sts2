@@ -24,7 +24,7 @@ public class LovePower : YunoBasePower
         new DynamicVar(_blockGainKey, 0m),
     };
 
-    public override async Task AfterTurnEnd(PlayerChoiceContext choiceContext, CombatSide side)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Player) return;
         Flash();
@@ -32,7 +32,7 @@ public class LovePower : YunoBasePower
         await CreatureCmd.GainBlock(Owner, new BlockVar((Amount + 1) / 2, ValueProp.Unpowered), null);
     }
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (power == this)
         {
@@ -45,7 +45,7 @@ public class LovePower : YunoBasePower
             {
                 while (Amount >= 10)
                 {
-                    await PowerCmd.Apply<LovePower>(Owner, -10, Owner, null);
+                    await PowerCmd.Apply<LovePower>(choiceContext, Owner, -10, Owner, null);
                     await CreatureCmd.GainBlock(Owner, new BlockVar(5, ValueProp.Unpowered), null);
                 }
             }

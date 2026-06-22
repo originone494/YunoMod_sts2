@@ -17,12 +17,12 @@ public class GraffitiDiaryRelic : YunoBaseRelic
 {
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, CombatState combatState)
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side == base.Owner.Creature.Side && combatState.RoundNumber <= 1)
         {
             Flash();
-            await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
+            await PowerCmd.Apply<DiaryPower>(choiceContext, Owner.Creature, 1, base.Owner.Creature, null);
         }
     }
 
@@ -31,7 +31,7 @@ public class GraffitiDiaryRelic : YunoBaseRelic
         if (player != Owner) return;
 
         Flash();
-        await PowerCmd.Apply<PoisonPower>(Owner.Creature.CombatState!.HittableEnemies, 2, Owner.Creature, null);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, Owner.Creature.CombatState!.HittableEnemies, 2, Owner.Creature, null);
     }
 
     public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
@@ -51,7 +51,7 @@ public class GraffitiDiaryRelic : YunoBaseRelic
         if (target == null) return;
 
         Flash();
-        await PowerCmd.Apply<PoisonPower>(target, poisonAmount, Owner.Creature, null);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, target, poisonAmount, Owner.Creature, null);
     }
 
     public override async Task AfterRemoved()

@@ -30,12 +30,13 @@ public class FuJiCard : YunoBaseCard
     }
 
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Axe];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Axe];
 
         protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<VulnerablePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Axe),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Axe),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     
@@ -46,7 +47,7 @@ public class FuJiCard : YunoBaseCard
 
         await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue);
 
-        await PowerCmd.Apply<VulnerablePower>(cardPlay.Target, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
 
         await ToolCmd.AxeStance(choiceContext, Owner, this);
     }

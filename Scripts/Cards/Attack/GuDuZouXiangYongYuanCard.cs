@@ -35,14 +35,14 @@ public class GuDuZouXiangYongYuanCard : YunoBaseCard, IOnForesee
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+        HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
     ];
 
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 计算所有敌人的虚弱和易伤层数之和
+        // 计算所有敌人的虚弱和易伤层数之�?
         int totalDebuffCount = 0;
 
         foreach (var enemy in CombatState!.HittableEnemies)

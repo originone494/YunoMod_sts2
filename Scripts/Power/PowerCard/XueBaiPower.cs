@@ -13,11 +13,11 @@ public class XueBaiPower : YunoBasePower, IOnBleedDamage
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public async Task OnBleedDamage(PlayerChoiceContext ctx, CombatState combatState, Creature target, int amount)
+    public async Task OnBleedDamage(PlayerChoiceContext ctx, Creature target, int amount)
     {
         for (int i = 0; i < Amount; i++)
         {
-            await PowerCmd.Apply<ZhiCanPower>(target, Amount, Owner, null);
+            await PowerCmd.Apply<ZhiCanPower>(ctx, target, Amount, Owner, null);
         }
     }
 

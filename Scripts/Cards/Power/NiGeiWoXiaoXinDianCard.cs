@@ -33,7 +33,7 @@ public class NiGeiWoXiaoXinDianCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<NiGeiWoXiaoXinDianPower>(Owner.Creature, DynamicVars.Strength.IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<NiGeiWoXiaoXinDianPower>(choiceContext, Owner.Creature, DynamicVars.Strength.IntValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

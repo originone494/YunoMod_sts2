@@ -20,6 +20,6 @@ public class SwordPower : YunoBasePower
 
     public override async Task AfterRemoved(Creature oldOwner)
     {
-        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner.Player);
+        await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner.Player!);
     }
 }

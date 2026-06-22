@@ -42,9 +42,9 @@ public class JiuShiNiCard : YunoBaseCard
 
             if (amount > 0)
             {
-                await PowerCmd.Apply<StrengthPower>(cardPlay.Target, -amount, Owner.Creature, this);
+                await PowerCmd.Apply<StrengthPower>(choiceContext, cardPlay.Target, -amount, Owner.Creature, this);
 
-                await PowerCmd.Apply<StrengthPower>(Owner.Creature, amount, Owner.Creature, this);
+                await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, amount, Owner.Creature, this);
             }
         }
     }

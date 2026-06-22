@@ -34,10 +34,10 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Sword];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Sword];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Sword),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Sword),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
 

@@ -36,7 +36,7 @@ public class YouNaiJiuWoCard : YunoBaseCard
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+        HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
     ];
 
 
@@ -48,9 +48,9 @@ public class YouNaiJiuWoCard : YunoBaseCard
 
         await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
 
-        // 获得易伤和虚弱（负面效果）
-        await PowerCmd.Apply<VulnerablePower>(Owner.Creature, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<WeakPower>(Owner.Creature, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+        // 获得易伤和虚弱（负面效果�?
+        await PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars.Weak.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

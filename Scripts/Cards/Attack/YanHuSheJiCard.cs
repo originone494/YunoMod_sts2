@@ -26,13 +26,14 @@ public class YanHuSheJiCard : YunoBaseCard
 
 
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
 
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Gun),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
 
     ];
 
@@ -42,7 +43,7 @@ public class YanHuSheJiCard : YunoBaseCard
 
         await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
 
-        await PowerCmd.Apply<WeakPower>(cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
     }
@@ -50,5 +51,6 @@ public class YanHuSheJiCard : YunoBaseCard
     protected override void OnUpgrade()
     {
         DynamicVars.Weak.UpgradeValueBy(1m);
+        DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

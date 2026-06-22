@@ -22,12 +22,13 @@ public class LiangRenCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Sword];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Sword];
 
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Sword),ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Sword),HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
 
@@ -35,14 +36,14 @@ public class LiangRenCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<StrengthPower>(Owner.Creature, (int)DynamicVars.Strength.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, (int)DynamicVars.Strength.BaseValue, Owner.Creature, this);
 
 
         var bladeCards = PileType.Draw.GetPile(Owner).Cards
             .Concat(PileType.Discard.GetPile(Owner).Cards)
             .Concat(PileType.Exhaust.GetPile(Owner).Cards)
             .Where(card =>
-                card.HasModKeyword(YunoKeywords.Sword)
+                card.Keywords.Contains(YunoKeywords.Sword)
             ).ToList();
 
         foreach (var card in bladeCards)

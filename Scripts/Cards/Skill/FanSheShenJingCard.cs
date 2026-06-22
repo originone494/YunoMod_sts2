@@ -29,7 +29,8 @@ public class FanSheShenJingCard : YunoBaseCard, IOnLingHuo
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.LingHuo];
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
@@ -39,7 +40,7 @@ public class FanSheShenJingCard : YunoBaseCard, IOnLingHuo
     };
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.LingHuo),
+        HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
 
     ];
 

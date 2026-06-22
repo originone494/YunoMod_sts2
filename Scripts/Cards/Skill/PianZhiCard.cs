@@ -43,7 +43,7 @@ public class PianZhiCard : YunoBaseCard
         {
             int cost = selectedCard.EnergyCost.GetWithModifiers(CostModifiers.None);
             await CardCmd.Exhaust(choiceContext, selectedCard);
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, cost, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, cost, Owner.Creature, this);
         }
 
 

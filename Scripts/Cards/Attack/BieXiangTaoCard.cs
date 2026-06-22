@@ -13,7 +13,7 @@ using YunoMod.Scripts.Hook;
 using MegaCrit.Sts2.Core.Entities.Players;
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class BieXiangTaoCard : YunoBaseCard, IOnLingHuo
+public class BieXiangTaoCard : YunoBaseCard
 {
     private const string _GrtCardCount = "GrtCardCount";
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -27,11 +27,11 @@ public class BieXiangTaoCard : YunoBaseCard, IOnLingHuo
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Axe, YunoKeywords.LingHuo];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Axe];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Axe),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.LingHuo),
+        HoverTipFactory.FromKeyword(YunoKeywords.Axe),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
     ];
 
 
@@ -60,13 +60,4 @@ public class BieXiangTaoCard : YunoBaseCard, IOnLingHuo
         DynamicVars[_GrtCardCount].UpgradeValueBy(1);
     }
 
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
-
-    public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
-    {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, null);
-    }
 }

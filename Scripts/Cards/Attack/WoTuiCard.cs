@@ -12,6 +12,7 @@ using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
 using YunoMod.Scripts.Tool;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 
 namespace YunoMod.Scripts.Cards.Attack;
 
@@ -22,7 +23,7 @@ public class WoTuiCard : YunoBaseCard
         new DamageVar(3m, ValueProp.Move),
     ];
 
-    public WoTuiCard() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public WoTuiCard() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 
@@ -30,22 +31,19 @@ public class WoTuiCard : YunoBaseCard
         HoverTipFactory.FromPower<LovePower>(),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        var attackCmd = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+        var attackCommand = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
 
-        int unblockedDamage = (int)attackCmd.Results
-            .Where(r => r.Receiver == cardPlay.Target)
-            .Sum(r => r.UnblockedDamage);
-
+        int unblockedDamage = attackCommand.Results.SelectMany((List<DamageResult> r) => r).Sum((DamageResult r) => r.TotalDamage + r.OverkillDamage);
 
         await ToolCmd.GainLovePower(choiceContext, Owner, this, unblockedDamage * 2);
     }

@@ -24,7 +24,8 @@ public class CuiXueCard : YunoBaseCard
         new DynamicVar(powerCount, 2)
     ];
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
 
     
 
@@ -38,7 +39,7 @@ public class CuiXueCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<CuiXuePower>(Owner.Creature, DynamicVars[powerCount].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<CuiXuePower>(choiceContext, Owner.Creature, DynamicVars[powerCount].BaseValue, Owner.Creature, this);
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
 

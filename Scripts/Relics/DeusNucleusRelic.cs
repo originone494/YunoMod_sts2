@@ -14,13 +14,13 @@ public class DeusNucleusRelic : YunoBaseRelic
 {
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task AfterPowerAmountChanged(PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (power is not StrengthPower) return;
         if (amount <= 0) return;
         if (power.Owner != Owner.Creature) return;
 
         Flash();
-        await PowerCmd.Apply<VigorPower>(Owner.Creature, (int)(amount * 2), Owner.Creature, null);
+        await PowerCmd.Apply<VigorPower>(choiceContext,Owner.Creature, (int)(amount * 2), Owner.Creature, null);
     }
 }

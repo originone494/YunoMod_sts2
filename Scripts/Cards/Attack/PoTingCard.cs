@@ -23,16 +23,16 @@ public class PoTingCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(1m, ValueProp.Move),
-        new RepeatVar(4),
+        new RepeatVar(3),
     };
 
-    public PoTingCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+    public PoTingCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Gun),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -41,9 +41,9 @@ public class PoTingCard : YunoBaseCard
 
         await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
 
-        var drawPile = PileType.Draw.GetPile(Owner).Cards.Where(card => card.Type == CardType.Attack).ToList();
-        var drawCard = await CardSelectCmd.FromSimpleGrid(choiceContext, drawPile, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1));
-        if (drawCard != null)
+        List<CardModel> drawPile = PileType.Draw.GetPile(Owner).Cards.Where(card => card.Type == CardType.Attack).ToList();
+        IEnumerable<CardModel> drawCard = await CardSelectCmd.FromSimpleGrid(choiceContext, drawPile, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1));
+        if (drawCard.Count() > 0)
         {
             await CardPileCmd.Add(drawCard, PileType.Hand);
 
@@ -71,5 +71,6 @@ public class PoTingCard : YunoBaseCard
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(1);
+        DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

@@ -48,7 +48,7 @@ public class WoChuiCard : YunoBaseCard
             strengthLoss = DynamicVars[_strengthAloneKey].IntValue;
         }
 
-        await PowerCmd.Apply<PiercingWailPower>(CombatState!.HittableEnemies, strengthLoss, Owner.Creature, this);
+        await PowerCmd.Apply<PiercingWailPower>(choiceContext, CombatState!.HittableEnemies, strengthLoss, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

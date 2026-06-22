@@ -17,7 +17,7 @@ namespace YunoMod.Scripts.Cards.Power;
 
 public class YuZhiCard : YunoBaseCard
 {
-    public YuZhiCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public YuZhiCard() : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 
@@ -28,7 +28,7 @@ public class YuZhiCard : YunoBaseCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Foresee),
+        HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
     ];
 
     
@@ -37,7 +37,7 @@ public class YuZhiCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<YuZhiPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<YuZhiPower>(choiceContext, Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

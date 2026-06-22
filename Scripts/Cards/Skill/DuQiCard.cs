@@ -37,7 +37,7 @@ public class DuQiCard : YunoBaseCard
 
         int totalPoison = DynamicVars[_totalPoisonKey].IntValue;
 
-        await PowerCmd.Apply<PoisonPower>(CombatState!.HittableEnemies, totalPoison, Owner.Creature, this);
+        await PowerCmd.Apply<PoisonPower>(choiceContext, CombatState!.HittableEnemies, totalPoison, Owner.Creature, this);
 
         int increaseAmount = DynamicVars[_poisonPerTurnKey].IntValue;
         BuffFromPlay(increaseAmount);

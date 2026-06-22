@@ -44,7 +44,7 @@ public class DiaryPower : YunoBasePower
         if (amount >= 5)
         {
             Flash();
-            await PowerCmd.Apply<PoisonPower>(Owner.CombatState!.HittableEnemies, 1, Owner, null);
+            await PowerCmd.Apply<PoisonPower>(choiceContext,Owner.CombatState!.HittableEnemies, 1, Owner, null);
         }
 
         if (round == 2 && amount >= 9)
@@ -53,7 +53,7 @@ public class DiaryPower : YunoBasePower
             var resultList = new List<CardPileAddResult>();
 
             var card = Owner.CombatState!.CreateCard<ZhiShiYuanBoCard>(Owner.Player!);
-            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, addedByPlayer: true);
+            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, Owner.Player);
             resultList.Add(addResult);
             CardCmd.PreviewCardPileAdd(resultList, 2f);
 
@@ -64,31 +64,26 @@ public class DiaryPower : YunoBasePower
             Flash();
             var resultList = new List<CardPileAddResult>();
             var card = Owner.CombatState!.CreateCard<WanQianLunHuiCard>(Owner.Player!);
-            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, addedByPlayer: true);
+            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, Owner.Player);
             resultList.Add(addResult);
             CardCmd.PreviewCardPileAdd(resultList, 2f);
 
         }
     }
 
-    public async override Task AfterPowerAmountChanged(
-    PowerModel power,
-    decimal amount,
-    Creature? applier,
-    CardModel? cardSource
-    )
+    public async override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
     {
         if (power == this && amount > 0 && applier == Owner)
         {
             if (Amount == 2)
             {
                 Flash();
-                await PowerCmd.Apply<StrengthPower>(Owner, 1, Owner, null);
+                await PowerCmd.Apply<StrengthPower>(choiceContext,Owner, 1, Owner, null);
             }
             if (Amount == 3)
             {
                 Flash();
-                await PowerCmd.Apply<DexterityPower>(Owner, 1, Owner, null);
+                await PowerCmd.Apply<DexterityPower>(choiceContext,Owner, 1, Owner, null);
             }
         }
 

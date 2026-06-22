@@ -25,16 +25,17 @@ public class RuoDianJiPoCard : YunoBaseCard, IOnLingHuo
         new RepeatVar( 3),
     };
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.LingHuo, YunoKeywords.Dagger];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.LingHuo, YunoKeywords.Dagger];
 
 
     public RuoDianJiPoCard() : base(3, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy)
     {
     }
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.LingHuo),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
 
     ];
 

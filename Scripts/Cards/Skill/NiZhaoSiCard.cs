@@ -33,7 +33,7 @@ public class NiZhaoSiCard : YunoBaseCard
 
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<CrazyPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<CrazyPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
 
     }

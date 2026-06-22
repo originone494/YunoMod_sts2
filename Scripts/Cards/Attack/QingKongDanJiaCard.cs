@@ -23,7 +23,8 @@ public class QingKongDanJiaCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Gun];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -33,8 +34,8 @@ public class QingKongDanJiaCard : YunoBaseCard
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Gun),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Gun),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -49,7 +50,7 @@ public class QingKongDanJiaCard : YunoBaseCard
 
     public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (cardPlay.Card.Owner == this.Owner && cardPlay.Card.HasModKeyword(YunoKeywords.Gun))
+        if (cardPlay.Card.Owner == this.Owner && cardPlay.Card.Keywords.Contains(YunoKeywords.Gun))
         {
             DynamicVars.Repeat.BaseValue += 1;
         }

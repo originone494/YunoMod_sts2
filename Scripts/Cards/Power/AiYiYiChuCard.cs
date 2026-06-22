@@ -19,7 +19,7 @@ public class AiYiYiChuCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<AiYiYiChuPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<AiYiYiChuPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
     protected override void OnUpgrade()

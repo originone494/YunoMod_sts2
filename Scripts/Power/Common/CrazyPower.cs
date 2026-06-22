@@ -30,7 +30,7 @@ public class CrazyPower : YunoBasePower
         return 1m;
     }
 
-    public override async Task AfterSideTurnStart(CombatSide side, CombatState combatState)
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Side) return;
         Flash();

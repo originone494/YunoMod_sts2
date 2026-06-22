@@ -21,12 +21,12 @@ public class FeedDiaryRelic : YunoBaseRelic
 
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, CombatState combatState)
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
         if (player != Owner) return;
         if (Owner.Creature.CombatState!.RoundNumber > 1) return;
 
-        await PowerCmd.Apply<DiaryPower>(Owner.Creature, 1, base.Owner.Creature, null);
+        await PowerCmd.Apply<DiaryPower>(choiceContext, Owner.Creature, 1, base.Owner.Creature, null);
 
         List<CardModel> selected = (from c in PileType.Draw.GetPile(Owner).Cards
                                     where c.DynamicVars.ContainsKey("Damage") || c.DynamicVars.ContainsKey("Block")

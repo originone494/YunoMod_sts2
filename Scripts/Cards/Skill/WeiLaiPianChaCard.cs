@@ -15,10 +15,13 @@ namespace YunoMod.Scripts.Cards.Skill;
 
 public class WeiLaiPianChaCard : YunoBaseCard
 {
-    public WeiLaiPianChaCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public WeiLaiPianChaCard() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
 
     }
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -38,7 +41,7 @@ public class WeiLaiPianChaCard : YunoBaseCard
         HoverTipFactory.FromPower<DexterityPower>(),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -50,13 +53,13 @@ public class WeiLaiPianChaCard : YunoBaseCard
 
             await CreatureCmd.Damage(choiceContext, Owner.Creature, damage, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
 
-            await PowerCmd.Apply<BaoZaPower>(Owner.Creature, damage, Owner.Creature, this);
+            await PowerCmd.Apply<BaoZaPower>(choiceContext, Owner.Creature, damage, Owner.Creature, this);
 
         }
         else
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
-            await PowerCmd.Apply<DexterityPower>(Owner.Creature, DynamicVars.Dexterity.IntValue, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, DynamicVars.Strength.BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, DynamicVars.Dexterity.IntValue, Owner.Creature, this);
         }
     }
 

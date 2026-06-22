@@ -31,7 +31,7 @@ public class AnZhongGuanChaCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<AnZhongGuanChaPower>(Owner.Creature, DynamicVars[_drawKey].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<AnZhongGuanChaPower>(choiceContext, Owner.Creature, DynamicVars[_drawKey].IntValue, Owner.Creature, this);
 
     }
 

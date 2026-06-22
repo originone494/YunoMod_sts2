@@ -27,13 +27,13 @@ public class WuYiZhongTingCard : YunoBaseCard
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
-        await PowerCmd.Apply<WuYiZhongTingPower>(Owner.Creature, DynamicVars[_drawKey].IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<WuYiZhongTingPower>(choiceContext, Owner.Creature, DynamicVars[_drawKey].IntValue, Owner.Creature, this);
 
     }
 

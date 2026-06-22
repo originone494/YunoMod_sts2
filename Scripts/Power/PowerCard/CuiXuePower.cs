@@ -18,7 +18,7 @@ public class CuiXuePower : YunoBasePower
     CardPlay cardPlay
 )
     {
-        if (cardPlay.Card.Owner.Creature == base.Owner && cardPlay.Card.HasModKeyword(YunoKeywords.Dagger) && cardPlay.Card.Type == CardType.Attack)
+        if (cardPlay.Card.Owner.Creature == base.Owner && cardPlay.Card.Keywords.Contains(YunoKeywords.Dagger) && cardPlay.Card.Type == CardType.Attack)
         {
             for (int i = 0; i < Amount; i++)
             {

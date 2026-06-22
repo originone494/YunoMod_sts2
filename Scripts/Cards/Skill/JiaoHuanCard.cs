@@ -50,14 +50,14 @@ public class JiaoHuanCard : YunoBaseCard
 
         if (dexterityAmount > 0)
         {
-            await PowerCmd.Apply<StrengthPower>(Owner.Creature, dexterityAmount, Owner.Creature, this);
+            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, dexterityAmount, Owner.Creature, this);
         }
         if (strengthAmount > 0)
         {
-            await PowerCmd.Apply<DexterityPower>(Owner.Creature, strengthAmount, Owner.Creature, this);
+            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, strengthAmount, Owner.Creature, this);
         }
 
-        await PowerCmd.Apply<JiaoHuanPower>(Owner.Creature, 1, Owner.Creature, this);
+        await PowerCmd.Apply<JiaoHuanPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
 
     }
 

@@ -32,12 +32,13 @@ public class NiShuoShenMeCard : YunoBaseCard, IOnLingHuo
         new PowerVar<WeakPower>(1)
     };
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger, YunoKeywords.LingHuo];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger, YunoKeywords.LingHuo];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
     HoverTipFactory.FromPower<LiuXuePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
     {
@@ -54,7 +55,7 @@ public class NiShuoShenMeCard : YunoBaseCard, IOnLingHuo
 
         await ToolCmd.DaggerAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue);
 
-        await PowerCmd.Apply<WeakPower>(CombatState!.HittableEnemies, DynamicVars.Weak.IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, CombatState!.HittableEnemies, DynamicVars.Weak.IntValue, Owner.Creature, this);
 
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);

@@ -27,12 +27,13 @@ public class ChuXueCard : YunoBaseCard
 
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
 
         protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<LiuXuePower>(),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Dagger),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
     
@@ -43,7 +44,7 @@ public class ChuXueCard : YunoBaseCard
 
         await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
 
-        await PowerCmd.Apply<LiuXuePower>(cardPlay.Target!, DynamicVars[_LiuXuePowerKey].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<LiuXuePower>(choiceContext, cardPlay.Target!, DynamicVars[_LiuXuePowerKey].BaseValue, Owner.Creature, this);
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }

@@ -29,7 +29,8 @@ public class WeiXieCard : YunoBaseCard
 
     ];
 
-       protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Dagger];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
+
 
 
 
@@ -39,12 +40,7 @@ public class WeiXieCard : YunoBaseCard
 
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<WeiXiePower>(cardPlay.Target, 1, Owner.Creature, this);
-
-        if (cardPlay.Target.Monster!.IntendsToAttack)
-        {
-            await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
-        }
+        await PowerCmd.Apply<WeiXiePower>(choiceContext, cardPlay.Target, 1, Owner.Creature, this);
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }

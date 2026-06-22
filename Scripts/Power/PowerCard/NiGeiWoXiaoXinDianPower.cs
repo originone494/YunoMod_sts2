@@ -2,6 +2,7 @@ using System.Net.Http.Headers;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using YunoMod.Scripts.Base;
@@ -27,7 +28,7 @@ public class NiGeiWoXiaoXinDianPower : YunoBasePower
         {
             for (int i = 0; i < Amount; i++)
             {
-                PowerCmd.Apply<StrengthPower>(Owner, amount, Owner, null);
+                PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Owner, amount, Owner, null);
             }
         }
         modifiedAmount = amount;

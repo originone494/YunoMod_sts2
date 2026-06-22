@@ -24,18 +24,17 @@ public class ShaWanLeCard : YunoBaseCard
     {
     }
 
-    protected override IEnumerable<string> RegisteredKeywordIds => [YunoKeywords.Axe];
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust, YunoKeywords.Axe];
 
-        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<VulnerablePower>(),
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+    HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Axe),
-        ModKeywordRegistry.CreateHoverTip(YunoKeywords.Stance),
+        HoverTipFactory.FromKeyword(YunoKeywords.Axe),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -44,17 +43,14 @@ public class ShaWanLeCard : YunoBaseCard
         await ToolCmd.AxeAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue);
 
 
-        // 对所有敌人造成伤害
         foreach (var enemy in CombatState!.HittableEnemies)
         {
-            // 施加基础易伤层数
-            await PowerCmd.Apply<VulnerablePower>(enemy, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
 
-            // 获取当前易伤层数并翻倍（叠加现有层数）
             int currentVuln = enemy.GetPowerAmount<VulnerablePower>();
             if (currentVuln > 0)
             {
-                await PowerCmd.Apply<VulnerablePower>(enemy, currentVuln, Owner.Creature, this);
+                await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, currentVuln, Owner.Creature, this);
             }
         }
 
@@ -63,6 +59,6 @@ public class ShaWanLeCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        DynamicVars.Vulnerable.UpgradeValueBy(1);
     }
 }
