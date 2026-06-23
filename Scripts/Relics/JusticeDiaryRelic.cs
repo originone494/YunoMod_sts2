@@ -43,7 +43,7 @@ public class JusticeDiaryRelic : YunoBaseRelic
         Flash();
 
 
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(),combatState.HittableEnemies, result.UnblockedDamage, ValueProp.Unpowered, null, null);
+        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), combatState.HittableEnemies, result.UnblockedDamage * 2, ValueProp.Unpowered, null, null);
 
     }
 

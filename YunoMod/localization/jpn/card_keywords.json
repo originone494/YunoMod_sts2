@@ -1,0 +1,18 @@
+{
+    "YUNO_MOD_KEYWORD_DAGGER.description": "[gold]構え[/gold]の一つ。[gold]短剣[/gold]カードで攻撃時、対象に1層の[gold]出血[/gold]を付与。[gold]短剣[/gold]カードを使用すると1層の[gold]短剣[/gold]を獲得（上限12層）。構え終了時、ランダムな敵に4ダメージを[gold]短剣[/gold]層数回繰り返す。",
+    "YUNO_MOD_KEYWORD_DAGGER.title": "短剣",
+    "YUNO_MOD_KEYWORD_AXE.description": "[gold]構え[/gold]の一つ。[gold]斧[/gold]カードは一般に高威力。[gold]斧[/gold]カードを使用すると1層の[gold]斧[/gold]を獲得（上限8層）。構え終了時、最もHPの高い敵に[gold]斧[/gold]層数×8ダメージ。",
+    "YUNO_MOD_KEYWORD_AXE.title": "斧",
+    "YUNO_MOD_KEYWORD_GUN.description": "[gold]構え[/gold]の一つ。[gold]銃[/gold]カードは一般に低威力・多段攻撃。[gold]銃[/gold]カードを使用すると1層の[gold]銃[/gold]を獲得（上限6層）。構え終了時、全敵に4ダメージを[gold]銃[/gold]層数回繰り返す。",
+    "YUNO_MOD_KEYWORD_GUN.title": "銃",
+    "YUNO_MOD_KEYWORD_SWORD.description": "[gold]構え[/gold]の一つ。[gold]刃[/gold]カードを使用すると1層の[gold]刃[/gold]を獲得（上限1層）。構え終了時、{Energy:energyIcons()}を得る。",
+    "YUNO_MOD_KEYWORD_SWORD.title": "刃",
+    "YUNO_MOD_KEYWORD_LING_HUO.description": "[gold]機敏[/gold]カードが[gold]山札[/gold]または[gold]手札[/gold]から[gold]捨て札[/gold]に送られた時、それをプレイする。[gold]機敏[/gold]の後に効果が記されている場合、プレイせず代わりにその効果を発動する。",
+    "YUNO_MOD_KEYWORD_LING_HUO.title": "機敏",
+    "YUNO_MOD_KEYWORD_FORESEE.description": "[gold]山札[/gold]の上からX枚を見て、任意の枚数を[gold]捨て札[/gold]に送り、残りを元の順番で山札の上に戻す。",
+    "YUNO_MOD_KEYWORD_FORESEE.title": "予見",
+    "YUNO_MOD_KEYWORD_STANCE.description": "[gold]構え[/gold]は4種：[gold]短剣[/gold]、[gold]斧[/gold]、[gold]銃[/gold]、[gold]刃[/gold]。同時に持てる[gold]構え[/gold]は1つのみ。いずれかの[gold]構え[/gold]カードを使用するとその構えに入る。別の構えを持っている場合、現在の構えを終了して終了効果を発動し、新たな構えに入る。",
+    "YUNO_MOD_KEYWORD_STANCE.title": "構え",
+    "YUNO_MOD_KEYWORD_RETRIEVER.description": "特定の[gold]カードプール[/gold]から数枚のカードを手札に加える。",
+    "YUNO_MOD_KEYWORD_RETRIEVER.title": "検索"
+}

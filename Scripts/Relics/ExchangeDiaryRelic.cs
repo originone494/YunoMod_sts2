@@ -37,8 +37,7 @@ public class ExchangeDiaryRelic : YunoBaseRelic
         CardModel selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1), context: choiceContext, player: base.Owner, filter: null, source: this)).FirstOrDefault()!;
 
         if (selectedCard != null)
-
-            await CardPileCmd.Add(selectedCard, PileType.Draw, CardPilePosition.Top);
+            await CardCmd.Discard(choiceContext, selectedCard);
     }
 
     public override async Task AfterRemoved()

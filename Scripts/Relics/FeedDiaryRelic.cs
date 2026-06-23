@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
@@ -20,6 +21,13 @@ public class FeedDiaryRelic : YunoBaseRelic
     private CardModel? _fedCard;
 
     public override RelicRarity Rarity => RelicRarity.Common;
+
+    private const string _increaseKey = "IncreaseCount";
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+[
+    new DynamicVar(_increaseKey,2)
+];
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext choiceContext, ICombatState combatState)
     {
@@ -44,12 +52,12 @@ public class FeedDiaryRelic : YunoBaseRelic
 
         if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.DynamicVars.ContainsKey("Damage"))
         {
-            cardPlay.Card.DynamicVars.Damage.BaseValue += 1m;
+            cardPlay.Card.DynamicVars.Damage.BaseValue += DynamicVars[_increaseKey].BaseValue;
             Flash();
         }
         else if (cardPlay.Card.Type == CardType.Skill && cardPlay.Card.DynamicVars.ContainsKey("Block"))
         {
-            cardPlay.Card.DynamicVars.Block.BaseValue += 1m;
+            cardPlay.Card.DynamicVars.Block.BaseValue += DynamicVars[_increaseKey].BaseValue;
             Flash();
         }
     }

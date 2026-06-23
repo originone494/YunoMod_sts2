@@ -49,20 +49,16 @@ public class EscapeDiaryRelic : YunoBaseRelic
 
         // 检查是否有敌人意图攻击
         bool enemyAttacking = false;
-        int attackAmount = 0;
         foreach (Creature enemy in Owner.Creature.CombatState!.HittableEnemies)
         {
             if (enemy.Monster?.IntendsToAttack == true)
             {
                 enemyAttacking = true;
-                attackAmount += 1;
             }
         }
 
-        if (!enemyAttacking) return;
-
-        int round = Owner.Creature.CombatState!.RoundNumber;
-        int blockAmount = IsPrime(round) ? diaryAmount * 2 * attackAmount : diaryAmount * attackAmount;
+        int enemyAmount = Owner.Creature.CombatState!.HittableEnemies.Count();
+        int blockAmount = enemyAttacking ? diaryAmount * 2 * enemyAmount : diaryAmount * enemyAmount;
 
         Flash();
         await CreatureCmd.GainBlock(Owner.Creature, blockAmount, ValueProp.Unpowered, null);

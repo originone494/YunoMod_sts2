@@ -1,0 +1,14 @@
+{
+  "ACTIONS.header": "Acciones",
+  "ACTION_NAME.attack": "Ataque",
+  "ACTION_NAME.cast": "Hechizo",
+  "ACTION_NAME.die": "Muerte",
+  "ACTION_NAME.hurt": "Dolor",
+  "ACTION_NAME.revive": "Resurreción",
+  "ACTION_NAME.stun": "Aturdimiento",
+  "DESCRIPTION.placeholder": "La información de este monstruo aún no está disponible...",
+  "LOCKED.monsterName": "[lb]Bloqueado[rb]",
+  "LOCKED.monsterTitle": "Bloqueado",
+  "UNDER_CONSTRUCTION": "En construcción",
+  "UNSEEN.monsterName": "[lb]Sin datos[rb]"
+}

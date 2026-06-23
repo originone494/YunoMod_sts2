@@ -29,5 +29,8 @@ public class DiamondRingRelic : YunoBaseRelic
         _triggered = true;
         Flash();
         await PowerCmd.Apply<BufferPower>(new ThrowingPlayerChoiceContext(), Owner.Creature, 1, Owner.Creature, null);
+        await PowerCmd.Apply<VulnerablePower>(new ThrowingPlayerChoiceContext(), Owner.Creature.CombatState!.HittableEnemies, 1, Owner.Creature, null);
+        await PowerCmd.Apply<WeakPower>(new ThrowingPlayerChoiceContext(), Owner.Creature.CombatState!.HittableEnemies, 1, Owner.Creature, null);
+
     }
 }

@@ -46,6 +46,8 @@ public class TheWatcherRelic : YunoBaseRelic
 
         var card = combatState.CreateCard(template, Owner);
         card.EnergyCost.AddThisTurn(-card.EnergyCost.GetWithModifiers(CostModifiers.None));
+        card.AddKeyword(CardKeyword.Ethereal);
+
 
         Flash();
         await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner);

@@ -1,0 +1,17 @@
+{
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.aromaPrinciple": "[sine][blue]……待っている……[/blue][/sine]",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.banter.alive.endTurnPing": "……",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.banter.dead.endTurnPing": "……",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.cardsModifierDescription": "由乃のカードが報酬とショップに出現する。",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.cardsModifierTitle": "由乃カード",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.description": "迷い込んだ普通の市民。",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.eventDeathPrevention": "まだ続けなければ……",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.goldMonologue": "[sine]この金貨……何かに使えるかも……[/sine]",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.possessiveAdjective": "彼女の",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.pronounObject": "彼女",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.pronounPossessive": "彼女の",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.pronounSubject": "彼女",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.title": "我妻由乃",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.titleObject": "由乃",
+  "YUNO_MOD_CHARACTER_YUNO_CHARACTER.unlockText": "..."
+}
