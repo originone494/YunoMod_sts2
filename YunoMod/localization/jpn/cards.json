@@ -100,7 +100,7 @@
   "YUNO_MOD_CARD_FU_JI_CARD.title": "斧撃",
   "YUNO_MOD_CARD_FU_JI_CARD.description": "{Damage:diff()}ダメージを与え、{VulnerablePower:diff()}層の[gold]脆弱[/gold]を付与。",
   "YUNO_MOD_CARD_SHA_LE_NI_CARD.title": "殺す！",
-  "YUNO_MOD_CARD_SHA_LE_NI_CARD.description": "HPを2失い、{Damage:diff()}ダメージを{Repeat:diff()}回与える。\nキル時：{Heal:diff()}HP回復。",
+  "YUNO_MOD_CARD_SHA_LE_NI_CARD.description": "HPを{LoseHp:diff()}失い、{Damage:diff()}ダメージを{Repeat:diff()}回与える。\nキル時：{Heal:diff()}HP回復。",
   "YUNO_MOD_CARD_SI_SHA_CARD.title": "死闘",
   "YUNO_MOD_CARD_SI_SHA_CARD.description": "全敵に{Damage:diff()}ダメージを与える。回数は部屋内の敵の数。",
   "YUNO_MOD_CARD_DE_SHOU_CARD.title": "得手",

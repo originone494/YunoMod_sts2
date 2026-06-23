@@ -59,7 +59,7 @@ public static class ToolCmd
         var prefs = new CardSelectorPrefs(
             YunoSelectorPrefs.ForeseeSelectionPrompt,
             0,
-            1
+            cardsToScry.Count()
         );
 
         var cardsToDiscard = (await CardSelectCmd.FromSimpleGrid(

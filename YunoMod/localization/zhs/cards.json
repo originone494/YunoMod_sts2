@@ -100,7 +100,7 @@
   "YUNO_MOD_CARD_FU_JI_CARD.title": "斧击",
   "YUNO_MOD_CARD_FU_JI_CARD.description": "造成{Damage:diff()}点伤害，给予{VulnerablePower:diff()}层[gold]易伤[/gold]。",
   "YUNO_MOD_CARD_SHA_LE_NI_CARD.title": "杀了你！",
-  "YUNO_MOD_CARD_SHA_LE_NI_CARD.description": "失去2点生命值，造成{Damage:diff()}点伤害，重复{Repeat:diff()}次。\n击杀：回复{Heal:diff()}点生命值。",
+  "YUNO_MOD_CARD_SHA_LE_NI_CARD.description": "失去{LoseHp:diff()}点生命值，造成{Damage:diff()}点伤害，重复{Repeat:diff()}次。\n击杀：回复{Heal:diff()}点生命值。",
   "YUNO_MOD_CARD_SI_SHA_CARD.title": "厮杀",
   "YUNO_MOD_CARD_SI_SHA_CARD.description": "对所有敌人造成{Damage:diff()}点伤害，重复次数为房间内敌人数量。",
   "YUNO_MOD_CARD_DE_SHOU_CARD.title": "得手",

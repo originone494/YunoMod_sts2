@@ -100,7 +100,7 @@
   "YUNO_MOD_CARD_FU_JI_CARD.title": "Axe Strike",
   "YUNO_MOD_CARD_FU_JI_CARD.description": "Deal {Damage:diff()} damage. Apply {VulnerablePower:diff()} [gold]Vulnerable[/gold].",
   "YUNO_MOD_CARD_SHA_LE_NI_CARD.title": "I'll Kill You!",
-  "YUNO_MOD_CARD_SHA_LE_NI_CARD.description": "Lose 2 HP. Deal {Damage:diff()} damage {Repeat:diff()} times.\nKill: Heal {Heal:diff()} HP.",
+  "YUNO_MOD_CARD_SHA_LE_NI_CARD.description": "Lose {LoseHp:diff()} HP. Deal {Damage:diff()} damage {Repeat:diff()} times.\nKill: Heal {Heal:diff()} HP.",
   "YUNO_MOD_CARD_SI_SHA_CARD.title": "Deathmatch",
   "YUNO_MOD_CARD_SI_SHA_CARD.description": "Deal {Damage:diff()} damage to ALL enemies, repeated for each enemy in the room.",
   "YUNO_MOD_CARD_DE_SHOU_CARD.title": "Success",
