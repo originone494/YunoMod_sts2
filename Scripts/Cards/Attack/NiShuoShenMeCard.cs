@@ -28,7 +28,7 @@ public class NiShuoShenMeCard : YunoBaseCard, IOnLingHuo
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(5,ValueProp.Move),
+        new DamageVar(8,ValueProp.Move),
         new PowerVar<WeakPower>(1)
     };
 

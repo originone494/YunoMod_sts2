@@ -20,7 +20,7 @@ public class CiTuCard : YunoBaseCard
     [
         new DamageVar(5m, ValueProp.Move),
         new RepeatVar(1),
-        new DynamicVar(_DuiMuCount,3)
+        new DynamicVar(_DuiMuCount,5)
     ];
 
     public CiTuCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)

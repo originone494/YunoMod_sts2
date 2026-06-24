@@ -70,6 +70,6 @@
     "YUNO_MOD_RELIC_GLOVE_DOLL_RELIC.description": "Enemies with [gold]Poison[/gold] deal [blue]25[/blue]% less damage.",
     "YUNO_MOD_RELIC_GLOVE_DOLL_RELIC.flavor": " ",
     "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.title": "Search Diary",
-    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.description": "At the start of your turn, gain [gold]Vigor[/gold] equal to the [blue]number of Diaries you hold[/blue].",
+    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.description": "At the start of your turn, gain [gold]Vigor[/gold] equal to the [blue]number of Diaries you hold[/blue]. Upon pickup, obtain [blue]{DiaryCount:diff()}[/blue] random [gold]Diaries[/gold].",
     "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.flavor": " "
 }

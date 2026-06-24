@@ -15,7 +15,7 @@ public class YiJiaLuanZhenCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CardsVar(2),
+        new CardsVar(3),
     ];
 
     public YiJiaLuanZhenCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
@@ -27,17 +27,19 @@ public class YiJiaLuanZhenCard : YunoBaseCard
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel? selectedCard = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1), context: choiceContext, player: Owner, filter: null, source: this)).FirstOrDefault();
-		if (selectedCard != null)
-		{
-			await CardCmd.Exhaust(choiceContext, selectedCard);
-		}else{
-			return;
-		}
+        if (selectedCard != null)
+        {
+            await CardCmd.Exhaust(choiceContext, selectedCard);
+        }
+        else
+        {
+            return;
+        }
 
 
         // 根据牌的类型施加不同效果
@@ -63,6 +65,6 @@ public class YiJiaLuanZhenCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

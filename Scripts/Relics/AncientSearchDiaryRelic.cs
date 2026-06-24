@@ -4,6 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
@@ -13,6 +14,13 @@ namespace YunoMod.Scripts.Relics;
 public class AncientSearchDiaryRelic : YunoBaseRelic
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
+
+    private const string _DiaryCount = "DiaryCount";
+
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+[
+new DynamicVar(_DiaryCount,2)
+];
 
     public override async Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
@@ -45,6 +53,14 @@ public class AncientSearchDiaryRelic : YunoBaseRelic
     {
         await base.AfterObtained();
 
+        int amount = DynamicVars[_DiaryCount].IntValue;
+
+        for (int i = 0; i < amount; i++)
+            GetDiary();
+    }
+
+    private async void GetDiary()
+    {
         List<int> available = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         if (Owner.GetRelic<BreedDiaryRelic>() == null)

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -18,6 +17,19 @@ public class LiuXuePower : YunoBasePower
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side == CombatSide.Player)
+        {
+            Flash();
+
+            await CreatureCmd.Damage(choiceContext, base.Owner, base.Amount, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
+            await BleedHook.OnBleedDamage(choiceContext, Owner.CombatState!, Owner, Amount);
+            await PowerCmd.Decrement(this);
+        }
+
+
+    }
 
     public override async Task AfterDamageGiven(PlayerChoiceContext choiceContext, Creature? dealer, DamageResult result, ValueProp props, Creature target, CardModel? cardSource)
     {
@@ -25,7 +37,6 @@ public class LiuXuePower : YunoBasePower
         {
             await CreatureCmd.Damage(choiceContext, base.Owner, base.Amount, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
             await BleedHook.OnBleedDamage(choiceContext, Owner.CombatState!, Owner, Amount);
-            await PowerCmd.Decrement(this);
         }
     }
 }

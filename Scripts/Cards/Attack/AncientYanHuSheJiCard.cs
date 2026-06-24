@@ -20,7 +20,7 @@ public class AncientYanHuSheJiCard : YunoBaseCard
         new PowerVar<WeakPower>(3m),
     ];
 
-    public AncientYanHuSheJiCard() : base(0, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
+    public AncientYanHuSheJiCard() : base(0, CardType.Attack, CardRarity.Ancient, TargetType.AllEnemies)
     {
     }
 
@@ -34,11 +34,10 @@ public class AncientYanHuSheJiCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
 
-        await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature.CombatState!.HittableEnemies, DynamicVars.Weak.BaseValue, Owner.Creature, this);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
     }

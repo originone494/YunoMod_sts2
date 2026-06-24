@@ -31,6 +31,6 @@ public class KanPoCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_BlockCount].UpgradeValueBy(1m);
+        DynamicVars[_BlockCount].UpgradeValueBy(2m);
     }
 }

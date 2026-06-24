@@ -70,6 +70,6 @@
     "YUNO_MOD_RELIC_GLOVE_DOLL_RELIC.description": "[gold]毒[/gold]を持つ敵の与えるダメージが[blue]25[/blue]%減少。",
     "YUNO_MOD_RELIC_GLOVE_DOLL_RELIC.flavor": " ",
     "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.title": "追跡日記",
-    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.description": "ターン開始時、[blue]所持日記数[/blue]層の[gold]活力[/gold]を得る。",
+    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.description": "ターン開始時、[blue]所持日記数[/blue]層の[gold]活力[/gold]を得る。拾得時、ランダムな[gold]日記[/gold]を[blue]{DiaryCount:diff()}[/blue]個獲得する。",
     "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.flavor": " "
 }

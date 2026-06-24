@@ -23,6 +23,9 @@ namespace YunoMod.Scripts;
 
 [RegisterOwnedCardKeyword(nameof(Retriever), IconPath = "res://yuno.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
 
+
+[RegisterOwnedCardKeyword(nameof(YaZhi), IconPath = "res://yuno.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
+
 public class YunoKeywords
 {
     public static readonly CardKeyword Dagger = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Dagger)).GetModCardKeyword();
@@ -38,6 +41,7 @@ public class YunoKeywords
 
     public static readonly CardKeyword Retriever = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(Retriever)).GetModCardKeyword();
 
+    public static readonly CardKeyword YaZhi = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(YaZhi)).GetModCardKeyword();
 
 
 }

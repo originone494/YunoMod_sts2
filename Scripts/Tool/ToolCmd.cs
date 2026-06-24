@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Keywords;
+using YunoMod.Scripts.Cards.Other;
 using YunoMod.Scripts.Custom;
 using YunoMod.Scripts.Hook;
 using YunoMod.Scripts.Power;
@@ -133,6 +134,12 @@ public static class ToolCmd
         {
             await PowerCmd.Apply<AxePower>(choiceContext, player.Creature, 1, player.Creature, cardSource);
         }
+
+        var resultList = new List<CardPileAddResult>();
+        CardModel card = player.Creature.CombatState!.CreateCard<YaZhiCard>(player);
+        var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, player);
+        resultList.Add(addResult);
+        CardCmd.PreviewCardPileAdd(resultList, 2f);
     }
 
     public static async Task GunStance(PlayerChoiceContext choiceContext, Player player, CardModel cardSource)
@@ -373,7 +380,8 @@ public static class ToolCmd
         return list;
     }
 
-    public static async Task<IEnumerable<CardModel>> SelcetCardExhaust(PlayerChoiceContext choiceContext, Player player, PileType pileType, CardModel cardSource)
+    public static async Task<IEnumerable<CardModel>> SelcetCardExhaust(PlayerChoiceContext choiceContext, Player player, PileType pileType, CardModel cardSource,
+    int min = 1, int max = 1)
     {
         IEnumerable<CardModel> res = new List<CardModel>();
         if (pileType != PileType.Hand)
@@ -381,7 +389,7 @@ public static class ToolCmd
             List<CardModel> cardsIn = (from c in pileType.GetPile(player).Cards
                                        orderby c.Rarity, c.Id
                                        select c).ToList();
-            CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cardsIn, player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1))).FirstOrDefault()!;
+            CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cardsIn, player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, min, max))).FirstOrDefault()!;
 
             if (cardModel != null)
             {
@@ -391,7 +399,7 @@ public static class ToolCmd
         }
         else if (pileType == PileType.Hand)
         {
-            CardModel cardModel = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1), context: choiceContext, player: player, filter: null, source: cardSource)).FirstOrDefault()!;
+            CardModel cardModel = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, min, max), context: choiceContext, player: player, filter: null, source: cardSource)).FirstOrDefault()!;
             if (cardModel != null)
             {
                 await CardCmd.Exhaust(choiceContext, cardModel);

@@ -25,7 +25,7 @@ public class FanSheShenJingCard : YunoBaseCard, IOnLingHuo
 
     private const string _LingHuoCard = "LingHuoCard";
 
-    public FanSheShenJingCard() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public FanSheShenJingCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

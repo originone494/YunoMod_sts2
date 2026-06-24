@@ -18,17 +18,13 @@ public class CuiXuePower : YunoBasePower
     CardPlay cardPlay
 )
     {
-        if (cardPlay.Card.Owner.Creature == base.Owner && cardPlay.Card.Keywords.Contains(YunoKeywords.Dagger) && cardPlay.Card.Type == CardType.Attack)
+        if (cardPlay.Card.Owner.Creature == base.Owner && cardPlay.Card.Type == CardType.Attack)
         {
             for (int i = 0; i < Amount; i++)
             {
                 if (cardPlay.Target != null)
                 {
-                    if (cardPlay.Target.HasPower<LiuXuePower>())
-                    {
-                        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), base.Owner, cardPlay.Target.GetPowerAmount<LiuXuePower>(), ValueProp.Unblockable | ValueProp.Unpowered, null, null);
-                        await PowerCmd.Decrement(this);
-                    }
+                    await PowerCmd.Apply<LiuXuePower>(choiceContext, cardPlay.Target, Amount, Owner, null);
                 }
             }
         }

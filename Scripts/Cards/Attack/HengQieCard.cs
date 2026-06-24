@@ -19,7 +19,7 @@ public class HengQieCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(5m, ValueProp.Move),
+        new DamageVar(6m, ValueProp.Move),
     };
 
     public HengQieCard() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)

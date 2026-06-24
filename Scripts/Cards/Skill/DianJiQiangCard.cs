@@ -10,7 +10,7 @@ namespace YunoMod.Scripts.Cards.Skill;
 
 public class DianJiQiangCard : YunoBaseCard
 {
-    
+
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
@@ -28,7 +28,7 @@ public class DianJiQiangCard : YunoBaseCard
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -47,6 +47,6 @@ public class DianJiQiangCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Weak.UpgradeValueBy(1m);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

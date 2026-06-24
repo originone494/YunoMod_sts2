@@ -53,7 +53,7 @@ public class DiaryPower : YunoBasePower
             var resultList = new List<CardPileAddResult>();
 
             var card = Owner.CombatState!.CreateCard<ZhiShiYuanBoCard>(Owner.Player!);
-            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, Owner.Player);
+            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner.Player);
             resultList.Add(addResult);
             CardCmd.PreviewCardPileAdd(resultList, 2f);
 
@@ -64,7 +64,7 @@ public class DiaryPower : YunoBasePower
             Flash();
             var resultList = new List<CardPileAddResult>();
             var card = Owner.CombatState!.CreateCard<WanQianLunHuiCard>(Owner.Player!);
-            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, Owner.Player);
+            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, Owner.Player);
             resultList.Add(addResult);
             CardCmd.PreviewCardPileAdd(resultList, 2f);
 

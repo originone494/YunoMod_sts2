@@ -1,11 +1,11 @@
 {
-    "YUNO_MOD_KEYWORD_DAGGER.description": "A type of [gold]Stance[/gold]. Cards with [gold]Dagger[/gold] deal 1 [gold]Bleed[/gold] to the target on hit. Playing a [gold]Dagger[/gold] card grants 1 [gold]Dagger[/gold] (max 12). On stance exit, deal 4 damage to a random enemy, repeated [gold]Dagger[/gold] times.",
+    "YUNO_MOD_KEYWORD_DAGGER.description": "A type of [gold]Stance[/gold]. Cards with [gold]Dagger[/gold] deal [blue]1[/blue] [gold]Bleed[/gold] to the target on hit. Playing a [gold]Dagger[/gold] card grants [blue]1[/blue] [gold]Dagger[/gold] (max [blue]12[/blue]). On stance exit, deal [blue]4[/blue] damage to a random enemy, repeated [gold]Dagger[/gold] times.",
     "YUNO_MOD_KEYWORD_DAGGER.title": "Dagger",
-    "YUNO_MOD_KEYWORD_AXE.description": "A type of [gold]Stance[/gold]. Cards with [gold]Axe[/gold] generally have high damage. Playing an [gold]Axe[/gold] card grants 1 [gold]Axe[/gold] (max 8). On stance exit, deal [gold]Axe[/gold] × 8 damage to the enemy with the highest HP.",
+    "YUNO_MOD_KEYWORD_AXE.description": "A type of [gold]Stance[/gold]. Cards with [gold]Axe[/gold] generally have high damage. Playing an [gold]Axe[/gold] card grants [blue]1[/blue] [gold]Axe[/gold] (max [blue]8[/blue]), and sends [blue]1[/blue] [gold]Suppress[/gold] to the discard pile. On stance exit, deal [gold]Axe[/gold] × [blue]8[/blue] damage to the enemy with the highest HP.",
     "YUNO_MOD_KEYWORD_AXE.title": "Axe",
-    "YUNO_MOD_KEYWORD_GUN.description": "A type of [gold]Stance[/gold]. Cards with [gold]Gun[/gold] generally have low damage and multi-hit attacks. Playing a [gold]Gun[/gold] card grants 1 [gold]Gun[/gold] (max 6). On stance exit, deal 4 damage to ALL enemies, repeated [gold]Gun[/gold] times.",
+    "YUNO_MOD_KEYWORD_GUN.description": "A type of [gold]Stance[/gold]. Cards with [gold]Gun[/gold] generally have low damage and multi-hit attacks. Playing a [gold]Gun[/gold] card grants [blue]1[/blue] [gold]Gun[/gold] (max [blue]6[/blue]). On stance exit, deal [blue]4[/blue] damage to ALL enemies, repeated [gold]Gun[/gold] times.",
     "YUNO_MOD_KEYWORD_GUN.title": "Gun",
-    "YUNO_MOD_KEYWORD_SWORD.description": "A type of [gold]Stance[/gold]. Playing a [gold]Sword[/gold] card grants 1 [gold]Sword[/gold] (max 1). On stance exit, gain [Energy:energyIcons()].",
+    "YUNO_MOD_KEYWORD_SWORD.description": "A type of [gold]Stance[/gold]. Playing a [gold]Sword[/gold] card grants [blue]1[/blue] [gold]Sword[/gold] (max [blue]1[/blue]). On stance exit, gain [Energy:energyIcons()].",
     "YUNO_MOD_KEYWORD_SWORD.title": "Sword",
     "YUNO_MOD_KEYWORD_LING_HUO.description": "Cards with [gold]Nimble[/gold] are played when sent from your [gold]draw pile[/gold] or [gold]hand[/gold] to the [gold]discard pile[/gold]. If the card has an effect after [gold]Nimble[/gold], it triggers that effect instead of being played.",
     "YUNO_MOD_KEYWORD_LING_HUO.title": "Nimble",
@@ -14,5 +14,7 @@
     "YUNO_MOD_KEYWORD_STANCE.description": "[gold]Stances[/gold] come in four types: [gold]Dagger[/gold], [gold]Axe[/gold], [gold]Gun[/gold], and [gold]Sword[/gold]. You can only have one [gold]Stance[/gold] at a time. Playing a card of a [gold]Stance[/gold] type enters that stance. If you already have a different [gold]Stance[/gold], you exit the current one (triggering its exit effect) before entering the new one.",
     "YUNO_MOD_KEYWORD_STANCE.title": "Stance",
     "YUNO_MOD_KEYWORD_RETRIEVER.description": "Add a number of cards from a specific [gold]card pool[/gold] to your hand.",
-    "YUNO_MOD_KEYWORD_RETRIEVER.title": "Retrieve"
+    "YUNO_MOD_KEYWORD_RETRIEVER.title": "Retrieve",
+    "YUNO_MOD_KEYWORD_YA_ZHI.description": "Suppression: Cannot be shuffled into the draw pile. When [gold]Exhausted[/gold], play it.",
+    "YUNO_MOD_KEYWORD_YA_ZHI.title": "Suppression"
 }

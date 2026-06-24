@@ -59,6 +59,6 @@ public class ShaWanLeCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Vulnerable.UpgradeValueBy(1);
+        RemoveKeyword(CardKeyword.Exhaust);
     }
 }

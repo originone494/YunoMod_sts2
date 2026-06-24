@@ -12,20 +12,18 @@ namespace YunoMod.Scripts.Cards.Skill;
 
 public class DuQiCard : YunoBaseCard
 {
-    private const string _poisonPerTurnKey = "PoisonPerTurn";
+    private const string _poisonIncreaseKey = "PoisonPerTurn";
     private const string _totalPoisonKey = "TotalPoison";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DynamicVar(_totalPoisonKey, 1m),
-        new DynamicVar(_poisonPerTurnKey, 1m),
+        new DynamicVar(_poisonIncreaseKey, 2m),
+        new DynamicVar(_totalPoisonKey, 4m)
     };
 
     public DuQiCard() : base(1, CardType.Skill, CardRarity.Common, TargetType.AllEnemies)
     {
     }
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<PoisonPower>(),
@@ -35,28 +33,14 @@ public class DuQiCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        int totalPoison = DynamicVars[_totalPoisonKey].IntValue;
+        await PowerCmd.Apply<PoisonPower>(choiceContext, CombatState!.HittableEnemies, DynamicVars[_totalPoisonKey].BaseValue, Owner.Creature, this);
 
-        await PowerCmd.Apply<PoisonPower>(choiceContext, CombatState!.HittableEnemies, totalPoison, Owner.Creature, this);
-
-        int increaseAmount = DynamicVars[_poisonPerTurnKey].IntValue;
-        BuffFromPlay(increaseAmount);
+        DynamicVars[_totalPoisonKey].BaseValue += DynamicVars[_poisonIncreaseKey].BaseValue;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_poisonPerTurnKey].UpgradeValueBy(1m);
+        DynamicVars[_poisonIncreaseKey].UpgradeValueBy(1m);
     }
 
-    private void BuffFromPlay(int extraAmount)
-    {
-        int newValue = DynamicVars[_totalPoisonKey].IntValue + extraAmount;
-        DynamicVars[_totalPoisonKey].BaseValue = newValue;
-
-        // 同步到牌组版本（DeckVersion 是独立实例，需要单独更新 DynamicVar）
-        if (DeckVersion != null)
-        {
-            DeckVersion.DynamicVars[_totalPoisonKey].BaseValue = newValue;
-        }
-    }
 }

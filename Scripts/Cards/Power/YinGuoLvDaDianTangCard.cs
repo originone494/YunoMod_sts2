@@ -16,7 +16,7 @@ namespace YunoMod.Scripts.Cards.Skill;
 public class YinGuoLvDaDianTangCard : YunoBaseCard
 {
     private const string _diaryCount = "DiaryCount";
-    public YinGuoLvDaDianTangCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public YinGuoLvDaDianTangCard() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
 
     }
@@ -43,6 +43,6 @@ public class YinGuoLvDaDianTangCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars[_diaryCount].UpgradeValueBy(1);
     }
 }

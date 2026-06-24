@@ -43,6 +43,7 @@ public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
     protected override void OnUpgrade()
     {
         DynamicVars["LingHuoBlock"].UpgradeValueBy(3m);
+        DynamicVars.Block.UpgradeValueBy(2);
     }
 
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)

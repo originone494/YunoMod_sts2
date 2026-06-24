@@ -22,8 +22,8 @@ public class JieYinCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new RepeatVar(1),
-        new CardsVar(1),
-        new DamageVar(5,ValueProp.Move)
+        new CardsVar(2),
+        new DamageVar(6,ValueProp.Move)
     ];
 
     public JieYinCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
@@ -37,7 +37,7 @@ public class JieYinCard : YunoBaseCard
         HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

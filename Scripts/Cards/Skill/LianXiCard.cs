@@ -21,8 +21,10 @@ namespace YunoMod.Scripts.Cards.Skill;
 public class LianXiCard : YunoBaseCard, IOnLingHuo
 {
 
+    private const string _playLoveCount = "PlayLoveCount";
 
-    public LianXiCard() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+
+    public LianXiCard() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
 
     }
@@ -35,6 +37,7 @@ public class LianXiCard : YunoBaseCard, IOnLingHuo
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new PowerVar<LovePower>(7),
+        new DynamicVar(_playLoveCount,4)
 
     ];
 
@@ -43,7 +46,7 @@ public class LianXiCard : YunoBaseCard, IOnLingHuo
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
-        await CardCmd.AutoPlay(ctx, this, player.Creature);
+        await ToolCmd.GainLovePower(ctx, Owner, this, DynamicVars["LovePower"].IntValue);
     }
 
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
@@ -53,11 +56,12 @@ public class LianXiCard : YunoBaseCard, IOnLingHuo
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ToolCmd.GainLovePower(choiceContext, Owner, this, DynamicVars["LovePower"].IntValue);
+        await ToolCmd.GainLovePower(choiceContext, Owner, this, DynamicVars[_playLoveCount].IntValue);
+
     }
 
     protected override void OnUpgrade()
     {
-         DynamicVars["LovePower"].UpgradeValueBy(2);
+        DynamicVars["LovePower"].UpgradeValueBy(2);
     }
 }

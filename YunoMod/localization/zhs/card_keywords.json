@@ -1,11 +1,11 @@
 {
-    "YUNO_MOD_KEYWORD_DAGGER.description": "一种[gold]姿态[/gold]。带有[gold]匕首[/gold]字段的牌攻击时，给予目标1层[gold]流血[/gold]。打出带有[gold]匕首[/gold]字段的牌获得1层[gold]匕首[/gold]，上限12层。退出时，对随机敌人造成4点伤害，重复[gold]匕首层数[/gold]次。",
+    "YUNO_MOD_KEYWORD_DAGGER.description": "一种[gold]姿态[/gold]。带有[gold]匕首[/gold]字段的牌攻击时，给予目标[blue]1[/blue]层[gold]流血[/gold]。打出带有[gold]匕首[/gold]字段的牌获得[blue]1[/blue]层[gold]匕首[/gold]，上限[blue]12[/blue]层。退出时，对随机敌人造成[blue]4[/blue]点伤害，重复[gold]匕首层数[/gold]次。",
     "YUNO_MOD_KEYWORD_DAGGER.title": "匕首",
-    "YUNO_MOD_KEYWORD_AXE.description": "一种[gold]姿态[/gold]。带有[gold]斧头[/gold]字段的牌一般拥有较高的伤害。打出带有[gold]斧头[/gold]字段的牌获得1层[gold]斧头[/gold]，上限8层。退出时，对生命值最高的敌人造成[gold]斧头层数[/gold]*8点伤害。",
+    "YUNO_MOD_KEYWORD_AXE.description": "一种[gold]姿态[/gold]。带有[gold]斧头[/gold]字段的牌一般拥有较高的伤害。打出带有[gold]斧头[/gold]字段的牌获得[blue]1[/blue]层[gold]斧头[/gold]，上限[blue]8[/blue]层，并将[blue]1[/blue]张[gold]压制[/gold]送入弃牌堆。退出时，对生命值最高的敌人造成[gold]斧头层数[/gold]*[blue]8[/blue]点伤害。",
     "YUNO_MOD_KEYWORD_AXE.title": "斧头",
-    "YUNO_MOD_KEYWORD_GUN.description": "一种[gold]姿态[/gold]。带有[gold]枪械[/gold]字段的牌一般拥有较低的伤害和较多的攻击次数。打出带有[gold]枪械[/gold]字段的牌获得1层[gold]枪械[/gold]，上限6层。退出时，对所有敌人造成4点伤害，重复[gold]枪械层数[/gold]次。",
+    "YUNO_MOD_KEYWORD_GUN.description": "一种[gold]姿态[/gold]。带有[gold]枪械[/gold]字段的牌一般拥有较低的伤害和较多的攻击次数。打出带有[gold]枪械[/gold]字段的牌获得[blue]1[/blue]层[gold]枪械[/gold]，上限[blue]6[/blue]层。退出时，对所有敌人造成[blue]4[/blue]点伤害，重复[gold]枪械层数[/gold]次。",
     "YUNO_MOD_KEYWORD_GUN.title": "枪械",
-    "YUNO_MOD_KEYWORD_SWORD.description": "一种[gold]姿态[/gold]。打出带有[gold]刃[/gold]字段的牌获得1层[gold]刃[/gold]，上限1层。退出时，获得2费。",
+    "YUNO_MOD_KEYWORD_SWORD.description": "一种[gold]姿态[/gold]。打出带有[gold]刃[/gold]字段的牌获得[blue]1[/blue]层[gold]刃[/gold]，上限[blue]1[/blue]层。退出时，获得[blue]2[/blue]费。",
     "YUNO_MOD_KEYWORD_SWORD.title": "刃",
     "YUNO_MOD_KEYWORD_LING_HUO.description": "拥有[gold]灵活[/gold]字段的牌，从[gold]抽牌堆[/gold]或[gold]手牌[/gold]被送入[gold]弃牌堆[/gold]时，将其打出。若[gold]灵活[/gold]后注有效果，则不会打出，而是改为触发那些效果。",
     "YUNO_MOD_KEYWORD_LING_HUO.title": "灵活",
@@ -14,5 +14,7 @@
     "YUNO_MOD_KEYWORD_STANCE.description": "[gold]姿态[/gold]有四种，分别为：[gold]匕首[/gold]、[gold]斧头[/gold]、[gold]枪械[/gold]和[gold]刃[/gold]。你只能拥有其中一种[gold]姿态[/gold]。打出其中一种[gold]姿态[/gold]的牌时，会进入该状态。若你已拥有其他[gold]姿态[/gold]，则先退出原[gold]姿态[/gold]，触发其退出效果，再进入新[gold]姿态[/gold]。",
     "YUNO_MOD_KEYWORD_STANCE.title": "姿态",
     "YUNO_MOD_KEYWORD_RETRIEVER.description": "从某一[gold]卡池[/gold]中将若干张牌加入手牌。",
-    "YUNO_MOD_KEYWORD_RETRIEVER.title": "检索"
+    "YUNO_MOD_KEYWORD_RETRIEVER.title": "检索",
+    "YUNO_MOD_KEYWORD_YA_ZHI.description": "压制不会被洗入抽牌堆，被[gold]消耗[/gold]时，将其打出。",
+    "YUNO_MOD_KEYWORD_YA_ZHI.title": "压制"
 }
