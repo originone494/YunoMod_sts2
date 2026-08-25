@@ -19,7 +19,7 @@ public class NiXiangMingYunCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new CardsVar(1),
-        new DynamicVar(_ForeseeCount,10)
+        new DynamicVar(_ForeseeCount,15)
     ];
 
     public NiXiangMingYunCard() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)

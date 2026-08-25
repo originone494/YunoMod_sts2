@@ -27,7 +27,7 @@ public class ZhengYiZhiXingCard : YunoBaseCard
         new CalculatedDamageVar(ValueProp.Unblockable|ValueProp.Unpowered).WithMultiplier((CardModel card, Creature? _) => ( card.Owner != null) ? (int)(card.Owner.Creature.MaxHp * 0.1m) : 0),
     };
 
-    public ZhengYiZhiXingCard() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+    public ZhengYiZhiXingCard() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
 
@@ -40,14 +40,14 @@ public class ZhengYiZhiXingCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this, cardPlay)
                 .TargetingAllOpponents(Owner.Creature.CombatState!)
                 .WithHitFx("vfx/vfx_dramatic_stab")
                 .Execute(choiceContext);
 
         int damage = (int)(Owner.Creature.MaxHp * 0.1m);
 
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, damage, ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this);
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, damage, ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this, cardPlay);
 
         //await PowerCmd.Apply<BaoZaPower>(choiceContext, Owner.Creature, damage, Owner.Creature, this);
 

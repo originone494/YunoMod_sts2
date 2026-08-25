@@ -17,6 +17,7 @@ public class ShiShouCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
+        new BlockVar(8m, ValueProp.Move),
         new CardsVar(5)
     };
 
@@ -32,7 +33,8 @@ public class ShiShouCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-
+        // 获得格挡
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         List<CardModel> selectedCards = (await ToolCmd.SelcetCardExhaust(choiceContext, Owner, PileType.Discard, this)).ToList();
 
@@ -46,6 +48,7 @@ public class ShiShouCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
+        DynamicVars.Block.UpgradeValueBy(2m);   // 8 → 10
         DynamicVars.Cards.UpgradeValueBy(2);
     }
 }

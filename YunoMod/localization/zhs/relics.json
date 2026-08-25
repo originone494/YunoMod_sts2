@@ -1,10 +1,10 @@
 {
     "SEA_GLASS.YUNO_MOD_CHARACTER_YUNO_CHARACTER.title": "由乃玻璃",
     "YUNO_MOD_RELIC_RADAR_DIARY_RELIC.title": "无差别日记",
-    "YUNO_MOD_RELIC_RADAR_DIARY_RELIC.description": "回合开始时，[gold]预见[/gold][blue]3[/blue]，抽[blue]1[/blue]张牌。",
+    "YUNO_MOD_RELIC_RADAR_DIARY_RELIC.description": "回合开始时，[gold]预知[/gold][blue]3[/blue]。\n\n仅一次，右键该遗物后，回到塔底。",
     "YUNO_MOD_RELIC_RADAR_DIARY_RELIC.flavor": "如雷达一般，预知身边的一切事物。",
     "YUNO_MOD_RELIC_SEARCH_DIARY_RELIC.title": "跟踪日记",
-    "YUNO_MOD_RELIC_SEARCH_DIARY_RELIC.description": "回合开始时，获得[blue]1[/blue]层[gold]活力[/gold]。",
+    "YUNO_MOD_RELIC_SEARCH_DIARY_RELIC.description": "回合开始时，获得[blue]1[/blue]层[gold]活力[/gold]。\n\n使用卡牌对目标造成单体伤害时，目标获得[gold]注视[/gold]，其他目标失去[gold]注视[/gold]。",
     "YUNO_MOD_RELIC_SEARCH_DIARY_RELIC.flavor": " ",
     "YUNO_MOD_RELIC_BLOOD_DAGGER_RELIC.title": "染血匕首",
     "YUNO_MOD_RELIC_BLOOD_DAGGER_RELIC.description": "战斗开始时，给予所有敌人[blue]1[/blue]层[gold]致残[/gold] 。",
@@ -69,7 +69,7 @@
     "YUNO_MOD_RELIC_GLOVE_DOLL_RELIC.title": "手套玩偶",
     "YUNO_MOD_RELIC_GLOVE_DOLL_RELIC.description": "拥有[gold]中毒[/gold]的敌人造成的伤害减少[blue]25[/blue]%。",
     "YUNO_MOD_RELIC_GLOVE_DOLL_RELIC.flavor": " ",
-    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.title": "跟踪日记",
-    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.description": "回合开始时，获得[blue]持有日记数[/blue]层[gold]活力[/gold]。拾起时，获得[blue]{DiaryCount:diff()}[/blue]个随机[gold]日记[/gold]。",
+    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.title": "跟踪日记（新）",
+    "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.description": "回合开始时，获得[blue]持有日记数[/blue]层[gold]活力[/gold]。\n\n使用卡牌对目标造成单体伤害时，目标获得[gold]注视[/gold]，其他目标失去[gold]注视[/gold]。\n\n拾起时，获得[blue]{DiaryCount:diff()}[/blue]个随机[gold]日记[/gold]。",
     "YUNO_MOD_RELIC_ANCIENT_SEARCH_DIARY_RELIC.flavor": " "
 }

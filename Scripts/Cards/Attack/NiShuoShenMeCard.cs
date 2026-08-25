@@ -53,7 +53,7 @@ public class NiShuoShenMeCard : YunoBaseCard, IOnLingHuo
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        await ToolCmd.DaggerAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.DaggerAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, cardPlay);
 
         await PowerCmd.Apply<WeakPower>(choiceContext, CombatState!.HittableEnemies, DynamicVars.Weak.IntValue, Owner.Creature, this);
 

@@ -16,7 +16,7 @@ public class ShaWanLeCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(12m, ValueProp.Move),
+        new DamageVar(9m, ValueProp.Move),
         new PowerVar<VulnerablePower>(1m),
     ];
 
@@ -40,7 +40,7 @@ public class ShaWanLeCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        await ToolCmd.AxeAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.AxeAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, cardPlay);
 
 
         foreach (var enemy in CombatState!.HittableEnemies)

@@ -19,9 +19,9 @@ public class ZhanCard : YunoBaseCard
     private const string _prevPrevDamageKey = "PrevPrevDamage";
     private const decimal _baseDamage = 12m;
 
-    // 斐波那�??: F(1)=base, F(2)=base, F(n)=F(n-1)+F(n-2)
-    // PrevDamage  = 上一次��成的伤�?F(n-1)
-    // PrevPrevDamage = 上上次��成的伤�?F(n-2)
+    // 斐波那�??: F(1)=base, F(2)=base, F(n)=F(n-1)+F(n-2)
+    // PrevDamage  = 上一次��成的伤�?F(n-1)
+    // PrevPrevDamage = 上上次��成的伤�?F(n-2)
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
@@ -52,20 +52,20 @@ public class ZhanCard : YunoBaseCard
         int oldPrev = DynamicVars[_prevDamageKey].IntValue;
 
         await DamageCmd.Attack(currentDamage)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
         await ToolCmd.SwordStance(choiceContext, Owner, this);
 
-        // 斐波那�??: 推移前两次伤害�??�?
-        // newPrev = �????伤�??, newPrevPrev = 上�??伤�??(oldPrev)
+        // 斐波那�??: 推移前两次伤害�??�?
+        // newPrev = �????伤�??, newPrevPrev = 上�??伤�??(oldPrev)
         int newPrev = currentDamage;
         int newPrevPrev = oldPrev;
 
-        // 计算下�??伤�??
-        // 如果 newPrevPrev == 0，�??明只打出�?-1次，下�??仍为基�??伤�??
+        // 计算下�??伤�??
+        // 如果 newPrevPrev == 0，�??明只打出�?-1次，下�??仍为基�??伤�??
         int nextDamage = (newPrevPrev == 0)
             ? (int)_baseDamage
             : newPrev + newPrevPrev;

@@ -38,7 +38,7 @@ public class WanQianLunHuiCard : YunoBaseCard
 
 
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target!)
             .WithHitFx("vfx/vfx_attack_slash")  // VFX 路径
             .Execute(choiceContext);

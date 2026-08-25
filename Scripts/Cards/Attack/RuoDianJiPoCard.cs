@@ -51,7 +51,7 @@ public class RuoDianJiPoCard : YunoBaseCard, IOnLingHuo
 
         if (lowestHpEnemy == null) return;
 
-        await ToolCmd.DaggerAttack(choiceContext, lowestHpEnemy, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.DaggerAttack(choiceContext, lowestHpEnemy, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }

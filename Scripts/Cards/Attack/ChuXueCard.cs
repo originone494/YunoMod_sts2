@@ -42,9 +42,15 @@ public class ChuXueCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay);
 
         await PowerCmd.Apply<LiuXuePower>(choiceContext, cardPlay.Target!, DynamicVars[_LiuXuePowerKey].BaseValue, Owner.Creature, this);
+
+        if (cardPlay.Target.HasPower<ZhuShiPower>())
+        {
+            await PowerCmd.Apply<LiuXuePower>(choiceContext, cardPlay.Target!, DynamicVars[_LiuXuePowerKey].BaseValue, Owner.Creature, this);
+
+        }
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }

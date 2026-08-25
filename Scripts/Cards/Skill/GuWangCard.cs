@@ -44,7 +44,9 @@ public class GuWangCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         await CreatureCmd.TriggerAnim(base.Owner.Creature, "Cast", base.Owner.Character.CastAnimDelay);
-        List<CardModel> list = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, Owner.Creature.HasPower<DiaryPower>() ? Owner.Creature.GetPowerAmount<DiaryPower>() : 1), context: choiceContext, player: base.Owner, filter: null, source: this)).ToList();
+        //List<CardModel> list = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, Owner.Creature.HasPower<DiaryPower>() ? Owner.Creature.GetPowerAmount<DiaryPower>() : 1), context: choiceContext, player: base.Owner, filter: null, source: this)).ToList();
+        List<CardModel> list = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, 999), context: choiceContext, player: base.Owner, filter: null, source: this)).ToList();
+
 
         if (list.Count() == 0) return;
         foreach (CardModel item in list)

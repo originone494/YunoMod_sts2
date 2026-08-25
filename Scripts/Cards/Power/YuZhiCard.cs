@@ -17,13 +17,13 @@ namespace YunoMod.Scripts.Cards.Power;
 
 public class YuZhiCard : YunoBaseCard
 {
-    public YuZhiCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public YuZhiCard() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new PowerVar<StrengthPower>(1)
+        new PowerVar<StrengthPower>(3)
     };
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -31,7 +31,7 @@ public class YuZhiCard : YunoBaseCard
         HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -42,6 +42,6 @@ public class YuZhiCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        EnergyCost.UpgradeBy(-1);
+        DynamicVars["StrengthPower"].UpgradeValueBy(1);
     }
 }

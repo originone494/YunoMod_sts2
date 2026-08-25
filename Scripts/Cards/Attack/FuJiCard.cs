@@ -21,7 +21,7 @@ public class FuJiCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(12m, ValueProp.Move),
+        new DamageVar(9m, ValueProp.Move),
         new PowerVar<VulnerablePower>(2m),
     };
 
@@ -45,7 +45,7 @@ public class FuJiCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue, cardPlay);
 
         await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
 

@@ -37,7 +37,7 @@ public class BadEndCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, 3, ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this);
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, 3, ValueProp.Unblockable | ValueProp.Unpowered, Owner.Creature, this, cardPlay);
 
         var drawList = await CardPileCmd.Draw(choiceContext, 10 - Owner.PlayerCombatState!.Hand.Cards.Count, Owner);
 

@@ -49,7 +49,7 @@ public class QiuTiCard : YunoBaseCard
             int repeatCount = Owner.Creature.GetPowerAmount<DiaryPower>();
 
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .FromCard(this, cardPlay)
                 .TargetingAllOpponents(Owner.Creature.CombatState!)
                 .WithHitCount(repeatCount)
                 .WithHitFx("vfx/vfx_dramatic_stab")

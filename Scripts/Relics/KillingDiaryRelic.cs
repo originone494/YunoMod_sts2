@@ -27,7 +27,7 @@ public class KillingDiaryRelic : YunoBaseRelic
 
     public override decimal ModifyDamageMultiplicative(
         Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (target == null || !target.IsMonster)
             return 1m;

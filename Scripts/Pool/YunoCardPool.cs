@@ -21,7 +21,7 @@ public class YunoCardPool : TypeListCardPoolModel
     public override Color EnergyOutlineColor => new(0.5f, 0.5f, 1f);
 
     // 如果你想用原版卡框换色，加这两行
-    private static readonly Material? _poolFrameMaterial = MaterialUtils.CreateReplaceHueShaderMaterial(0.5f, 0.5f, 1f);
+    private static readonly Material? _poolFrameMaterial = MaterialUtils.CreateReplaceHueShaderMaterial(245 / 255f, 162 / 255f, 192 / 255f);
 
     public override Material? PoolFrameMaterial => _poolFrameMaterial;
 

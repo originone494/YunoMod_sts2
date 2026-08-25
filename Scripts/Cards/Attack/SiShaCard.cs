@@ -39,7 +39,7 @@ public class SiShaCard : YunoBaseCard
         int amount = Owner.Creature.CombatState!.HittableEnemies.Count;
 
         if (amount > 0)
-            await ToolCmd.DaggerAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, amount);
+            await ToolCmd.DaggerAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, cardPlay, amount);
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }

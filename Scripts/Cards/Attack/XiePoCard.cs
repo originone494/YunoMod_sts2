@@ -20,8 +20,8 @@ public class XiePoCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(12m, ValueProp.Move),
-        new ComputedDynamicVar(_drawCount,0,card=> card !=null?PileType.Discard.GetPile(card.Owner).Cards
+        new DamageVar(9m, ValueProp.Move),
+        new ComputedDynamicVar(_drawCount,0,card=> card != null && card.CombatState != null ? PileType.Discard.GetPile(card.Owner).Cards
                 .Where(c => c.Tags.Contains(YunoTags.YaZhi))
                 .ToList().Count() : 0)
     };
@@ -43,7 +43,7 @@ public class XiePoCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay);
 
         await ToolCmd.AxeStance(choiceContext, Owner, this);
 

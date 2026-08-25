@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -33,7 +34,7 @@ public class YiYaHuanYaPower : YunoBasePower
 
     public override decimal ModifyDamageMultiplicative(
         Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
         if (target == null) return 1m;
         if (dealer != Owner) return 1m;

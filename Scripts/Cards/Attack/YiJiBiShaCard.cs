@@ -38,7 +38,7 @@ public class YiJiBiShaCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue, cardPlay);
 
 
         var suppressCards = PileType.Discard.GetPile(Owner).Cards

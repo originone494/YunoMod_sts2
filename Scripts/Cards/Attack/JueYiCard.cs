@@ -45,7 +45,7 @@ public class JueYiCard : YunoBaseCard
     {
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .TargetingAllOpponents(CombatState!)
             .WithHitCount(Owner.Creature.HasPower<LovePower>() ? Owner.Creature.GetPowerAmount<LovePower>() : 0)
             .WithHitFx("vfx/vfx_dramatic_stab")

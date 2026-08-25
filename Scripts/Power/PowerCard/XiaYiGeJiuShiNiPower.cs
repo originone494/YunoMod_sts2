@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using YunoMod.Scripts.Base;
 
 namespace YunoMod.Scripts.Power;
@@ -16,6 +17,8 @@ public class XiaYiGeJiuShiNiPower : YunoBasePower
     {
         if (side != Owner.Side) return;
         Flash();
-        await PlayerCmd.GainEnergy(1, Owner.Player!);
+        await PlayerCmd.GainEnergy(Amount, Owner.Player!);
+        await PowerCmd.Apply<ZhiCanPower>(new ThrowingPlayerChoiceContext(), CombatState!.HittableEnemies, Amount, Owner, null);
+
     }
 }

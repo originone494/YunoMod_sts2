@@ -31,7 +31,7 @@ public class AxePower : YunoBasePower
 
         if (targetEnemy != null)
         {
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targetEnemy, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, base.Owner, null);
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targetEnemy, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, base.Owner, null, null);
         }
     }
 

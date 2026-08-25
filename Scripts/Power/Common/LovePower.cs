@@ -19,6 +19,8 @@ public class LovePower : YunoBasePower
 
     private const string _blockGainKey = "BlockGain";
 
+    private int _love2Block => Amount;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DynamicVar(_blockGainKey, 0m),
@@ -29,7 +31,7 @@ public class LovePower : YunoBasePower
         if (side != CombatSide.Player) return;
         Flash();
 
-        await CreatureCmd.GainBlock(Owner, new BlockVar((Amount + 1) / 2, ValueProp.Unpowered), null);
+        await CreatureCmd.GainBlock(Owner, new BlockVar(_love2Block, ValueProp.Unpowered), null);
     }
 
     public override async Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)
@@ -54,6 +56,6 @@ public class LovePower : YunoBasePower
 
     private void UpdateBlockDisplay()
     {
-        DynamicVars[_blockGainKey].BaseValue = (Amount + 1) / 2;
+        DynamicVars[_blockGainKey].BaseValue = _love2Block;
     }
 }

@@ -38,7 +38,7 @@ public class SaoSheCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
     }

@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using MegaCrit.Sts2.Core.HoverTips;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Power;
 
@@ -26,18 +27,16 @@ public class PianZhiCard : YunoBaseCard
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        CardModel selectedCard = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1),
-            context: choiceContext,
-            player: Owner,
-            filter: null,
-            source: this
-        )).FirstOrDefault()!;
+        IEnumerable<CardModel> cards = await ToolCmd.SelcetCardExhaust(choiceContext, Owner, PileType.Discard, this);
+
+        if (cards.Count() <= 0) return;
+
+        CardModel selectedCard = cards.First();
 
         if (selectedCard != null)
         {

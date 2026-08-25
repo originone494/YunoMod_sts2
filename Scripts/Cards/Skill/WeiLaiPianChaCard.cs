@@ -15,12 +15,10 @@ namespace YunoMod.Scripts.Cards.Skill;
 
 public class WeiLaiPianChaCard : YunoBaseCard
 {
-    public WeiLaiPianChaCard() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public WeiLaiPianChaCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
 
     }
-
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -51,7 +49,7 @@ public class WeiLaiPianChaCard : YunoBaseCard
 
             int damage = (int)(Owner.Creature.CurrentHp - Owner.Creature.MaxHp * 0.4);
 
-            await CreatureCmd.Damage(choiceContext, Owner.Creature, damage, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this);
+            await CreatureCmd.Damage(choiceContext, Owner.Creature, damage, ValueProp.Unblockable | ValueProp.Unpowered | ValueProp.Move, this, cardPlay);
 
             await PowerCmd.Apply<BaoZaPower>(choiceContext, Owner.Creature, damage, Owner.Creature, this);
 

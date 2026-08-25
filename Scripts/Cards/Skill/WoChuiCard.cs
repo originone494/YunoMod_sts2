@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
@@ -29,7 +30,7 @@ public class WoChuiCard : YunoBaseCard
 
     ];
 
-    public WoChuiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
+    public WoChuiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
@@ -40,21 +41,22 @@ public class WoChuiCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        int strengthLoss = DynamicVars[_strengthKey].IntValue;
+        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        // 如果只有一个敌人，失去更多力量
-        if (CombatState!.HittableEnemies.Count == 1)
+
+        if (cardPlay.Target!.Block > 0)
         {
-            strengthLoss = DynamicVars[_strengthAloneKey].IntValue;
+            await CreatureCmd.LoseBlock(choiceContext, cardPlay.Target!, cardPlay.Target!.Block, this.Owner.Creature);
         }
-
-        await PowerCmd.Apply<PiercingWailPower>(choiceContext, CombatState!.HittableEnemies, strengthLoss, Owner.Creature, this);
+        foreach (var power in cardPlay.Target!.Powers)
+        {
+            if (power.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Buff)
+                await PowerCmd.Remove(power);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars[_strengthKey].UpgradeValueBy(2m);
-        DynamicVars[_strengthAloneKey].UpgradeValueBy(4m);
-
+        EnergyCost.UpgradeBy(-1);
     }
 }

@@ -44,12 +44,11 @@ public class BuDaoCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         int threshold = (int)DynamicVars[_thresholdKey].BaseValue;
 
         if (cardPlay.Target.IsAlive &&
-            cardPlay.Target.GetPowerAmount<WeakPower>() > 0 &&
             cardPlay.Target.CurrentHp <= threshold)
         {
             await CreatureCmd.Kill(cardPlay.Target);

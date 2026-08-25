@@ -42,7 +42,7 @@ public class QingKongDanJiaCard : YunoBaseCard
     {
 
         if (DynamicVars.Repeat.IntValue > 0)
-            await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+            await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
 

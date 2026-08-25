@@ -44,7 +44,7 @@ public class JieYinCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.IntValue, Owner);
 

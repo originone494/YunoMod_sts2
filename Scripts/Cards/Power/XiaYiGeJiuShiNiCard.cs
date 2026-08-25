@@ -35,7 +35,6 @@ public class XiaYiGeJiuShiNiCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<ZhiCanPower>(choiceContext, CombatState!.HittableEnemies, DynamicVars[_PowerCount].BaseValue, Owner.Creature, null);
 
         await PowerCmd.Apply<XiaYiGeJiuShiNiPower>(choiceContext, Owner.Creature, DynamicVars[_PowerCount].BaseValue, Owner.Creature, this);
 

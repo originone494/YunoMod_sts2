@@ -19,7 +19,7 @@ public class LianSheCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(2m, ValueProp.Move),
-        new RepeatVar(4),
+        new RepeatVar(6),
     };
 
 
@@ -37,7 +37,7 @@ public class LianSheCard : YunoBaseCard
     {
 
 
-        await ToolCmd.GunAttackRandomEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.GunAttackRandomEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
 
@@ -50,13 +50,13 @@ public class LianSheCard : YunoBaseCard
         DynamicVars.Damage.UpgradeValueBy(1);
     }
 
-    protected override PileType GetResultPileTypeForCardPlay()
+    protected override CardLocation GetResultLocationForCardPlay()
     {
-        PileType resultPileTypeForCardPlay = base.GetResultPileTypeForCardPlay();
-        if (resultPileTypeForCardPlay != PileType.Discard)
+        CardLocation result = base.GetResultLocationForCardPlay();
+        if (result.pileType != PileType.Discard)
         {
-            return resultPileTypeForCardPlay;
+            return result;
         }
-        return PileType.Hand;
+        return result with { pileType = PileType.Hand };
     }
 }

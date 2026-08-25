@@ -1,60 +1,71 @@
+using System.Linq;
+using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using YunoMod.Scripts.Base;
-using YunoMod.Scripts.Power;
-using YunoMod.Scripts.Tool;
-using MegaCrit.Sts2.Core.HoverTips;
-
 using STS2RitsuLib.Keywords;
+using YunoMod.Scripts.Base;
+using YunoMod.Scripts.Cards.Other;
+using YunoMod.Scripts.Tool;
+
 namespace YunoMod.Scripts.Cards.Attack;
 
 public class BaoHuNiCard : YunoBaseCard
 {
+    private const string _stabCountKey = "StabCount";
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CalculationBaseVar(11m),
-        new CalculationExtraVar(1m),
-        new ExtraDamageVar(1m),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => ( card.Owner != null) ? card.Owner.Creature.GetPowerAmount<LovePower>() : 0),
-        new CalculatedBlockVar(ValueProp.Move).WithMultiplier((CardModel card, Creature? _) => ( card.Owner != null) ? card.Owner.Creature.GetPowerAmount<LovePower>() : 0)
+        new DamageVar(9m, ValueProp.Move),   // 造成 9 点伤害（{Damage:diff()}）
+        new DynamicVar(_stabCountKey, 1m),   // 抽到时加入的刺伤数量（{StabCount:diff()}）
     ];
 
-
-    public BaoHuNiCard() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public BaoHuNiCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
-
     public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Dagger];
 
-        protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<LovePower>(),
-        HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(YunoKeywords.Stance),
+        HoverTipFactory.FromCard<CiShangCard>()
+
     ];
-
-    
-
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.CalculatedDamage.BaseValue);
+        // 造成9点伤害
+        await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.IntValue, cardPlay);
 
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.CalculatedBlock.Calculate(cardPlay.Target), DynamicVars.CalculatedBlock.Props, cardPlay);
+        // 丢弃手牌所有灵活卡
+        var hand = PileType.Hand.GetPile(Owner);
+        foreach (var card in hand.Cards.Where(c => c.Keywords.Contains(YunoKeywords.LingHuo)).ToList())
+        {
+            await CardCmd.Discard(choiceContext, card);
+        }
+    }
 
-        await ToolCmd.DaggerStance(choiceContext, Owner, this);
+    // 抽到时，将 N 张带有灵活的「刺伤」加入手牌
+    public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
+    {
+        if (card != this) return;
+
+        for (int i = 0; i < DynamicVars[_stabCountKey].IntValue; i++)
+        {
+            CardModel stab = Owner.Creature.CombatState!.CreateCard<CiShangCard>(Owner);
+            stab.AddModKeyword(YunoKeywords.LingHuo);
+            await CardPileCmd.Add(stab, PileType.Hand);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars.CalculationExtra.UpgradeValueBy(1m);
-        DynamicVars.ExtraDamage.UpgradeValueBy(1m);
+        DynamicVars[_stabCountKey].UpgradeValueBy(1);
     }
 }

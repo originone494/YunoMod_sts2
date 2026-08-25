@@ -22,7 +22,7 @@ public class PoTingCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(1m, ValueProp.Move),
+        new DamageVar(2m, ValueProp.Move),
         new RepeatVar(3),
     };
 
@@ -39,7 +39,7 @@ public class PoTingCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.GunAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         List<CardModel> drawPile = PileType.Draw.GetPile(Owner).Cards.Where(card => card.Type == CardType.Attack).ToList();
         IEnumerable<CardModel> drawCard = await CardSelectCmd.FromSimpleGrid(choiceContext, drawPile, Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1));
@@ -70,7 +70,6 @@ public class PoTingCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(1);
         DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

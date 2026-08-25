@@ -55,10 +55,10 @@ public class CiTuCard : YunoBaseCard
         }
 
         if (amount > 0)
-            await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue + 1);
+            await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue + 1);
         else
 
-            await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
+            await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay);
 
         await ToolCmd.DaggerStance(choiceContext, Owner, this);
     }

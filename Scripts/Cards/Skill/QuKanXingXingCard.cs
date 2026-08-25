@@ -21,7 +21,7 @@ public class QuKanXingXingCard : YunoBaseCard
         new DynamicVar(_discardKey, 3m),
     ];
 
-    public QuKanXingXingCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+    public QuKanXingXingCard() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

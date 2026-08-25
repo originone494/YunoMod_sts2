@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.GameInfo.Objects;
 using STS2RitsuLib.Keywords;
 using YunoMod.Scripts.Cards.Other;
 using YunoMod.Scripts.Custom;
@@ -41,9 +42,9 @@ public static class ToolCmd
 
     }
 
-    public static async Task Foresee(PlayerChoiceContext choiceContext, Player player, int amount)
+    public static async Task<IEnumerable<CardModel>> Foresee(PlayerChoiceContext choiceContext, Player player, int amount)
     {
-        if (amount <= 0) return;
+        if (amount <= 0) return Array.Empty<CardModel>(); ;
 
         var drawPile = PileType.Draw.GetPile(player);
 
@@ -56,24 +57,53 @@ public static class ToolCmd
         var cardsToScry = drawPile.Cards.Take(amount).ToList();
 
 
-        if (cardsToScry.Count == 0) return;
+        if (cardsToScry.Count == 0) return Array.Empty<CardModel>();
         var prefs = new CardSelectorPrefs(
             YunoSelectorPrefs.ForeseeSelectionPrompt,
-            0,
-            cardsToScry.Count()
+            1,
+            1
         );
 
-        var cardsToDiscard = (await CardSelectCmd.FromSimpleGrid(
+        var selectedCards = (await CardSelectCmd.FromSimpleGrid(
             choiceContext,
             cardsToScry,
             player,
             prefs
         )).ToList();
-        foreach (var card in cardsToDiscard)
+
+        List<CardModel> result = new List<CardModel>();
+
+
+        // 选中的1张加入手牌
+        foreach (var card in selectedCards)
         {
-            await CardCmd.Discard(choiceContext, card);
+            await CardPileCmd.Add(card, PileType.Hand);
+            result.Add(card);
         }
-        await ForeseeHook.OnForesee(choiceContext, player, amount, cardsToDiscard.Count);
+
+        // 剩余牌送入弃牌堆
+        foreach (var card in cardsToScry)
+        {
+            if (!selectedCards.Contains(card))
+            {
+                await CardCmd.Discard(choiceContext, card);
+            }
+        }
+
+        await ForeseeHook.OnForesee(choiceContext, player, amount, cardsToScry.Count - selectedCards.Count);
+
+        return result;
+    }
+
+    public static async Task<IEnumerable<CardModel>> ForeseeAndDraw(PlayerChoiceContext choiceContext, Player player, int ForeseeAmount = 5, int DrawAmount = 0)
+    {
+        return await Foresee(choiceContext, player, ForeseeAmount);
+    }
+
+    public static async Task GainLovePower(PlayerChoiceContext choiceContext, Player player, CardModel source, int amount)
+    {
+        await PowerCmd.Apply<LovePower>(choiceContext, player.Creature, amount, player.Creature, source);
+        await LovePowerHook.OnGetLove(choiceContext, player, amount);
     }
 
     public static async Task<Stance> ExitAllStance(Player player)
@@ -166,10 +196,10 @@ public static class ToolCmd
         }
     }
 
-    public static async Task<AttackCommand> DaggerAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, int repeat = 1)
+    public static async Task<AttackCommand> DaggerAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, CardPlay cardPlay, int repeat = 1)
     {
         var cmd = await DamageCmd.Attack(damage)
-        .FromCard(cardSource)
+        .FromCard(cardSource, cardPlay)
         .Targeting(target)
         .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_slash")
@@ -184,10 +214,10 @@ public static class ToolCmd
 
 
 
-    public static async Task<AttackCommand> DaggerAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
+    public static async Task<AttackCommand> DaggerAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, CardPlay cardPlay, int repeat = 1)
     {
         var cmd = await DamageCmd.Attack(damage)
-        .FromCard(cardSource)
+        .FromCard(cardSource, cardPlay)
         .TargetingAllOpponents(cardSource.Owner.Creature.CombatState!)
         .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_slash")
@@ -201,10 +231,10 @@ public static class ToolCmd
     }
 
 
-    public static async Task<AttackCommand> GunAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, int repeat = 1)
+    public static async Task<AttackCommand> GunAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, CardPlay cardPlay, int repeat = 1)
     {
         return await DamageCmd.Attack(damage)
-        .FromCard(cardSource)
+        .FromCard(cardSource, cardPlay)
         .Targeting(target)
         .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_blunt")
@@ -212,58 +242,47 @@ public static class ToolCmd
     }
 
 
-    public static async Task<AttackCommand> GunAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
+    public static async Task<AttackCommand> GunAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, CardPlay cardPlay, int repeat = 1)
     {
         return await DamageCmd.Attack(damage)
-        .FromCard(cardSource)
+        .FromCard(cardSource, cardPlay)
         .TargetingAllOpponents(cardSource.Owner.Creature.CombatState!)
         .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_blunt")
         .Execute(choiceContext);
     }
 
-    public static async Task<AttackCommand> GunAttackRandomEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
+    public static async Task<AttackCommand> GunAttackRandomEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, CardPlay cardPlay, int repeat = 1)
     {
         return await DamageCmd.Attack(damage)
-        .FromCard(cardSource)
+        .FromCard(cardSource, cardPlay)
         .TargetingRandomOpponents(cardSource.Owner.Creature.CombatState!)
         .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_blunt")
         .Execute(choiceContext);
     }
 
-    public static async Task<AttackCommand> AxeAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, int repeat = 1)
+    public static async Task<AttackCommand> AxeAttack(PlayerChoiceContext choiceContext, Creature target, CardModel cardSource, decimal damage, CardPlay cardPlay, int repeat = 1)
     {
         return await DamageCmd.Attack(damage)
-       .FromCard(cardSource)
+       .FromCard(cardSource, cardPlay)
        .Targeting(target)
        .WithHitCount(repeat)
        .WithHitFx("vfx/vfx_attack_blunt")
        .Execute(choiceContext);
     }
 
-    public static async Task<AttackCommand> AxeAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, int repeat = 1)
+    public static async Task<AttackCommand> AxeAttackAllEnemy(PlayerChoiceContext choiceContext, CardModel cardSource, decimal damage, CardPlay cardPlay, int repeat = 1)
     {
         return await DamageCmd.Attack(damage)
-        .FromCard(cardSource)
+        .FromCard(cardSource, cardPlay)
         .TargetingAllOpponents(cardSource.Owner.Creature.CombatState!)
         .WithHitCount(repeat)
         .WithHitFx("vfx/vfx_attack_blunt")
         .Execute(choiceContext);
     }
 
-    public static async Task<IEnumerable<CardModel>> ForeseeAndDraw(PlayerChoiceContext choiceContext, Player player, int ForeseeAmount = 3, int DrawAmount = 1)
-    {
-        await Foresee(choiceContext, player, ForeseeAmount);
-        return await CardPileCmd.Draw(choiceContext, DrawAmount, player);
 
-    }
-
-    public static async Task GainLovePower(PlayerChoiceContext choiceContext, Player player, CardModel source, int amount)
-    {
-        await PowerCmd.Apply<LovePower>(choiceContext, player.Creature, amount, player.Creature, source);
-        await LovePowerHook.OnGetLove(choiceContext, player, amount);
-    }
 
     public static async Task RetrieverDaggerCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
     {
@@ -389,6 +408,7 @@ public static class ToolCmd
             List<CardModel> cardsIn = (from c in pileType.GetPile(player).Cards
                                        orderby c.Rarity, c.Id
                                        select c).ToList();
+            if (cardsIn.Count <= 0) return res;
             CardModel cardModel = (await CardSelectCmd.FromSimpleGrid(choiceContext, cardsIn, player, new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, min, max))).FirstOrDefault()!;
 
             if (cardModel != null)

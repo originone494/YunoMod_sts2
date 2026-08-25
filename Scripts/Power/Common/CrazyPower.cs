@@ -19,7 +19,7 @@ public class CrazyPower : YunoBasePower
 
     public override decimal ModifyDamageMultiplicative(
         Creature? target, decimal amount, ValueProp props,
-        Creature? dealer, CardModel? cardSource)
+        Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
 
         if (dealer == Owner && cardSource != null && target != null && target.IsMonster && props.IsPoweredAttack())

@@ -29,7 +29,7 @@ public class YaZhiCard : YunoBaseCard
 
 
     public YaZhiCard
-    () : base(0, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
+    () : base(1, CardType.Attack, CardRarity.Token, TargetType.AnyEnemy)
     {
     }
 
@@ -45,7 +45,7 @@ public class YaZhiCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay);
 
         await ToolCmd.AxeStance(choiceContext, Owner, this);
     }

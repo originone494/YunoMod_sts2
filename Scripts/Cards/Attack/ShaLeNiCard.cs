@@ -48,11 +48,11 @@ public class ShaLeNiCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, new DamageVar(DynamicVars[_LoseHpKey].IntValue, ValueProp.Unpowered | ValueProp.Unblockable), this);
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, new DamageVar(DynamicVars[_LoseHpKey].IntValue, ValueProp.Unpowered | ValueProp.Unblockable), this, cardPlay);
 
         bool shouldTriggerFatal = cardPlay.Target.Powers.All((PowerModel p) => p.ShouldOwnerDeathTriggerFatal());
 
-        AttackCommand attackCommand = await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        AttackCommand attackCommand = await ToolCmd.DaggerAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         if (shouldTriggerFatal && attackCommand.Results.SelectMany((List<DamageResult> r) => r).Any((DamageResult r) => r.WasTargetKilled))
         {

@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
+using YunoMod.Scripts.Cards.Other;
 
 namespace YunoMod.Scripts.Power;
 
@@ -47,13 +48,15 @@ public class DaggerPower : YunoBasePower
     }
     public override async Task AfterRemoved(Creature oldOwner)
     {
+        // 每有一层，就对随机敌人打出一张刺伤
         for (int i = 0; i < Amount; i++)
         {
             await Cmd.CustomScaledWait(0.1f, 0.2f);
             Creature? creature = Owner.Player!.RunState.Rng.CombatTargets.NextItem(Owner.CombatState!.HittableEnemies);
             if (creature != null)
             {
-                await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), creature, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, base.Owner);
+                CardModel stab = Owner.CombatState!.CreateCard<CiShangCard>(Owner.Player!);
+                await CardCmd.AutoPlay(new ThrowingPlayerChoiceContext(), stab, creature);
             }
         }
     }

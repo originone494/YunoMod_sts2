@@ -49,7 +49,7 @@ public class XueJianCard : YunoBaseCard
         bool getBlock = cardPlay.Target.GetPowerAmount<VulnerablePower>() > 0;
 
         var damage = DynamicVars.Damage.BaseValue;
-        AttackCommand attackCommand = await ToolCmd.AxeAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue);
+        AttackCommand attackCommand = await ToolCmd.AxeAttack(choiceContext, cardPlay.Target, this, DynamicVars.Damage.BaseValue, cardPlay);
 
         if (getBlock) await CreatureCmd.GainBlock(Owner.Creature, attackCommand.Results.SelectMany((List<DamageResult> r) => r).Sum((DamageResult r) => r.TotalDamage + r.OverkillDamage), ValueProp.Move, cardPlay);
 

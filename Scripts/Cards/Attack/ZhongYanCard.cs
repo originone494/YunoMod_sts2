@@ -38,7 +38,7 @@ public class ZhongYanCard : YunoBaseCard
     {
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                        .FromCard(this)
+                        .FromCard(this, cardPlay)
                         .TargetingAllOpponents(Owner.Creature.CombatState!)
                         .WithHitFx("vfx/vfx_dramatic_stab")
                         .Execute(choiceContext);

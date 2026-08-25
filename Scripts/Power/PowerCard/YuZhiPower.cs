@@ -25,8 +25,8 @@ public class YuZhiPower : YunoBasePower, IOnForesee
 
         foreach (var enemy in player.Creature.CombatState!.HittableEnemies)
         {
-            PowerCmd.Apply<StrengthPower>(ctx, enemy, Amount, Owner, null);
-            PowerCmd.Apply<StrengthPower>(ctx, enemy, -2 * Amount, Owner, null);
+            PowerCmd.Apply<JiuShiNiTempDownPower>(new ThrowingPlayerChoiceContext(), enemy, 4 * Amount, Owner, null);
+
         }
         return Task.CompletedTask;
     }

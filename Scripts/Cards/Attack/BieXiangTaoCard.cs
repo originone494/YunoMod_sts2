@@ -18,7 +18,7 @@ public class BieXiangTaoCard : YunoBaseCard
     private const string _GrtCardCount = "GrtCardCount";
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(12m,ValueProp.Move),
+        new DamageVar(9m,ValueProp.Move),
         new DynamicVar(_GrtCardCount, 1),
         new BlockVar(7,ValueProp.Move)
     ];
@@ -41,10 +41,14 @@ public class BieXiangTaoCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue);
+        await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue, cardPlay);
 
-        var discardPile = PileType.Discard.GetPile(Owner);
-        var selectedCards = await CardSelectCmd.FromSimpleGrid(choiceContext, discardPile.Cards.ToList(), Owner,
+        // 从弃牌堆、消耗堆中选取牌加入手牌
+        var candidates = PileType.Discard.GetPile(Owner).Cards
+            .Concat(PileType.Exhaust.GetPile(Owner).Cards)
+            .ToList();
+
+        var selectedCards = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars[_GrtCardCount].IntValue));
 
         foreach (var card in selectedCards)

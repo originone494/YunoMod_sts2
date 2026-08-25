@@ -35,7 +35,7 @@ public class AncientYanHuSheJiCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
 
-        await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, DynamicVars.Repeat.IntValue);
+        await ToolCmd.GunAttackAllEnemy(choiceContext, this, DynamicVars.Damage.BaseValue, cardPlay, DynamicVars.Repeat.IntValue);
 
         await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature.CombatState!.HittableEnemies, DynamicVars.Weak.BaseValue, Owner.Creature, this);
 

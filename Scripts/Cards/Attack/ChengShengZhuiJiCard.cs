@@ -40,12 +40,12 @@ public class ChengShengZhuiJiCard : YunoBaseCard, IOnForesee
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
 
-        // 每使用一次永久成�?
+        // 每使用一次永久成�?
         DynamicVars.Damage.BaseValue += DynamicVars[_growthKey].BaseValue;
     }
 

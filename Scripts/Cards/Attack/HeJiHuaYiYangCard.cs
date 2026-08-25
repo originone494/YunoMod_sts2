@@ -20,7 +20,8 @@ public class HeJiHuaYiYangCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(11m, ValueProp.Move),
+        new DamageVar(8m, ValueProp.Move),
+        new BlockVar(8,ValueProp.Move),
         new CardsVar(1),
     };
 
@@ -40,13 +41,28 @@ public class HeJiHuaYiYangCard : YunoBaseCard
 
         // 造成伤害
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .Targeting(cardPlay.Target)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
 
+
+
         // 抽牌
-        await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
+
+        var card = await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
+
+        if (card == null) return;
+
+        if (card.First().Type == CardType.Attack)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .FromCard(this, cardPlay)
+                .Targeting(cardPlay.Target)
+                .WithHitFx("vfx/vfx_dramatic_stab")
+                .Execute(choiceContext);
+        else if (card.First().Type == CardType.Skill)
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+
     }
 
     protected override void OnUpgrade()

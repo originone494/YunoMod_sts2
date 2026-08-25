@@ -38,7 +38,7 @@ public class JinJiZhengYiHuHuanCard : YunoBaseCard
         if (IsUpgraded) damageAmount = Owner.Creature.MaxHp;
 
         await DamageCmd.Attack(damageAmount)
-            .FromCard(this)
+            .FromCard(this, cardPlay)
             .TargetingAllOpponents(CombatState!)
             .WithHitFx("vfx/vfx_dramatic_stab")
             .Execute(choiceContext);
