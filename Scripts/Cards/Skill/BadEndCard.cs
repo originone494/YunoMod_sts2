@@ -18,7 +18,6 @@ public class BadEndCard : YunoBaseCard
         new DamageVar(3,ValueProp.Unpowered |ValueProp.Unblockable),
         new BlockVar(1m, ValueProp.Move),
         new EnergyVar(1),
-        new PowerVar<StrengthPower>(1)
     ];
 
     public BadEndCard() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
@@ -28,7 +27,6 @@ public class BadEndCard : YunoBaseCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<LiuXuePower>(),
-        HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 

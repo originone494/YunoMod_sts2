@@ -17,7 +17,10 @@ public class ShouHuPower : YunoBasePower, IOnGetLove
 
     public async Task OnGetLove(PlayerChoiceContext ctx, Player player, int amount)
     {
-        await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner.CombatState!.HittableEnemies, base.Amount, ValueProp.Unpowered, null, null, null);
-
+        // 每获得1点爱意，对所有敌人造成 base.Amount 点伤害
+        for (int i = 0; i < amount; i++)
+        {
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner.CombatState!.HittableEnemies, base.Amount, ValueProp.Unpowered, null, null, null);
+        }
     }
 }

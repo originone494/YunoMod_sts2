@@ -13,15 +13,16 @@ using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Attack;
 
+// 斩：斐波那契伤害——F(1)=F(2)=基础伤害，F(n)=F(n-1)+F(n-2)；本场战斗内累计，战斗结束重置
 public class ZhanCard : YunoBaseCard
 {
     private const string _prevDamageKey = "PrevDamage";
     private const string _prevPrevDamageKey = "PrevPrevDamage";
     private const decimal _baseDamage = 12m;
+    private const decimal _upgradeDamage = 3m;
 
-    // 斐波那�??: F(1)=base, F(2)=base, F(n)=F(n-1)+F(n-2)
-    // PrevDamage  = 上一次��成的伤�?F(n-1)
-    // PrevPrevDamage = 上上次��成的伤�?F(n-2)
+    // PrevDamage  = 上一次打出的伤害 F(n-1)
+    // PrevPrevDamage = 上上次打出的伤害 F(n-2)
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
@@ -59,15 +60,14 @@ public class ZhanCard : YunoBaseCard
 
         await ToolCmd.SwordStance(choiceContext, Owner, this);
 
-        // 斐波那�??: 推移前两次伤害�??�?
-        // newPrev = �????伤�??, newPrevPrev = 上�??伤�??(oldPrev)
+        // 斐波那契推移：newPrev = 本次伤害，newPrevPrev = 上一次伤害
         int newPrev = currentDamage;
         int newPrevPrev = oldPrev;
 
-        // 计算下�??伤�??
-        // 如果 newPrevPrev == 0，�??明只打出�?-1次，下�??仍为基�??伤�??
+        // 计算下次伤害：F(2) 与 F(1) 相同（用本次实际伤害，升级加成自然保留）；
+        // 此后 F(n+1) = F(n) + F(n-1)
         int nextDamage = (newPrevPrev == 0)
-            ? (int)_baseDamage
+            ? currentDamage
             : newPrev + newPrevPrev;
 
         DynamicVars[_prevDamageKey].BaseValue = newPrev;
@@ -77,6 +77,15 @@ public class ZhanCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars.Damage.UpgradeValueBy(_upgradeDamage);
+    }
+
+    // 战斗结束重置斐波那契状态，基础伤害按升级状态恢复
+    public override Task AfterCombatEnd(MegaCrit.Sts2.Core.Rooms.CombatRoom room)
+    {
+        DynamicVars.Damage.BaseValue = _baseDamage + (IsUpgraded ? _upgradeDamage : 0m);
+        DynamicVars[_prevDamageKey].BaseValue = 0m;
+        DynamicVars[_prevPrevDamageKey].BaseValue = 0m;
+        return Task.CompletedTask;
     }
 }

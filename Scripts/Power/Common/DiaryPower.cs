@@ -6,6 +6,8 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Rewards;
+using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
@@ -59,7 +61,7 @@ public class DiaryPower : YunoBasePower
 
         }
 
-        if (round == 3 && amount >= 12)
+        if (round == 3 && amount >= 10)
         {
             Flash();
             var resultList = new List<CardPileAddResult>();
@@ -69,6 +71,18 @@ public class DiaryPower : YunoBasePower
             CardCmd.PreviewCardPileAdd(resultList, 2f);
 
         }
+    }
+
+    // 持有 12 个日记：每次战斗胜利后，获得 1 个随机遗物（放入战斗结束的奖励界面，可拿取/跳过）。
+    // 该钩子在所有玩家的 AfterCombatEnd 清空能力之前触发，DiaryPower 与层数仍有效；
+    // 奖励只会在胜利后被引擎发放（失败局不会进入奖励界面）。
+    public override async Task AfterCombatEnd(CombatRoom room)
+    {
+        if (Amount >= 12 && Owner.Player != null)
+        {
+            room.AddExtraReward(Owner.Player, new RelicReward(Owner.Player));
+        }
+        await Task.CompletedTask;
     }
 
     public async override Task AfterPowerAmountChanged(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, Creature? applier, CardModel? cardSource)

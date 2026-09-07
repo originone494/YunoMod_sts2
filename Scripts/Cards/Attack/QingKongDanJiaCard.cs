@@ -56,6 +56,14 @@ public class QingKongDanJiaCard : YunoBaseCard
         }
         return Task.CompletedTask;
     }
+
+    // 战斗结束重置重复次数（描述为"本场战斗中打出的枪械牌数量"）
+    public override Task AfterCombatEnd(MegaCrit.Sts2.Core.Rooms.CombatRoom room)
+    {
+        DynamicVars.Repeat.BaseValue = 0;
+        return Task.CompletedTask;
+    }
+
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(1);

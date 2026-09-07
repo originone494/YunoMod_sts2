@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Extensions;
 using MegaCrit.Sts2.Core.Factories;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -282,18 +283,34 @@ public static class ToolCmd
         .Execute(choiceContext);
     }
 
-
-
-    public static async Task RetrieverDaggerCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
+    /// <summary>
+    /// 通用「检索」：以全卡池（ModelDb.AllCards）为候选源，同时按卡条件
+    /// <paramref name="filter"/> 与卡池条件 <paramref name="poolFilter"/> 筛选候选卡，
+    /// 生成战斗副本后让玩家从选择网格中最多选 <paramref name="amount"/> 张加入手牌。
+    /// 不同检索效果只需提供各自的卡条件与卡池条件即可复用本方法。
+    /// </summary>
+    /// <param name="choiceContext">选择上下文。</param>
+    /// <param name="player">目标玩家。</param>
+    /// <param name="filter">卡条件（如标签、稀有度、排除自身）。</param>
+    /// <param name="poolFilter">卡池条件（如限定某个卡池）；为 null 时不限卡池。</param>
+    /// <param name="amount">最多可选择并加入手牌的数量。</param>
+    public static async Task<List<CardModel>> RetrieverCard(
+        PlayerChoiceContext choiceContext,
+        Player player,
+        Func<CardModel, bool> filter,
+        Func<CardPoolModel, bool>? poolFilter = null,
+        int amount = 1, bool isDiscard = false)
     {
+        if (player == null || amount < 1) return [];
 
-        CardPoolModel list = player.Character.CardPool;
-
-        IReadOnlyList<CardModel> cards =
-        list.GetUnlockedCards(
-        player.UnlockState,
-        player.RunState.CardMultiplayerConstraint).Where(c => c.Keywords.Contains(YunoKeywords.Dagger)).ToList();
-
+        // 候选 = 全卡池，同时满足卡条件与卡池条件（c.Pool 为该卡所属卡池）
+        var cards = ModelDb.AllCards
+            .Where(filter)
+            .Where(c => poolFilter == null || (c.Pool != null && poolFilter(c.Pool)))
+            .GroupBy(c => c.Id)
+            .Select(g => g.First())
+            .ToList();
+        if (cards.Count == 0) return [];
 
         List<CardModel> combatCopies = cards
             .Select(c => player.Creature.CombatState!.CreateCard(c, player))
@@ -311,38 +328,59 @@ public static class ToolCmd
             player,
             prefs
         )).ToList();
-        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
+        if (isDiscard)
+            foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, player);
+        else
+            foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
+
+        // 返回本次实际检索到并加入手牌的卡，供调用方继续处理（如丢弃、选择去向）
+        return selectCards;
     }
 
-    public static async Task RetrieverRareCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
+    /// <summary>检索「匕首」标签卡（角色自身卡池）。</summary>
+    public static Task<List<CardModel>> RetrieverDaggerCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
     {
-        List<CardPoolModel> pools = player.UnlockState.CharacterCardPools.ToList();
-
-        // 随机选择一个职业的卡池
-        var randomPool = pools[Random.Shared.Next(pools.Count)];
-
-        IReadOnlyList<CardModel> cards = randomPool
-            .GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint)
-            .Where(c => c.Rarity == CardRarity.Rare)
-            .ToList();
-
-        List<CardModel> combatCopies = cards
-            .Select(c => player.Creature.CombatState!.CreateCard(c, player))
-            .ToList();
-
-        var prefs = new CardSelectorPrefs(
-            YunoSelectorPrefs.RetrieverSelectionPrompt,
-            0,
-            amount
-        );
-
-        var selectCards = (await CardSelectCmd.FromSimpleGrid(
+        return RetrieverCard(
             choiceContext,
-            combatCopies,
             player,
-            prefs
-        )).ToList();
-        foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
+            c => c.Keywords.Contains(YunoKeywords.Dagger),
+            p => p.Title == player.Character.CardPool.Title,
+            amount);
+    }
+
+    /// <summary>检索稀有卡（随机一名角色的卡池）。</summary>
+    public static Task<List<CardModel>> RetrieverRareCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)
+    {
+        var pools = player.UnlockState.CharacterCardPools.ToList();
+        if (pools.Count == 0) return Task.FromResult(new List<CardModel>());
+        var randomPool = player.RunState.Rng.Niche.NextItem(pools)!;
+        return RetrieverCard(
+            choiceContext,
+            player,
+            c => c.Rarity == CardRarity.Rare,
+            p => p.Title == randomPool.Title,
+            amount);
+    }
+
+    /// <summary>
+    /// 通用「是/否」选择：生成「是」「否」两张选项卡弹选择网格，让玩家二选一。
+    /// 返回 true = 选了「是」；false = 选了「否」。
+    /// </summary>
+    /// <param name="choiceContext">选择上下文。</param>
+    /// <param name="player">做选择的玩家。</param>
+    /// <param name="prompt">选择界面的提示文本（card_selection 本地化）。</param>
+    public static async Task<bool> AskYesNo(PlayerChoiceContext choiceContext, Player player, LocString prompt)
+    {
+        var shi = player.Creature.CombatState!.CreateCard<ShiCard>(player);
+        var fou = player.Creature.CombatState!.CreateCard<FouCard>(player);
+
+        CardModel? picked = (await CardSelectCmd.FromSimpleGrid(
+            choiceContext,
+            new List<CardModel> { shi, fou },
+            player,
+            new CardSelectorPrefs(prompt, 1, 1))).FirstOrDefault();
+
+        return picked is ShiCard;
     }
 
     public static async Task SelectCardFromDraw2Discard(Player player, PlayerChoiceContext choiceContext)

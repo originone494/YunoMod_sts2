@@ -7,7 +7,7 @@ namespace YunoMod.Scripts.Pool;
 public class YunoCardPool : TypeListCardPoolModel
 {
     // 卡池的ID。必须唯一防撞车。
-    public override string Title => "YunoMod";
+    public override string Title => "YunoModCardPool";
     public override string EnergyColorName => "YunoMod";
 
     // 描述中使用的能量图标。大小为24x24。

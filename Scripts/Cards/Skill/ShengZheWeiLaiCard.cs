@@ -14,7 +14,6 @@ public class ShengZheWeiLaiCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CardsVar(1),
     ];
 
     public ShengZheWeiLaiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -36,7 +35,7 @@ public class ShengZheWeiLaiCard : YunoBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         var cards = await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
-        if (cards.Count() < 0) return;
+        if (cards.Count() == 0) return;
         var targetCard = cards.First();
         if (targetCard.Type == CardType.Attack && targetCard.BaseReplayCount == 0)
         {

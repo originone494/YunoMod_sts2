@@ -30,7 +30,7 @@ public class ZouBaCard : YunoBaseCard
         HoverTipFactory.FromPower<LovePower>(),
     ];
 
-    
+
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
@@ -39,7 +39,7 @@ public class ZouBaCard : YunoBaseCard
 
         int amount = Owner.Creature.GetPowerAmount<LovePower>();
 
-        await CreatureCmd.GainBlock(Owner.Creature, new BlockVar(amount / 2 + 1, ValueProp.Unpowered), cardPlay);
+        await CreatureCmd.GainBlock(Owner.Creature, new BlockVar(amount, ValueProp.Unpowered), cardPlay);
     }
 
     protected override void OnUpgrade()

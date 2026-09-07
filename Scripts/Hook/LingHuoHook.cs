@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
@@ -13,6 +14,9 @@ public interface IOnLingHuo
 
 public static class LingHuoHook
 {
+    // 已被灵活效果主动处理（如珠泪融合把卡返回抽牌堆）的卡，弃牌流程应跳过，不再重复弃
+    public static readonly HashSet<CardModel> HandledByLingHuo = new();
+
     public static async Task OnLingHuo(PlayerChoiceContext ctx, Player player)
     {
         var combatState = player.Creature.CombatState;

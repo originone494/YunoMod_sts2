@@ -1,4 +1,18 @@
 {
-    "TO_FORESEE":"选择1张牌加入手牌。",
-    "TO_RETRIEVER":"检索：选择{Amount}张牌加入手牌。"
+    "TO_FORESEE": "选择1张牌加入手牌。",
+    "TO_RETRIEVER": "检索：选择{Amount}张牌加入手牌。",
+    "TO_FUSION": "选择1张卡进行融合。",
+    "TO_ZHU_LEI_LEI_NUO_HA_TE_LING_HUO": "是否发动「珠泪·雷诺哈特」的「灵活」效果？",
+    "TO_ZHU_LEI_SHUI_XIAN_RETRIEVE": "是否将「检索」的「珠泪」卡加入手牌？",
+    "TO_FUSION_SHUI_XIAN": "选择1张「珠泪怪兽」返回卡组，将「珠泪·水仙人鱼」加入手牌。",
+    "TO_FUSION_KA_LEI_DUO_HA_TE_RENO": "选择1张「珠泪·雷诺哈特」返回抽牌堆。",
+    "TO_FUSION_KA_LEI_DUO_HA_TE_MONSTER": "选择1张「珠泪怪兽」返回抽牌堆，将「珠泪·卡雷多哈特」加入手牌。",
+    "TO_FUSION_LU_SHA_KA": "选择1张「珠泪·水仙人鱼」返回抽牌堆，将「珠泪·露莎卡」加入手牌。",
+    "TO_BIE_XIANGT_TAO_CHOICE": "是否选择从消耗堆中将卡加入手牌？",
+    "TO_LIAN_LI_PAO_CHOICE_A_First": "选择1张卡，费用记为A。",
+    "TO_LIAN_LI_PAO_CHOICE_A": "选择1张费用为A的卡。",
+    "TO_LIAN_LI_PAO_CHOICE_B": "选择1张卡，费用记为B。",
+    "TO_LIAN_LI_PAO_CHOICE_A_Back": "从消耗堆选择1张费用为A的卡返回抽牌堆。",
+    "TO_LIAN_LI_PAO_CHOICE_B_Back": "从消耗堆选择1张费用为B的卡返回抽牌堆。",
+    "TO_HE_LU_SI_XIAN_DAO_HA_BI_CHOICE": "是否选择从消耗堆中将卡加入手牌。"
 }

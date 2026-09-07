@@ -32,7 +32,6 @@ public class BuDaoCard : YunoBaseCard
     public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-    HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromKeyword(YunoKeywords.Gun),
         HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];

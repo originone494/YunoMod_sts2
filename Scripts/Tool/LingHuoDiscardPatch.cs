@@ -2,6 +2,7 @@
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Keywords;
@@ -32,7 +33,7 @@ public class LingHuoDiscardPatch
         bool hasLingHuo = false;
         foreach (CardModel card in yunoDiscardCards)
         {
-            if (card.Keywords.Contains(YunoKeywords.LingHuo))
+            if (card.Keywords.Contains(YunoKeywords.LingHuo) || card.Tags.Contains(YunoTags.LingHuo))
 
             {
                 hasLingHuo = true;
@@ -55,7 +56,7 @@ public class LingHuoDiscardPatch
         {
             foreach (CardModel card in cardsToDiscard)
             {
-                if (card.Keywords.Contains(YunoKeywords.LingHuo))
+                if (card.Keywords.Contains(YunoKeywords.LingHuo) || card.Tags.Contains(YunoTags.LingHuo))
                 {
                     await LingHuoHook.LingHuoSpecial(choiceContext, card.Owner, card);
                     await LingHuoHook.OnLingHuo(choiceContext, card.Owner);
@@ -63,10 +64,23 @@ public class LingHuoDiscardPatch
             }
 
             // 灵活效果处理完毕，执行原本的弃牌抽牌（_isProcessing=true 放行）
-            await CardCmd.DiscardAndDraw(choiceContext, cardsToDiscard, cardsToDraw);
+            // 只弃仍然在手牌/抽牌堆中的卡：已被打出（如灵活打出）或已被灵活效果主动处理（如珠泪融合返回抽牌堆）的卡不再重复弃
+            var remaining = cardsToDiscard
+                .Where(c => c.Pile?.Type is PileType.Hand or PileType.Draw)
+                .Where(c => !LingHuoHook.HandledByLingHuo.Contains(c))
+                .ToList();
+            if (remaining.Count > 0)
+            {
+                await CardCmd.DiscardAndDraw(choiceContext, remaining, cardsToDraw);
+            }
         }
         finally
         {
+            // 清理标记，避免跨战斗泄漏
+            foreach (var card in cardsToDiscard)
+            {
+                LingHuoHook.HandledByLingHuo.Remove(card);
+            }
             _isProcessing = false;
         }
     }

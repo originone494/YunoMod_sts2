@@ -16,7 +16,7 @@ using YunoMod.Scripts.Tool;
 
 using STS2RitsuLib.Keywords;
 using MegaCrit.Sts2.Core.Entities.Players;
-namespace YunoMod.Scripts.Cards.Skill;
+namespace YunoMod.Scripts.Cards.Attack;
 
 public class NiShuoShenMeCard : YunoBaseCard, IOnLingHuo
 {

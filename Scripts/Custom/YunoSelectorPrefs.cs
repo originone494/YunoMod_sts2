@@ -8,5 +8,7 @@ public static LocString ForeseeSelectionPrompt = new LocString("card_selection",
 
 public static LocString RetrieverSelectionPrompt = new LocString("card_selection","TO_RETRIEVER");
 
+public static LocString RetainSelectionPrompt = new LocString("powers","YUNO_MOD_POWER_AO_LI_HA_GANG_DI_ER_JIE_JIE_POWER.selectionScreenPrompt");
+
     
 }

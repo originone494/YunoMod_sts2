@@ -22,7 +22,7 @@ public class ZhongYanCard : YunoBaseCard
 
     public ZhongYanCard() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
-        
+
     }
 
     protected override bool IsPlayable => Owner.Creature.GetPowerAmount<LovePower>() >= 8;
@@ -31,19 +31,20 @@ public class ZhongYanCard : YunoBaseCard
         HoverTipFactory.FromPower<LovePower>(),
     ];
 
-    
+
 
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
+        await ToolCmd.GainLovePower(choiceContext, Owner, this, 2);
+
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                         .FromCard(this, cardPlay)
                         .TargetingAllOpponents(Owner.Creature.CombatState!)
                         .WithHitFx("vfx/vfx_dramatic_stab")
                         .Execute(choiceContext);
-                        
-        await ToolCmd.GainLovePower(choiceContext,Owner,this,2);
+
     }
 
     protected override void OnUpgrade()

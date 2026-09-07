@@ -51,6 +51,7 @@ public class CiShangCard : YunoBaseCard, IOnLingHuo
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
         Creature? creature = Owner!.RunState.Rng.CombatTargets.NextItem(Owner.Creature.CombatState!.HittableEnemies);
+        if (creature == null) return;
 
         await CardCmd.AutoPlay(ctx, this, creature);
     }

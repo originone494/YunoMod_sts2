@@ -25,7 +25,7 @@ public class BoomerangRelic : YunoBaseRelic
         var enemies = Owner.Creature.CombatState!.HittableEnemies.ToList();
         if (enemies.Count == 0) return;
 
-        var target = enemies[Random.Shared.Next(enemies.Count)];
+        var target = Owner.RunState.Rng.CombatTargets.NextItem(enemies)!;
 
         if (weakAmount > 0)
         {

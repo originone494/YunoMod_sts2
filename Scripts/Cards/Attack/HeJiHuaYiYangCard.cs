@@ -22,7 +22,6 @@ public class HeJiHuaYiYangCard : YunoBaseCard
     {
         new DamageVar(8m, ValueProp.Move),
         new BlockVar(8,ValueProp.Move),
-        new CardsVar(1),
     };
 
     public HeJiHuaYiYangCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
@@ -52,7 +51,7 @@ public class HeJiHuaYiYangCard : YunoBaseCard
 
         var card = await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
 
-        if (card == null) return;
+        if (card.Count() == 0) return;
 
         if (card.First().Type == CardType.Attack)
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)

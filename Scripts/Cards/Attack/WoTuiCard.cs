@@ -45,7 +45,7 @@ public class WoTuiCard : YunoBaseCard
 
         int unblockedDamage = attackCommand.Results.SelectMany((List<DamageResult> r) => r).Sum((DamageResult r) => r.TotalDamage + r.OverkillDamage);
 
-        await ToolCmd.GainLovePower(choiceContext, Owner, this, unblockedDamage * 2);
+        await ToolCmd.GainLovePower(choiceContext, Owner, this, unblockedDamage);
     }
 
     protected override void OnUpgrade()

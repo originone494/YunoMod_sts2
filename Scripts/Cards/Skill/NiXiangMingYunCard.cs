@@ -18,7 +18,6 @@ public class NiXiangMingYunCard : YunoBaseCard
     private const string _ForeseeCount = "ForeseeCount";
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new CardsVar(1),
         new DynamicVar(_ForeseeCount,15)
     ];
 
@@ -34,7 +33,7 @@ public class NiXiangMingYunCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await ToolCmd.ForeseeAndDraw(choiceContext, Owner, DynamicVars[_ForeseeCount].IntValue, DynamicVars.Cards.IntValue);
+        await ToolCmd.ForeseeAndDraw(choiceContext, Owner, DynamicVars[_ForeseeCount].IntValue);
     }
 
     protected override void OnUpgrade()

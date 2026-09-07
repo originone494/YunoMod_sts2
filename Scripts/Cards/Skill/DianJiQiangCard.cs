@@ -3,6 +3,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using MegaCrit.Sts2.Core.HoverTips;
 
@@ -14,6 +15,7 @@ public class DianJiQiangCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
+        new BlockVar(8m, ValueProp.Move),
         new PowerVar<WeakPower>(1m),
     ];
 
@@ -29,10 +31,12 @@ public class DianJiQiangCard : YunoBaseCard
 
 
 
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+
+        // 获得格挡
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         // 先给予基础虚弱层数
         await PowerCmd.Apply<WeakPower>(choiceContext, cardPlay.Target, DynamicVars.Weak.BaseValue, Owner.Creature, this);
@@ -47,6 +51,6 @@ public class DianJiQiangCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        RemoveKeyword(CardKeyword.Exhaust);
+        DynamicVars.Weak.UpgradeValueBy(1);
     }
 }

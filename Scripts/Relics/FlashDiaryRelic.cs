@@ -15,7 +15,7 @@ public class FlashDiaryRelic : YunoBaseRelic
         var drawPile = PileType.Draw.GetPile(Owner);
         if (drawPile.Cards.Count == 0) return Task.CompletedTask;
 
-        var card = drawPile.Cards[Random.Shared.Next(drawPile.Cards.Count)];
+        var card = Owner.RunState.Rng.Niche.NextItem(drawPile.Cards)!;
         card.BaseReplayCount += 1;
         Flash();
 

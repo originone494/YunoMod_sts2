@@ -20,7 +20,6 @@ public class JiaoHuanCard : YunoBaseCard
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromPower<DexterityPower>(),
-        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
 
@@ -48,14 +47,11 @@ public class JiaoHuanCard : YunoBaseCard
         await PowerCmd.Remove<StrengthPower>(Owner.Creature);
         await PowerCmd.Remove<DexterityPower>(Owner.Creature);
 
-        if (dexterityAmount > 0)
-        {
-            await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, dexterityAmount, Owner.Creature, this);
-        }
-        if (strengthAmount > 0)
-        {
-            await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, strengthAmount, Owner.Creature, this);
-        }
+
+        await PowerCmd.Apply<StrengthPower>(choiceContext, Owner.Creature, dexterityAmount, Owner.Creature, this);
+
+        await PowerCmd.Apply<DexterityPower>(choiceContext, Owner.Creature, strengthAmount, Owner.Creature, this);
+
 
         await PowerCmd.Apply<JiaoHuanPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
 

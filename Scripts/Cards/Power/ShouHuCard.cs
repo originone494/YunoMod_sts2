@@ -15,10 +15,11 @@ namespace YunoMod.Scripts.Cards.Power;
 
 public class ShouHuCard : YunoBaseCard
 {
+    private const string _damageKey = "HitDamage";
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(6,ValueProp.Unpowered)
+        new DynamicVar(_damageKey, 2m)   // 每获得1点爱意造成的伤害（升级后 3）
     };
 
     public ShouHuCard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
@@ -31,12 +32,12 @@ public class ShouHuCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        await PowerCmd.Apply<ShouHuPower>(choiceContext, Owner.Creature, DynamicVars.Damage.IntValue, Owner.Creature, this);
+        await PowerCmd.Apply<ShouHuPower>(choiceContext, Owner.Creature, DynamicVars[_damageKey].IntValue, Owner.Creature, this);
     }
 
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(4);
+        DynamicVars[_damageKey].UpgradeValueBy(1m);   // 2 → 3
     }
 }

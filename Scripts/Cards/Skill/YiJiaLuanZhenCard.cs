@@ -23,7 +23,6 @@ public class YiJiaLuanZhenCard : YunoBaseCard
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<StrengthPower>(),
         HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 

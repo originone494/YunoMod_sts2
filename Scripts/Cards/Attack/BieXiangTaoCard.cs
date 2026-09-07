@@ -11,6 +11,10 @@ using MegaCrit.Sts2.Core.HoverTips;
 using STS2RitsuLib.Keywords;
 using YunoMod.Scripts.Hook;
 using MegaCrit.Sts2.Core.Entities.Players;
+using YunoMod.Scripts.Cards.Other;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Localization;
+using YunoMod.Scripts.Power;
 namespace YunoMod.Scripts.Cards.Attack;
 
 public class BieXiangTaoCard : YunoBaseCard
@@ -19,8 +23,7 @@ public class BieXiangTaoCard : YunoBaseCard
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(9m,ValueProp.Move),
-        new DynamicVar(_GrtCardCount, 1),
-        new BlockVar(7,ValueProp.Move)
+        new DynamicVar(_GrtCardCount, 1)
     ];
 
     public BieXiangTaoCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
@@ -43,10 +46,27 @@ public class BieXiangTaoCard : YunoBaseCard
 
         await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue, cardPlay);
 
+        await ToolCmd.AxeStance(choiceContext, Owner, this);
+
+
         // 从弃牌堆、消耗堆中选取牌加入手牌
-        var candidates = PileType.Discard.GetPile(Owner).Cards
-            .Concat(PileType.Exhaust.GetPile(Owner).Cards)
+        var candidates1 = PileType.Discard.GetPile(Owner).Cards
             .ToList();
+
+        var candidates2 = PileType.Exhaust.GetPile(Owner).Cards
+            .ToList();
+
+        var candidates = candidates1;
+
+
+        // 「注视」：可以从消耗堆中选择
+        if (cardPlay.Target.HasPower<ZhuShiPower>() && await ToolCmd.AskYesNo(choiceContext, Owner, ChoicePrompt))
+        {
+            candidates = candidates2;
+            if (candidates2.Count() == 0) return;
+        }
+        if (candidates1.Count() == 0) return;
+
 
         var selectedCards = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,
             new CardSelectorPrefs(SelectionScreenPrompt, DynamicVars[_GrtCardCount].IntValue));
@@ -56,8 +76,10 @@ public class BieXiangTaoCard : YunoBaseCard
             await CardPileCmd.Add(card, PileType.Hand);
         }
 
-        await ToolCmd.AxeStance(choiceContext, Owner, this);
     }
+
+    private static LocString ChoicePrompt { get; } = new("card_selection", "TO_BIE_XIANGT_TAO_CHOICE");
+
 
     protected override void OnUpgrade()
     {

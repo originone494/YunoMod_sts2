@@ -44,21 +44,17 @@ public class QiuTiCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        if (Owner.Creature.HasPower<DiaryPower>())
-        {
-            int repeatCount = Owner.Creature.GetPowerAmount<DiaryPower>();
+        int repeatCount = Owner.Creature.GetPowerAmount<DiaryPower>() == 0 ? 1 : Owner.Creature.GetPowerAmount<DiaryPower>();
 
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this, cardPlay)
-                .TargetingAllOpponents(Owner.Creature.CombatState!)
-                .WithHitCount(repeatCount)
-                .WithHitFx("vfx/vfx_dramatic_stab")
-                .Execute(choiceContext);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this, cardPlay)
+            .TargetingAllOpponents(Owner.Creature.CombatState!)
+            .WithHitCount(repeatCount)
+            .WithHitFx("vfx/vfx_dramatic_stab")
+            .Execute(choiceContext);
 
 
-            await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
-
-        }
+        await CardPileCmd.Draw(choiceContext, DynamicVars.Cards.BaseValue, Owner);
     }
 
     protected override void OnUpgrade()

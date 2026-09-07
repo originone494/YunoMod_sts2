@@ -38,15 +38,20 @@ public class YiJiBiShaCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
+        bool isExhaust = cardPlay.Target.HasPower<ZhuShiPower>();
+
+
         await ToolCmd.AxeAttack(choiceContext, cardPlay.Target!, this, DynamicVars.Damage.BaseValue, cardPlay);
+
 
 
         var suppressCards = PileType.Discard.GetPile(Owner).Cards
             .Where(c => c.Tags.Contains(YunoTags.YaZhi))
             .ToList();
 
-        foreach (var card in suppressCards)
-            await CardCmd.Exhaust(choiceContext, card);
+        if (isExhaust)
+            foreach (var card in suppressCards)
+                await CardCmd.Exhaust(choiceContext, card);
 
         if (Owner.Creature.HasPower<AxePower>())
         {

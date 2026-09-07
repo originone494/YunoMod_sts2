@@ -23,6 +23,7 @@ public class LovePower : YunoBasePower
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
+        new BlockVar(10,ValueProp.Unpowered),
         new DynamicVar(_blockGainKey, 0m),
     };
 
@@ -48,7 +49,7 @@ public class LovePower : YunoBasePower
                 while (Amount >= 10)
                 {
                     await PowerCmd.Apply<LovePower>(choiceContext, Owner, -10, Owner, null);
-                    await CreatureCmd.GainBlock(Owner, new BlockVar(5, ValueProp.Unpowered), null);
+                    await CreatureCmd.GainBlock(Owner, DynamicVars.Block, null);
                 }
             }
         }

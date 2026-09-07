@@ -44,7 +44,9 @@ public class NaQiWeiLaiCard : YunoBaseCard
         for (int i = 0; i < addCount; i++)
         {
             CardModel card = Owner.Creature.CombatState!.CreateCard<WeiLaiXunXiCard>(Owner);
-            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Draw, cardPlay.Card.Owner);
+            // 升级版的拿起未来产生的未来讯息同样为升级版（不消耗）
+
+            var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, cardPlay.Card.Owner);
             resultList.Add(addResult);
         }
         CardCmd.PreviewCardPileAdd(resultList, 2f);

@@ -3,55 +3,40 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
-using MegaCrit.Sts2.Core.HoverTips;
-using MegaCrit.Sts2.Core.ValueProps;
+using YunoMod.Scripts.Power;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
+// 我锤：移除所有敌人的格挡；这个回合内所有敌人的力量变为负数（敌方回合结束自动还原）
 public class WoChuiCard : YunoBaseCard
 {
-
-    private const string _strengthKey = "DownStrength";
-
-    private const string _strengthAloneKey = "DownAloneStrength";
-
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
-
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-    [
-        new DynamicVar(_strengthKey, 6m),
-        new DynamicVar(_strengthAloneKey, 12m),
-
-    ];
-
-    public WoChuiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+    public WoChuiCard() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AllEnemies)
     {
     }
 
-    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-    ];
-
-
-
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+        var enemies = Owner.Creature.CombatState?.HittableEnemies;
+        if (enemies == null) return;
 
+        foreach (var enemy in enemies)
+        {
+            // 移除格挡
+            if (enemy.Block > 0)
+            {
+                await CreatureCmd.LoseBlock(choiceContext, enemy, enemy.Block, this.Owner.Creature);
+            }
 
-        if (cardPlay.Target!.Block > 0)
-        {
-            await CreatureCmd.LoseBlock(choiceContext, cardPlay.Target!, cardPlay.Target!.Block, this.Owner.Creature);
-        }
-        foreach (var power in cardPlay.Target!.Powers)
-        {
-            if (power.Type == MegaCrit.Sts2.Core.Entities.Powers.PowerType.Buff)
-                await PowerCmd.Remove(power);
+            // 力量变为负数：按当前正数力量 S 施加 2S 点临时力量损失（S → -S），敌方回合结束自动 +2S 还原
+            var strength = enemy.GetPower<StrengthPower>();
+            if (strength is { Amount: > 0 })
+            {
+                await PowerCmd.Apply<WoChuiTempStrengthDownPower>(choiceContext, enemy, 2 * strength.Amount, this.Owner.Creature, this);
+            }
         }
     }
 

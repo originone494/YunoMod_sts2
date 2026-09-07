@@ -19,28 +19,28 @@ public class WanQianLunHuiCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
+        new DamageVar(1,ValueProp.Move),
         new CalculationBaseVar(0m),
         new CalculationExtraVar(1m),
         new ExtraDamageVar(1m),
-        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>  card.Owner != null ? card.Owner.UnlockState.NumberOfRuns : 0),
+        new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier((card, _) =>  card.Owner != null ? card.Owner.UnlockState.NumberOfRuns : 0),
     };
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal, CardKeyword.Exhaust];
 
 
-    public WanQianLunHuiCard() : base(2, CardType.Attack, CardRarity.Event, TargetType.AnyEnemy)
+    public WanQianLunHuiCard() : base(3, CardType.Attack, CardRarity.Event, TargetType.RandomEnemy)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-
-        await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .FromCard(this, cardPlay)
-            .Targeting(cardPlay.Target!)
-            .WithHitFx("vfx/vfx_attack_slash")  // VFX 路径
+            .TargetingRandomOpponents(Owner.Creature.CombatState!)
+            .WithHitCount(Owner.UnlockState.NumberOfRuns)
+            .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
     }
 

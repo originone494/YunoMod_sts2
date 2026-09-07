@@ -23,14 +23,13 @@ public class LianSheCard : YunoBaseCard
     };
 
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [ YunoKeywords.Gun];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Gun];
     public LianSheCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.RandomEnemy)
     {
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(YunoKeywords.Gun),
-        HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -41,7 +40,7 @@ public class LianSheCard : YunoBaseCard
 
         await ToolCmd.GunStance(choiceContext, Owner, this);
 
-		await Cmd.Wait(0.25f);
+        await Cmd.Wait(0.25f);
 
     }
 

@@ -9,6 +9,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
 using MegaCrit.Sts2.Core.HoverTips;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
@@ -27,7 +28,6 @@ public class AiMuCard : YunoBaseCard
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<LovePower>(),
-        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
 
@@ -43,10 +43,10 @@ public class AiMuCard : YunoBaseCard
 
             if (((Owner.PlayerCombatState!.Hand.Cards.Count + 1) * 2 + Owner.PlayerCombatState.DiscardPile.Cards.Count) % num == 0)
             {
-                
+
                 await CardPileCmd.Draw(choiceContext, num, Owner);
 
-                await PowerCmd.Apply<LovePower>(choiceContext, Owner.Creature, IsUpgraded ? 2 * num : num, Owner.Creature, this);
+                await ToolCmd.GainLovePower(choiceContext, Owner, this, IsUpgraded ? 2 * num : num);
 
                 await PlayerCmd.GainEnergy(num, Owner);
             }

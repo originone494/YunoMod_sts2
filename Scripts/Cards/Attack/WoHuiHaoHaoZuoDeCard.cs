@@ -47,7 +47,7 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
         // 与卡面显示同源的当前概率（%），读取计算变量
         decimal currentChance = DynamicVars.EvaluateValueOrDefault(_critChanceKey, target: cardPlay.Target) / 100m;
 
-        bool crit = Random.Shared.NextDouble() < (double)currentChance;
+        bool crit = Owner.RunState.Rng.Niche.NextDouble() < (double)currentChance;
 
         // 触发时改为造成基础伤害的 2.5 次方点伤害
         decimal damageToDeal = crit

@@ -37,6 +37,7 @@ public class LiuXuePower : YunoBasePower
         {
             await CreatureCmd.Damage(choiceContext, base.Owner, base.Amount, ValueProp.Unblockable | ValueProp.Unpowered, null, null);
             await BleedHook.OnBleedDamage(choiceContext, Owner.CombatState!, Owner, Amount);
+            await PowerCmd.Decrement(this);
         }
     }
 }

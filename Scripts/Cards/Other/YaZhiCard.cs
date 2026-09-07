@@ -34,7 +34,6 @@ public class YaZhiCard : YunoBaseCard
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         HoverTipFactory.FromKeyword(YunoKeywords.Axe),
         HoverTipFactory.FromKeyword(YunoKeywords.YaZhi),
     ];
