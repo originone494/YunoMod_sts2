@@ -9,7 +9,7 @@ namespace YunoMod.Scripts.Base;
 
 // 注册power并设置Inherit = true，使得继承这个类的power自动被注册
 [RegisterPower(Inherit = true)]
-public abstract class YunoTempStrengthPower<T> : ModTemporaryAppliedPowerTemplate<T, StrengthPower> where T : AbstractModel
+public abstract class YunoTempDexterityPower<T> : ModTemporaryAppliedPowerTemplate<T, DexterityPower> where T : AbstractModel
 {
     // 自定义图标路径。
     public override PowerAssetProfile AssetProfile => new(
@@ -25,5 +25,5 @@ public abstract class YunoTempStrengthPower<T> : ModTemporaryAppliedPowerTemplat
 
     // 推荐重载描述，以达到多个power共享一条文本的效果
     // 例如这里的文本需要在powers.json中写"TEST_POWER_TEMP_POWER.description"和"TEST_POWER_TEMP_POWER_DOWN.description"
-    public override LocString Description => new("powers", IsPositive ? "YUNO_MOD_POWER_TEMP_STRENGTH_POWER.description" : "YUNO_MOD_POWER_TEMP_STRENGTH_POWER_DOWN.description");
+    public override LocString Description => new("powers", IsPositive ? "YUNO_MOD_POWER_TEMP_DEXTERITY_POWER.description" : "YUNO_MOD_POWER_TEMP_DEXTERITY_POWER_DOWN.description");
 }
