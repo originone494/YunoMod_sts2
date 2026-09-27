@@ -6,7 +6,8 @@ using YunoMod.Scripts;
 
 [RegisterOwnedCardTag(nameof(YaZhi))]
 [RegisterOwnedCardTag(nameof(ZhuLei))]
-[RegisterOwnedCardTag(nameof(ZhuLeiMoXian))]
+[RegisterOwnedCardTag(nameof(ZhuLeiMoFa))]
+[RegisterOwnedCardTag(nameof(ZhuLeiXianJing))]
 [RegisterOwnedCardTag(nameof(ZhuLeiGuaiShou))]
 [RegisterOwnedCardTag(nameof(ZhuLeiRongHe))]
 [RegisterOwnedCardTag(nameof(ZhuChang))]
@@ -21,7 +22,8 @@ public class YunoTags
 {
     public static readonly CardTag YaZhi = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(YaZhi)).GetModCardTag();
     public static readonly CardTag ZhuLei = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(ZhuLei)).GetModCardTag();
-    public static readonly CardTag ZhuLeiMoXian = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(ZhuLeiMoXian)).GetModCardTag();
+    public static readonly CardTag ZhuLeiMoFa = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(ZhuLeiMoFa)).GetModCardTag();
+    public static readonly CardTag ZhuLeiXianJing = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(ZhuLeiXianJing)).GetModCardTag();
     public static readonly CardTag ZhuLeiGuaiShou = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(ZhuLeiGuaiShou)).GetModCardTag();
     public static readonly CardTag ZhuLeiRongHe = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(ZhuLeiRongHe)).GetModCardTag();
     public static readonly CardTag ZhuChang = ModContentRegistry.GetQualifiedCardTagId(Entry.ModId, nameof(ZhuChang)).GetModCardTag();

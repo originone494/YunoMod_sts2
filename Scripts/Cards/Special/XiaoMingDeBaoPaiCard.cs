@@ -1,0 +1,66 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Rooms;
+using YunoMod.Scripts.Base;
+
+namespace YunoMod.Scripts.Cards.Special;
+
+// 游戏王「削命的宝札」（Card of Demise）：手牌抽至 3 张，回合结束时丢弃所有手牌。
+// 本卡打出后即进入消耗堆，但引擎的钩子监听覆盖 PlayerCombatState.AllPiles 全部牌堆
+//（含消耗堆），延迟效果由本卡的 AfterSideTurnEnd 直接承载，无需临时能力；
+// 一次性标记保证整场战斗只在打出的那个回合结束时结算一次。
+public class XiaoMingDeBaoPaiCard : YunoSpecialBaseCard
+{
+    private const int _handTarget = 3;
+
+    private bool _discardPending;
+
+    public XiaoMingDeBaoPaiCard() : base(0, CardType.Skill, CardRarity.Ancient, TargetType.Self)
+    {
+    }
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
+    ];
+
+    protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
+    {
+        // 手牌不足 3 张时补抽至 3 张
+        int missing = _handTarget - PileType.Hand.GetPile(Owner).Cards.Count;
+        if (missing > 0)
+        {
+            await CardPileCmd.Draw(choiceContext, missing, Owner);
+        }
+
+        _discardPending = true;
+    }
+
+    // 回合结束时丢弃所有手牌（只清自己的手牌，联机不影响队友）
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side != Owner.Creature.Side || !_discardPending) return;
+        _discardPending = false;
+
+        var handCards = PileType.Hand.GetPile(Owner).Cards.ToList();
+        if (handCards.Count == 0) return;
+
+        await CardCmd.Discard(choiceContext, handCards);
+    }
+
+    // 战斗结束复位一次性标记（与清空弹夹/驱死等卡的状态复位惯例一致）
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
+        _discardPending = false;
+        return Task.CompletedTask;
+    }
+}

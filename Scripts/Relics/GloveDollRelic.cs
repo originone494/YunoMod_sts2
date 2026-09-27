@@ -14,8 +14,11 @@ public class GloveDollRelic : YunoBaseRelic
 
     public override decimal ModifyDamageMultiplicative(Creature? target, decimal amount, ValueProp props, Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
-        if (dealer != null && dealer.IsMonster && dealer.HasPower<PoisonPower>())
-            return 0.75m;
-        return 1m;
+        if (target != Owner.Creature) return 1m;   // 只减免自己受到的伤害（多人下不影响队友）
+
+        if (dealer == null || !dealer.IsMonster || !dealer.HasPower<PoisonPower>())
+            return 1m;
+
+        return 0.75m;
     }
 }

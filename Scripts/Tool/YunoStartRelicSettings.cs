@@ -14,11 +14,12 @@ public static class YunoStartRelicSettings
 
     public sealed class Model
     {
-        public bool GrantDeadEndRed { get; set; } = true;
+        public bool GrantDeadEndRed { get; set; } = false;
         public bool GrantDeadEndPink { get; set; } = true;
         public bool GrantAllDiary { get; set; } = false;
         public bool GrantAllTarot { get; set; } = false;
         public bool GrantDeadEndBlue { get; set; } = true;
+        public bool GrantStartSpecialCard { get; set; } = true;
     }
 
     public static readonly ModSettingsValueBinding<Model, bool> GrantDeadEndRedBinding = new(
@@ -45,6 +46,11 @@ public static class YunoStartRelicSettings
         Entry.ModId, DataKey, SaveScope.Global,
         static m => m.GrantDeadEndBlue,
         static (m, v) => m.GrantDeadEndBlue = v);
+
+    public static readonly ModSettingsValueBinding<Model, bool> GrantStartSpecialCardBinding = new(
+        Entry.ModId, DataKey, SaveScope.Global,
+        static m => m.GrantStartSpecialCard,
+        static (m, v) => m.GrantStartSpecialCard = v);
 
     public static void Register()
     {
@@ -74,20 +80,25 @@ public static class YunoStartRelicSettings
                     GrantDeadEndRedBinding,
                     ModSettingsText.Literal("开启后，每局开局发放「死亡讯息-红」，击败精英后获得特殊卡牌奖励。"))
                 .AddToggle(
-                "grant_dead_end_blue",
-                ModSettingsText.Literal("开局是否获得「死亡讯息-蓝」"),
-                GrantDeadEndBlueBinding,
-                ModSettingsText.Literal("开启后，每局开局发放「死亡讯息-蓝」。持有该遗物时，塔罗牌系列遗物才会出现在游戏中。"))
+                    "grant_dead_end_blue",
+                    ModSettingsText.Literal("开局是否获得「死亡讯息-黄」"),
+                    GrantDeadEndBlueBinding,
+                    ModSettingsText.Literal("开启后，每局开局发放「死亡讯息-黄」。持有该遗物时，塔罗牌系列遗物才会出现在游戏中。"))
                 .AddToggle(
                     "grant_all_diary",
-                    ModSettingsText.Literal("开局获得所有日记"),
+                    ModSettingsText.Literal("开局获得「死亡讯息-蓝」"),
                     GrantAllDiaryBinding,
-                    ModSettingsText.Literal("开局获得所有日记"))
+                    ModSettingsText.Literal("开启后，每局开局获得「死亡讯息-蓝」：获得时直接获得所有日记。"))
                 .AddToggle(
                     "grant_all_tarot",
-                    ModSettingsText.Literal("开局获得所有塔罗牌系列遗物"),
+                    ModSettingsText.Literal("开局获得「死亡讯息-绿」"),
                     GrantAllTarotBinding,
-                    ModSettingsText.Literal("开启后，开局获得所有塔罗牌系列遗物。"))
+                    ModSettingsText.Literal("开启后，每局开局获得「死亡讯息-绿」：获得时直接获得所有塔罗牌系列遗物。"))
+                .AddToggle(
+                    "grant_start_special_card",
+                    ModSettingsText.Literal("开局获得「死亡讯息-紫」"),
+                    GrantStartSpecialCardBinding,
+                    ModSettingsText.Literal("开启后，每局开局获得「死亡讯息-紫」：获得时从所有特殊卡中选择1张加入牌组。"))
 
                 ));
 

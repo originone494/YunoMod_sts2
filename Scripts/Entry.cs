@@ -42,7 +42,7 @@ public class Entry
         EliteSpecialReward.Register();
         // 首次战斗（第2层）与击败 Boss 时随机补1本日记
         DiaryKillReward.Register();
-        // 模组设置页：开局是否发放 DeadEnd 遗物（死亡讯息-红/粉）
+        // 模组设置页：开局是否发放 DeadEnd 遗物（死亡讯息-红/粉/黄/蓝/绿/紫）
         YunoStartRelicSettings.Register();
         RunGameAddRelicReward.Register();
 

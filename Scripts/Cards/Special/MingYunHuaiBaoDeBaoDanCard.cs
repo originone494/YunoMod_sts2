@@ -21,7 +21,7 @@ public class MingYunHuaiBaoDeBaoDanCard : YunoSpecialBaseCard
     // 这张卡无法打出
     protected override bool IsPlayable => false;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain, CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),

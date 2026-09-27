@@ -16,13 +16,13 @@ using YunoMod.Scripts.Tool;
 using YunoMod.Scripts.Hook;
 using MegaCrit.Sts2.Core.Entities.Players;
 
-namespace YunoMod.Scripts.Cards.Skill;
+namespace YunoMod.Scripts.Cards.Attack;
 
 public class ZhuMuCard : YunoBaseCard, IOnGetLove
 {
 
 
-    public ZhuMuCard() : base(3, CardType.Skill, CardRarity.Rare, TargetType.AllEnemies)
+    public ZhuMuCard() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
 
     }
@@ -40,6 +40,9 @@ public class ZhuMuCard : YunoBaseCard, IOnGetLove
 
     public async Task OnGetLove(PlayerChoiceContext ctx, Player player, int amount)
     {
+        // 只响应自己获得爱意（多人下队友获得爱意不触发）
+        if (player != Owner) return;
+
         if (Pile?.Type == PileType.Hand)
             await CardCmd.AutoPlay(ctx, this, player.Creature);
     }

@@ -22,6 +22,8 @@ public class LingHunZhaoJiPower : YunoBasePower
     {
         // 只有打出的卡是攻击牌时触发
         if (cardPlay.Card.Type != CardType.Attack) return Task.CompletedTask;
+        // 只响应自己打出的攻击牌（多人下队友的攻击不磨自己的抽牌堆）
+        if (cardPlay.Card.Owner != Owner.Player) return Task.CompletedTask;
         if (CombatState == null) return Task.CompletedTask;
 
         Flash();

@@ -29,6 +29,8 @@ public class SearchDiaryRelic : YunoBaseRelic
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
+        if (player != Owner) return;   // 只在自己的回合开始时结算（多人下队友回合不触发）
+
         Flash();
 
         await PowerCmd.Apply<VigorPower>(choiceContext, Owner.Creature, 1, Owner.Creature, null);

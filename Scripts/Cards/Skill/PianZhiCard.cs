@@ -12,7 +12,7 @@ using YunoMod.Scripts.Base;
 using MegaCrit.Sts2.Core.HoverTips;
 using YunoMod.Scripts.Tool;
 
-namespace YunoMod.Scripts.Cards.Power;
+namespace YunoMod.Scripts.Cards.Skill;
 
 public class PianZhiCard : YunoBaseCard
 {

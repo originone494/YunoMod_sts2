@@ -31,7 +31,8 @@ public class AxePower : YunoBasePower
 
         if (targetEnemy != null)
         {
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targetEnemy, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, base.Owner, null, null);
+            // 统一使用 oldOwner：能力移除后 Owner 引用不保证仍挂载在生物上
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), targetEnemy, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, oldOwner, null, null);
         }
     }
 

@@ -12,12 +12,12 @@ namespace YunoMod.Scripts.Cards.Skill;
 
 public class YiYaHuanYaCard : YunoBaseCard
 {
-    public YiYaHuanYaCard() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+    public YiYaHuanYaCard() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
     {
     }
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromPower<FuChouPower>(),
+        HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
     ];
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
@@ -31,12 +31,21 @@ public class YiYaHuanYaCard : YunoBaseCard
     {
         await CreatureCmd.TriggerAnim(Owner.Creature, "Cast", Owner.Character.CastAnimDelay);
 
-        await PowerCmd.Apply<YiYaHuanYaPower>(choiceContext, Owner.Creature, DynamicVars["YiYaHuanYaPower"].BaseValue, Owner.Creature, this);
+        // 打出消耗堆中所有「灵活」卡
+        // AutoPlay 会自行处理目标选取（攻击牌随机敌人）、"不可打出"与 hook 拦截，
+        // 并把卡从消耗堆移入 Play 堆再结算到它自己的目标牌堆
+        var lingHuoCards = PileType.Exhaust.GetPile(Owner).Cards
+            .Where(c => c.Tags.Contains(YunoTags.LingHuo) || c.Keywords.Contains(YunoKeywords.LingHuo))
+            .ToList();
 
+        foreach (var card in lingHuoCards)
+        {
+            await CardCmd.AutoPlay(choiceContext, card, null);
+        }
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["YiYaHuanYaPower"].UpgradeValueBy(1);
+        EnergyCost.UpgradeBy(-1);
     }
 }

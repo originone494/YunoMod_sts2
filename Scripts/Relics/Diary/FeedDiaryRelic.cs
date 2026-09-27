@@ -35,6 +35,9 @@ public class FeedDiaryRelic : YunoBaseRelic
     {
         if (!_isFirstPlay) return;
 
+        // 只强化自己打出的牌（多人下队友的牌不触发、不消耗次数）
+        if (cardPlay.Card.Owner != Owner) return;
+
         if (cardPlay.Card.Type == CardType.Attack && cardPlay.Card.DynamicVars.ContainsKey("Damage"))
         {
             cardPlay.Card.DynamicVars.Damage.BaseValue += DynamicVars[_increaseKey].BaseValue;

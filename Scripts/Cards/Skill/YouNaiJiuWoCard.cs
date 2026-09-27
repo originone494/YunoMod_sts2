@@ -43,12 +43,12 @@ public class YouNaiJiuWoCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 鑾峰緱鏍兼尅
+        // 获得格挡
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
 
-        // 鑾峰緱鏄撲激鍜岃櫄寮憋紙璐熼潰鏁堟灉锛?
+        // 获得易伤和虚弱（负面效果）
         await PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars.Weak.BaseValue, Owner.Creature, this);
     }

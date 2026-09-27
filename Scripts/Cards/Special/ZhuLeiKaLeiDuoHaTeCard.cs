@@ -33,7 +33,6 @@ public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
 
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
-        YunoTags.ZhuLeiGuaiShou,
         YunoTags.ZhuLeiRongHe,
         YunoTags.ZhuChang,
         YunoTags.LingHuo,
@@ -46,7 +45,6 @@ public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
-        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuChang),
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),

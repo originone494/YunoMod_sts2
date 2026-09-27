@@ -28,6 +28,8 @@ public class YuZhiMengPower : YunoBasePower, IOnForesee
     public override Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
         if (_foreseeDrawsPending <= 0) return Task.CompletedTask;
+        // 只标记自己抽到的牌（多人下队友的抽牌不消耗免费配额）
+        if (card.Owner?.Creature != Owner) return Task.CompletedTask;
         _freeCardsThisTurn.Add(card);
         _foreseeDrawsPending--;
         return Task.CompletedTask;

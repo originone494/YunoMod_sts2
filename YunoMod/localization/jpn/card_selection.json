@@ -1,0 +1,19 @@
+{
+  "TO_FORESEE": "手札に加えるカードを1枚選ぶ。",
+  "TO_RETRIEVER": "サーチ：手札に加えるカードを{Amount}枚選ぶ。",
+  "TO_FUSION": "融合するカードを1枚選ぶ。",
+  "TO_ZHU_LEI_LEI_NUO_HA_TE_LING_HUO": "「ティアラメンツ・レイノハート」の「柔軟」効果を発動しますか？",
+  "TO_ZHU_LEI_SHUI_XIAN_RETRIEVE": "「サーチ」した「ティアラメンツ」カードを手札に加えますか？",
+  "TO_FUSION_SHUI_XIAN": "「ティアラメンツモンスター」を1枚選んでデッキに戻し、「ティアラメンツ・ハゥフニス」を手札に加える。",
+  "TO_FUSION_KA_LEI_DUO_HA_TE_RENO": "「ティアラメンツ・レイノハート」を1枚選んで山札に戻す。",
+  "TO_FUSION_KA_LEI_DUO_HA_TE_MONSTER": "「ティアラメンツモンスター」を1枚選んで山札に戻し、「ティアラメンツ・カレイドハート」を手札に加える。",
+  "TO_FUSION_LU_SHA_KA": "「ティアラメンツ・ハゥフニス」を1枚選んで山札に戻し、「ティアラメンツ・ルルカロス」を手札に加える。",
+  "TO_BIE_XIANGT_TAO_CHOICE": "消尽置き場からカードを手札に加えますか？",
+  "TO_LIAN_LI_PAO_CHOICE_A_First": "カードを1枚選び、コストをAとする。",
+  "TO_LIAN_LI_PAO_CHOICE_A": "コストがAのカードを1枚選ぶ。",
+  "TO_LIAN_LI_PAO_CHOICE_B": "カードを1枚選び、コストをBとする。",
+  "TO_LIAN_LI_PAO_CHOICE_A_Back": "消尽置き場からコストがAのカードを1枚選んで山札に戻す。",
+  "TO_LIAN_LI_PAO_CHOICE_B_Back": "消尽置き場からコストがBのカードを1枚選んで山札に戻す。",
+  "TO_HE_LU_SI_XIAN_DAO_HA_BI_CHOICE": "消尽置き場からカードを手札に加えますか。",
+  "TO_START_SPECIAL_CARD": "ラン開始：特殊カードから1枚選んでデッキに加える。"
+}

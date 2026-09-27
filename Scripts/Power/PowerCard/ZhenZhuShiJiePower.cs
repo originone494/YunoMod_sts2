@@ -22,6 +22,8 @@ public class ZhenZhuShiJiePower : YunoBasePower
     {
         // 只有打出的卡带「珠泪」标签时触发
         if (!cardPlay.Card.Tags.Contains(YunoTags.ZhuLei)) return Task.CompletedTask;
+        // 只响应自己打出的珠泪卡（与珠泪·哀唱的守卫口径一致）
+        if (cardPlay.Card.Owner != Owner.Player) return Task.CompletedTask;
         if (CombatState == null) return Task.CompletedTask;
 
         Flash();

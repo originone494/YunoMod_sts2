@@ -53,7 +53,8 @@ public class GunPower : YunoBasePower
         for (int i = 0; i < Amount; i++)
         {
             await Cmd.CustomScaledWait(0.1f, 0.2f);
-            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), Owner.CombatState!.HittableEnemies, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, base.Owner);
+            // 统一使用 oldOwner：能力移除后 Owner 引用不保证仍挂载在生物上
+            await CreatureCmd.Damage(new ThrowingPlayerChoiceContext(), oldOwner.CombatState!.HittableEnemies, DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, oldOwner);
         }
     }
 }

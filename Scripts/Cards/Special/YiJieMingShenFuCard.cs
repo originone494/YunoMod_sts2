@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Custom;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
@@ -35,14 +36,8 @@ public class YiJieMingShenFuCard : YunoSpecialBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        // 1. 向消耗堆加入7张随机卡（全卡池完全随机，各抽各的）
-        var copies = new List<CardModel>();
-        for (int i = 0; i < _randomCards; i++)
-        {
-            var randomCanonical = Owner.RunState.Rng.Niche.NextItem(ModelDb.AllCards)!;
-            copies.Add(Owner.Creature.CombatState!.CreateCard(randomCanonical!, Owner));
-        }
-        await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Exhaust, Owner);
+        // 1. 向消耗堆加入7张随机卡（全卡池完全随机，各抽各的），并展示给玩家
+        await ToolCmd.AddRandomCardsToExhaust(Owner, _randomCards);
 
         // 2. 造成21点伤害
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this, cardPlay).Targeting(cardPlay.Target)

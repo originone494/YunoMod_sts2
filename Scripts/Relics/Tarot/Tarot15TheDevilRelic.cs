@@ -85,9 +85,10 @@ public class Tarot15TheDevilRelic : TarotRelicBase
         await CreatureCmd.Heal(Owner.Creature, Owner.Creature.MaxHp);
     }
 
-    // 正位诅咒：契约生效后，回合开始受到49%最大生命值的伤害（不可格挡）
+    // 正位诅咒：契约生效后，自己的回合开始受到49%最大生命值的伤害（不可格挡）
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
+        if (player != Owner) return;   // 只在自己的回合开始结算（多人下队友回合不触发）
         if (IsReversed || !PactUsed) return;
 
         await CreatureCmd.Damage(choiceContext, Owner.Creature, Owner.Creature.MaxHp * _cursePercent, ValueProp.Unblockable | ValueProp.Unpowered, null, null);

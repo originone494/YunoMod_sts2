@@ -7,3 +7,6 @@
 .vscode/
 *.md
 *.import
+*.uid
+*.png
+*.tmp

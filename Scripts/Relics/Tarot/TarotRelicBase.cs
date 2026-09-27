@@ -21,7 +21,10 @@ public abstract class TarotRelicBase : YunoBaseRelic
     // 子类实现了逆位效果时置 true，才会参与掷骰与换图
     protected virtual bool SupportsReversed => false;
 
-    // 持有死亡讯息-蓝的玩家才可获得塔罗牌系列遗物（直接发放不受影响）
+    // 持有死亡讯息-蓝的玩家才可获得塔罗牌系列遗物（直接发放不受影响）。
+    // 注意：引擎的 IsAllowed(IRunState) 是共享遗物卡包上的全局门（无玩家上下文）——
+    // 只要任一玩家持蓝，塔罗遗物就会进入卡池；"未持蓝的玩家抽不到"这一逐玩家限制
+    // 由 TarotRelicPlayerGatePatch 在 RelicFactory 抽取工厂上以 filter 包装实现。
     public override bool IsAllowed(IRunState runState)
         => base.IsAllowed(runState) && runState.Players.Any(p => p.GetRelic<DeadEndYellowRelic>() != null);
 

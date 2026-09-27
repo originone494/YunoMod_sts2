@@ -8,7 +8,7 @@ using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
 using MegaCrit.Sts2.Core.HoverTips;
 
-namespace YunoMod.Scripts.Cards.Skill;
+namespace YunoMod.Scripts.Cards.Power;
 
 public class ZhanHouBaoZaCard : YunoBaseCard
 {

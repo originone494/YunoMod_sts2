@@ -70,8 +70,38 @@ public class LingHuoGeneratedDiscardPatch
             var remaining = list
                 .Where(c => c.Pile == null && !LingHuoHook.HandledByLingHuo.Contains(c))
                 .ToList();
+            var pending = new Queue<CardPileAddResult>();
             if (remaining.Count > 0)
-                results.AddRange(await CardPileCmd.AddGeneratedCardsToCombat(remaining, PileType.Discard, creator, position));
+            {
+                foreach (var added in await CardPileCmd.AddGeneratedCardsToCombat(remaining, PileType.Discard, creator, position))
+                    pending.Enqueue(added);
+            }
+
+            // 返回值必须与入参一一对应：单数版 AddGeneratedCardToCombat 会直接对结果取 [0]，
+            // 若这里返回空列表（卡已被灵活效果移走、无需再入堆），调用方就会抛
+            // ArgumentOutOfRangeException。该异常会从 OnPlay 逃出，使 CardModel.OnPlayWrapper
+            // 跳过"把打出的卡移入结果堆"的收尾段，卡面便永久停留在屏幕中央；
+            // 又因异常被 TaskHelper 吞掉，游戏进程不受影响。
+            int remainingIndex = 0;
+            foreach (CardModel card in list)
+            {
+                if (remainingIndex < remaining.Count && ReferenceEquals(remaining[remainingIndex], card) && pending.Count > 0)
+                {
+                    results.Add(pending.Dequeue());
+                    remainingIndex++;
+                }
+                else
+                {
+                    // 被灵活效果消费掉的卡补一条"未入堆"的结果占位
+                    results.Add(new CardPileAddResult
+                    {
+                        success = false,
+                        cardAdded = card,
+                        oldPile = card.Pile,
+                        targetPile = PileType.Discard,
+                    });
+                }
+            }
         }
         finally
         {

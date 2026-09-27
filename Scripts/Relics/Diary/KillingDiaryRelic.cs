@@ -29,6 +29,8 @@ public class KillingDiaryRelic : YunoBaseRelic
         Creature? target, decimal amount, ValueProp props,
         Creature? dealer, CardModel? cardSource, CardPlay? cardPlay)
     {
+        if (dealer != Owner.Creature) return 1m;   // 只增幅自己造成的伤害（多人下不影响队友）
+
         if (target == null || !target.IsMonster)
             return 1m;
 

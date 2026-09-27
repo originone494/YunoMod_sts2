@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
@@ -16,6 +17,7 @@ using YunoMod.Scripts.Relics;
 namespace YunoMod.Scripts.Tool;
 
 // 击败每层的第一个精英时：从 Special 卡池随机抽 3 张，以原版卡牌奖励界面 3 选 1 加入卡组。
+// 模组设置只对本地玩家生效：仅处理本地玩家持有的「死亡讯息-红」，不影响其他玩家。
 public static class EliteSpecialReward
 {
     /// <summary>一次奖励提供的选项数量（原版卡牌奖励是 3 选 1）。</summary>
@@ -53,78 +55,82 @@ public static class EliteSpecialReward
             return;
         }
 
-        foreach (Player player in evt.RunState.Players)
+        // 只处理本地玩家（单人局即唯一玩家）
+        Player? me = LocalContext.GetMe(evt.RunState.Players);
+        if (me == null)
         {
-            try
+            return;
+        }
+
+        try
+        {
+            if (me.GetRelic<DeadEndRedRelic>() == null)
             {
-                if (player.GetRelic<DeadEndRedRelic>() == null)
-                {
-                    continue;
-                }
-
-                // 卡池模型必须从 ModelDb 取已注册的规范实例（直接 new 会触发 DuplicateModelException）。
-                var pool = ModelDb.GetById<CardPoolModel>(ModelDb.GetId(typeof(YunoSpecialCardPool)));
-
-                // 候选卡过滤规则与原版 CardCreationOptions.GetPossibleCards 一致（解锁状态 + 多人约束）。
-                // 注意：该池同时经 [RegisterCard]（ModHelper 注入）与旧式 CardTypes 反射枚举收录卡牌，
-                // 同一张卡会出现两次；这里按卡牌类型去重，保证一次奖励内的 3 张候选互不相同。
-                List<CardModel> candidates = pool
-                    .GetUnlockedCards(player.UnlockState, player.RunState.CardMultiplayerConstraint)
-                    .GroupBy(c => c.GetType())
-                    .Select(g => g.First())
-                    .ToList();
-                if (candidates.Count == 0)
-                {
-                    Log.Warn($"[YunoMod] EliteSpecialReward: Special 卡池无可用候选卡（玩家 {player.NetId}），跳过特殊卡奖励。");
-                    continue;
-                }
-
-                // 关键点：Special 池全部是 Ancient 稀有度，而原版 CardFactory 的任意稀有度抽取都产不出 Ancient——
-                // Uniform 分支显式排除 Ancient；RegularEncounter/Elite/Boss 等分支掷出 Common/Uncommon/Rare 后
-                // 沿 Common→Uncommon→Rare→Common 的循环向上爬，Ancient 直接映射为 None（死路），
-                // 最终抛 "couldn't generate a valid rarity"。所以这里不走 CardCreationOptions + CardReward.Populate()，
-                // 而是从候选池均匀随机抽 3 张互不相同的卡，走原版「指定卡牌」CardReward 构造器
-                // （原版教程/事件同款路线）。序列化/读档由 RitsuLib 的 CardRewardToSerializablePatch 旁路数据兜底。
-                var rng = player.PlayerRng.Rewards;
-                List<CardModel> remaining = new(candidates);
-                List<CardModel> offered = new(OptionCount);
-                for (int i = 0; i < OptionCount && remaining.Count > 0; i++)
-                {
-                    CardModel? canonical = rng.NextItem(remaining);
-                    if (canonical == null)
-                    {
-                        break;
-                    }
-                    remaining.Remove(canonical);
-                    // 生成玩家拥有的可变卡实例，与原版 CardFactory.CreateForReward 的做法一致。
-                    CardModel mutableCard = player.RunState.CreateCard(canonical, player);
-                    // 特殊卡奖励统一以「已升级(+1)」形态发放：目前特殊卡还没有升级数值内容，
-                    // 仅显示升级标记；今后在卡牌里补充 OnUpgrade 后会自动套用。
-                    CardCmd.Upgrade(mutableCard);
-                    offered.Add(mutableCard);
-                }
-                if (offered.Count == 0)
-                {
-                    Log.Warn($"[YunoMod] EliteSpecialReward: 未抽出任何特殊卡（玩家 {player.NetId}），跳过特殊卡奖励。");
-                    continue;
-                }
-
-                // 「指定卡牌」构造器：3 张卡固定不变，不再参与任何稀有度抽取。
-                // rerollOptions 仅用于 Driftwood 遗物触发的重掷（本奖励不支持重掷出 Ancient）；
-                // 传入角色卡池的常规精英奖励选项作为兜底，避免重掷时走 CardFactory 抛异常。
-                var reward = new CardReward(
-                    offered,
-                    CardCreationSource.Other,
-                    player,
-                    CardCreationOptions.ForRoom(player, RoomType.Elite));
-                combatRoom.AddExtraReward(player, reward);
-
-                Log.Info($"[YunoMod] EliteSpecialReward: 已为玩家 {player.NetId} 加入 {offered.Count} 选 1 特殊卡奖励：{string.Join(",", offered.Select(c => c.Id))}");
+                return;
             }
-            catch (Exception ex)
+
+            // 卡池模型必须从 ModelDb 取已注册的规范实例（直接 new 会触发 DuplicateModelException）。
+            var pool = ModelDb.GetById<CardPoolModel>(ModelDb.GetId(typeof(YunoSpecialCardPool)));
+
+            // 候选卡过滤规则与原版 CardCreationOptions.GetPossibleCards 一致（解锁状态 + 多人约束）。
+            // 注意：该池同时经 [RegisterCard]（ModHelper 注入）与旧式 CardTypes 反射枚举收录卡牌，
+            // 同一张卡会出现两次；这里按卡牌类型去重，保证一次奖励内的 3 张候选互不相同。
+            List<CardModel> candidates = pool
+                .GetUnlockedCards(me.UnlockState, me.RunState.CardMultiplayerConstraint)
+                .GroupBy(c => c.GetType())
+                .Select(g => g.First())
+                .ToList();
+            if (candidates.Count == 0)
             {
-                Log.Error($"[YunoMod] EliteSpecialReward: 为玩家 {player.NetId} 生成特殊卡奖励异常：{ex}");
+                Log.Warn($"[YunoMod] EliteSpecialReward: Special 卡池无可用候选卡（玩家 {me.NetId}），跳过特殊卡奖励。");
+                return;
             }
+
+            // 关键点：Special 池全部是 Ancient 稀有度，而原版 CardFactory 的任意稀有度抽取都产不出 Ancient——
+            // Uniform 分支显式排除 Ancient；RegularEncounter/Elite/Boss 等分支掷出 Common/Uncommon/Rare 后
+            // 沿 Common→Uncommon→Rare→Common 的循环向上爬，Ancient 直接映射为 None（死路），
+            // 最终抛 "couldn't generate a valid rarity"。所以这里不走 CardCreationOptions + CardReward.Populate()，
+            // 而是从候选池均匀随机抽 3 张互不相同的卡，走原版「指定卡牌」CardReward 构造器
+            // （原版教程/事件同款路线）。序列化/读档由 RitsuLib 的 CardRewardToSerializablePatch 旁路数据兜底。
+            var rng = me.PlayerRng.Rewards;
+            List<CardModel> remaining = new(candidates);
+            List<CardModel> offered = new(OptionCount);
+            for (int i = 0; i < OptionCount && remaining.Count > 0; i++)
+            {
+                CardModel? canonical = rng.NextItem(remaining);
+                if (canonical == null)
+                {
+                    break;
+                }
+                remaining.Remove(canonical);
+                // 生成玩家拥有的可变卡实例，与原版 CardFactory.CreateForReward 的做法一致。
+                CardModel mutableCard = me.RunState.CreateCard(canonical, me);
+                // 特殊卡奖励统一以「已升级(+1)」形态发放：目前特殊卡还没有升级数值内容，
+                // 仅显示升级标记；今后在卡牌里补充 OnUpgrade 后会自动套用。
+                CardCmd.Upgrade(mutableCard);
+                offered.Add(mutableCard);
+            }
+            if (offered.Count == 0)
+            {
+                Log.Warn($"[YunoMod] EliteSpecialReward: 未抽出任何特殊卡（玩家 {me.NetId}），跳过特殊卡奖励。");
+                return;
+            }
+
+            // 「指定卡牌」构造器：3 张卡固定不变，不再参与任何稀有度抽取。
+            // rerollOptions 仅用于 Driftwood 遗物触发的重掷（本奖励不支持重掷出 Ancient）；
+            // 传入角色卡池的常规精英奖励选项作为兜底，避免重掷时走 CardFactory 抛异常。
+            var reward = new CardReward(
+                offered,
+                CardCreationSource.Other,
+                me,
+                CardCreationOptions.ForRoom(me, RoomType.Elite));
+            combatRoom.AddExtraReward(me, reward);
+
+            Log.Info($"[YunoMod] EliteSpecialReward: 已为玩家 {me.NetId} 加入 {offered.Count} 选 1 特殊卡奖励：{string.Join(",", offered.Select(c => c.Id))}");
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"[YunoMod] EliteSpecialReward: 为玩家 {me.NetId} 生成特殊卡奖励异常：{ex}");
         }
 
         await Task.CompletedTask;

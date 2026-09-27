@@ -61,7 +61,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
             choiceContext,
             Owner,
             c => c.Tags.Contains(YunoTags.ZhuLei)
-                 && !c.Tags.Contains(YunoTags.ZhuLeiRongHe) && !c.Tags.Contains(YunoTags.ZhuLeiMoXian)
+                 && c.Tags.Contains(YunoTags.ZhuLeiGuaiShou)
                  && c is not ZhuLeiLeiNuoHaTeCard,
             p => p is YunoSpecialCardPool,
             1, true);

@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Custom;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
@@ -42,10 +43,8 @@ public class YiJieXinNenGuCard : YunoSpecialBaseCard
         // 1. 获得10点格挡
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
-        // 2. 向消耗堆加入1张随机卡（全卡池完全随机）
-        var randomCanonical = Owner.RunState.Rng.Niche.NextItem(ModelDb.AllCards)!;
-        var copy = Owner.Creature.CombatState!.CreateCard(randomCanonical!, Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(copy, PileType.Exhaust, Owner);
+        // 2. 向消耗堆加入1张随机卡（全卡池完全随机），并展示给玩家
+        await ToolCmd.AddRandomCardsToExhaust(Owner, 1);
 
         // 3. 从消耗堆将最多2张「异解怪兽」卡加入手牌（可以不选）
         var prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, 0, 2);

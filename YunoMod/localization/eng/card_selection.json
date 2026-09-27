@@ -1,0 +1,19 @@
+{
+    "TO_FORESEE": "Choose 1 card to add to your hand.",
+    "TO_RETRIEVER": "Retrieve: choose {Amount} cards to add to your hand.",
+    "TO_FUSION": "Choose 1 card to fuse.",
+    "TO_ZHU_LEI_LEI_NUO_HA_TE_LING_HUO": "Activate the \"Nimble\" effect of \"Tearlaments Reinoheart\"?",
+    "TO_ZHU_LEI_SHUI_XIAN_RETRIEVE": "Add a \"Tearlaments\" card via \"Retrieve\" to your hand?",
+    "TO_FUSION_SHUI_XIAN": "Choose 1 \"Tearlaments monster\" to return to your deck, and add \"Tearlaments Havnis\" to your hand.",
+    "TO_FUSION_KA_LEI_DUO_HA_TE_RENO": "Choose 1 \"Tearlaments Reinoheart\" to return to your draw pile.",
+    "TO_FUSION_KA_LEI_DUO_HA_TE_MONSTER": "Choose 1 \"Tearlaments monster\" to return to your draw pile, and add \"Tearlaments Kaleido-Heart\" to your hand.",
+    "TO_FUSION_LU_SHA_KA": "Choose 1 \"Tearlaments Havnis\" to return to your draw pile, and add \"Tearlaments Rulkallos\" to your hand.",
+    "TO_BIE_XIANGT_TAO_CHOICE": "Choose a card from your exhaust pile to add to your hand?",
+    "TO_LIAN_LI_PAO_CHOICE_A_First": "Choose 1 card; its cost is recorded as A.",
+    "TO_LIAN_LI_PAO_CHOICE_A": "Choose 1 card with cost A.",
+    "TO_LIAN_LI_PAO_CHOICE_B": "Choose 1 card; its cost is recorded as B.",
+    "TO_LIAN_LI_PAO_CHOICE_A_Back": "Choose 1 card with cost A from your exhaust pile to return to your draw pile.",
+    "TO_LIAN_LI_PAO_CHOICE_B_Back": "Choose 1 card with cost B from your exhaust pile to return to your draw pile.",
+    "TO_HE_LU_SI_XIAN_DAO_HA_BI_CHOICE": "Choose a card from your exhaust pile to add to your hand.",
+    "TO_START_SPECIAL_CARD": "Run start: choose 1 Special card to add to your deck."
+}

@@ -1,6 +1,9 @@
+using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib;
 using YunoMod.Scripts.Relics;
 
@@ -10,7 +13,12 @@ namespace YunoMod.Scripts.Tool;
 // 每局开局按模组配置发放 DeadEnd 遗物：
 // - 「死亡讯息-红」：击败每层的第一个精英后获得特殊卡奖励（默认发放）
 // - 「死亡讯息-粉」：首战胜利/击败Boss后获得随机日记（默认发放）
-// 两个开关均可在模组设置页独立关闭。
+// - 「死亡讯息-黄」：持有后塔罗牌系列遗物才会出现（默认发放）
+// - 「死亡讯息-蓝」：获得时获得所有日记
+// - 「死亡讯息-绿」：获得时获得所有塔罗牌系列遗物
+// - 「死亡讯息-紫」：获得时从所有特殊卡中选择1张加入牌组
+// 各开关均可在模组设置页独立关闭，功能附着在遗物本身上（玩家可见）。
+// 模组设置只对本地玩家生效：联机时各客户端仅处理自己的角色，不影响其他玩家。
 public static class RunGameAddRelicReward
 {
     public static void Register()
@@ -25,53 +33,40 @@ public static class RunGameAddRelicReward
     {
         bool grantRed = YunoStartRelicSettings.GrantDeadEndRedBinding.Read();
         bool grantPink = YunoStartRelicSettings.GrantDeadEndPinkBinding.Read();
-        bool grantAll = YunoStartRelicSettings.GrantAllDiaryBinding.Read();
-        bool grantTarot = YunoStartRelicSettings.GrantAllTarotBinding.Read();
-        bool grantBlue = YunoStartRelicSettings.GrantDeadEndBlueBinding.Read();
+        bool grantBlue = YunoStartRelicSettings.GrantAllDiaryBinding.Read();
+        bool grantGreen = YunoStartRelicSettings.GrantAllTarotBinding.Read();
+        bool grantYellow = YunoStartRelicSettings.GrantDeadEndBlueBinding.Read();
+        bool grantPurple = YunoStartRelicSettings.GrantStartSpecialCardBinding.Read();
 
-
-        foreach (Player player in evt.RunState.Players)   // 所有角色（联机时每人都发）
+        // 只处理本地玩家（单人局即唯一玩家）。
+        // 注意时序：RunStartedEvent 触发于 RunManager.InitializeNewRun，此时 LocalContext.NetId
+        // 尚未赋值（RunState.Launch 才赋值），LocalContext.GetMe 会返回 null 并静默跳过发放。
+        // 因此优先用 NetService 的 NetId 匹配本地玩家，匹配不到时回退为唯一玩家（单人局）。
+        var playerList = evt.RunState.Players.ToList();
+        ulong localNetId = RunManager.Instance.NetService?.NetId ?? 0;
+        Player? me = playerList.FirstOrDefault(p => p.NetId == localNetId) ?? playerList.FirstOrDefault();
+        if (me == null)
         {
-            if (grantRed && player.GetRelic<DeadEndRedRelic>() == null)
-                await RelicCmd.Obtain<DeadEndRedRelic>(player);
-
-            if (grantPink && player.GetRelic<DeadEndPinkRelic>() == null)
-                await RelicCmd.Obtain<DeadEndPinkRelic>(player);
-
-            if (grantBlue && player.GetRelic<DeadEndYellowRelic>() == null)
-                await RelicCmd.Obtain<DeadEndYellowRelic>(player);
-
-            if (grantAll)
-            {
-                while (await DiaryRelics.TryGrantRandomUnobtained(player)) ;
-            }
-
-            if (grantTarot)
-            {
-                if (player.GetRelic<Tarot00TheFoolRelic>() == null) await RelicCmd.Obtain<Tarot00TheFoolRelic>(player);
-                if (player.GetRelic<Tarot01TheMagicianRelic>() == null) await RelicCmd.Obtain<Tarot01TheMagicianRelic>(player);
-                if (player.GetRelic<Tarot02TheHighPriestessRelic>() == null) await RelicCmd.Obtain<Tarot02TheHighPriestessRelic>(player);
-                if (player.GetRelic<Tarot03TheEmpressRelic>() == null) await RelicCmd.Obtain<Tarot03TheEmpressRelic>(player);
-                if (player.GetRelic<Tarot04TheEmperorRelic>() == null) await RelicCmd.Obtain<Tarot04TheEmperorRelic>(player);
-                if (player.GetRelic<Tarot05TheHierophantRelic>() == null) await RelicCmd.Obtain<Tarot05TheHierophantRelic>(player);
-                if (player.GetRelic<Tarot06TheLoversRelic>() == null) await RelicCmd.Obtain<Tarot06TheLoversRelic>(player);
-                if (player.GetRelic<Tarot07TheChariotRelic>() == null) await RelicCmd.Obtain<Tarot07TheChariotRelic>(player);
-                if (player.GetRelic<Tarot08StrengthRelic>() == null) await RelicCmd.Obtain<Tarot08StrengthRelic>(player);
-                if (player.GetRelic<Tarot09TheHermitRelic>() == null) await RelicCmd.Obtain<Tarot09TheHermitRelic>(player);
-                if (player.GetRelic<Tarot10WheelOfFortuneRelic>() == null) await RelicCmd.Obtain<Tarot10WheelOfFortuneRelic>(player);
-                if (player.GetRelic<Tarot11JusticeRelic>() == null) await RelicCmd.Obtain<Tarot11JusticeRelic>(player);
-                if (player.GetRelic<Tarot12TheHangedManRelic>() == null) await RelicCmd.Obtain<Tarot12TheHangedManRelic>(player);
-                if (player.GetRelic<Tarot13DeathRelic>() == null) await RelicCmd.Obtain<Tarot13DeathRelic>(player);
-                if (player.GetRelic<Tarot14TemperanceRelic>() == null) await RelicCmd.Obtain<Tarot14TemperanceRelic>(player);
-                if (player.GetRelic<Tarot15TheDevilRelic>() == null) await RelicCmd.Obtain<Tarot15TheDevilRelic>(player);
-                if (player.GetRelic<Tarot16TheTowerRelic>() == null) await RelicCmd.Obtain<Tarot16TheTowerRelic>(player);
-                if (player.GetRelic<Tarot17TheStarRelic>() == null) await RelicCmd.Obtain<Tarot17TheStarRelic>(player);
-                if (player.GetRelic<Tarot18TheMoonRelic>() == null) await RelicCmd.Obtain<Tarot18TheMoonRelic>(player);
-                if (player.GetRelic<Tarot19TheSunRelic>() == null) await RelicCmd.Obtain<Tarot19TheSunRelic>(player);
-                if (player.GetRelic<Tarot20JudgementRelic>() == null) await RelicCmd.Obtain<Tarot20JudgementRelic>(player);
-                if (player.GetRelic<Tarot21TheWorldRelic>() == null) await RelicCmd.Obtain<Tarot21TheWorldRelic>(player);
-            }
+            Entry.Logger.Error("[GrantStartRelics] 未找到本地玩家，放弃发放");
+            return;
         }
+
+        async Task GrantChecked<T>(bool on, Func<RelicModel?> has) where T : RelicModel
+        {
+            if (!on) return;
+            if (has() != null) return;
+            Entry.Logger.Info($"[GrantStartRelics] 发放 {typeof(T).Name}");
+            await RelicCmd.Obtain<T>(me);
+        }
+
+        await GrantChecked<DeadEndRedRelic>(grantRed, () => me.GetRelic<DeadEndRedRelic>());
+        await GrantChecked<DeadEndPinkRelic>(grantPink, () => me.GetRelic<DeadEndPinkRelic>());
+        await GrantChecked<DeadEndYellowRelic>(grantYellow, () => me.GetRelic<DeadEndYellowRelic>());
+        await GrantChecked<DeadEndBlueRelic>(grantBlue, () => me.GetRelic<DeadEndBlueRelic>());
+        await GrantChecked<DeadEndGreenRelic>(grantGreen, () => me.GetRelic<DeadEndGreenRelic>());
+        await GrantChecked<DeadEndPurpleRelic>(grantPurple, () => me.GetRelic<DeadEndPurpleRelic>());
+
+        Entry.Logger.Info("[GrantStartRelics] 开局发放完成");
 
         await Task.CompletedTask;
     }

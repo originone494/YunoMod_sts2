@@ -38,7 +38,6 @@ public class ZhuLeiShuiXianCard : YunoSpecialBaseCard, IOnLingHuo
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
         YunoTags.ZhuLeiRongHe,
-        YunoTags.ZhuLeiGuaiShou,
         YunoTags.LingHuo,
         YunoTags.ZhuChang
     ];

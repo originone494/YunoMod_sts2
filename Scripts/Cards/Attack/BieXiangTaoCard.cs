@@ -59,13 +59,14 @@ public class BieXiangTaoCard : YunoBaseCard
         var candidates = candidates1;
 
 
-        // 「注视」：可以从消耗堆中选择
-        if (cardPlay.Target.HasPower<ZhuShiPower>() && await ToolCmd.AskYesNo(choiceContext, Owner, ChoicePrompt))
+        // 「注视」：可以从消耗堆中选择（消耗堆为空时不弹出是/否询问，直接走弃牌堆）
+        if (cardPlay.Target.HasPower<ZhuShiPower>()
+            && candidates2.Count > 0
+            && await ToolCmd.AskYesNo(choiceContext, Owner, ChoicePrompt))
         {
             candidates = candidates2;
-            if (candidates2.Count() == 0) return;
         }
-        if (candidates1.Count() == 0) return;
+        if (candidates.Count == 0) return;
 
 
         var selectedCards = await CardSelectCmd.FromSimpleGrid(choiceContext, candidates, Owner,

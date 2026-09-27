@@ -54,14 +54,13 @@ public class ChengShengZhuiJiCard : YunoBaseCard, IOnForesee
         DynamicVars[_growthKey].UpgradeValueBy(2m);
     }
 
-    public Task OnForesee(PlayerChoiceContext ctx, Player player, int amount, int discardedAmount)
+    public async Task OnForesee(PlayerChoiceContext ctx, Player player, int amount, int discardedAmount)
     {
         if (player == base.Owner && Pile!.Type == PileType.Discard)
         {
-            CardPileCmd.Add(this, PileType.Hand);
-
+            // await 入堆，避免与预知流程的后续抽牌产生交错
+            await CardPileCmd.Add(this, PileType.Hand);
         }
-        return Task.CompletedTask;
     }
 
 }

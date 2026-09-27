@@ -14,7 +14,7 @@ using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-// 珠泪·爪音：先古魔陷。让目标在这个回合失去99点力量（其回合结束自动恢复），
+// 珠泪·爪音：先古珠泪陷阱卡。让目标在这个回合失去99点力量（其回合结束自动恢复），
 // 「检索」并丢弃1张「珠泪」卡（丢弃的珠泪怪兽会触发其灵活效果）；
 // 灵活：检索1张「珠泪怪兽」卡加入手牌。
 public class ZhuLeiZhuaYinCard : YunoSpecialBaseCard, IOnLingHuo
@@ -26,13 +26,16 @@ public class ZhuLeiZhuaYinCard : YunoSpecialBaseCard, IOnLingHuo
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.LingHuo,
         YunoTags.ZhuLei,
-        YunoTags.ZhuLeiMoXian,
+        YunoTags.ZhuLeiXianJing,
     ];
+
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
-        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiMoXian),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiXianJing),
         HoverTipFactory.FromKeyword(YunoKeywords.Retriever),
     ];
 
@@ -47,7 +50,7 @@ public class ZhuLeiZhuaYinCard : YunoSpecialBaseCard, IOnLingHuo
         await ToolCmd.RetrieverCard(
             choiceContext,
             Owner,
-            c => c.Tags.Contains(YunoTags.ZhuLei) && !c.Tags.Contains(YunoTags.ZhuLeiRongHe),
+            c => c.Tags.Contains(YunoTags.ZhuLeiGuaiShou) && !c.Tags.Contains(YunoTags.ZhuLeiRongHe),
             p => p is YunoSpecialCardPool,
             1,
             isDiscard: true);

@@ -48,14 +48,14 @@ public class DaggerPower : YunoBasePower
     }
     public override async Task AfterRemoved(Creature oldOwner)
     {
-        // 每有一层，就对随机敌人打出一张刺伤
+        // 每有一层，就对随机敌人打出一张刺伤（统一使用 oldOwner）
         for (int i = 0; i < Amount; i++)
         {
             await Cmd.CustomScaledWait(0.1f, 0.2f);
-            Creature? creature = Owner.Player!.RunState.Rng.CombatTargets.NextItem(Owner.CombatState!.HittableEnemies);
+            Creature? creature = oldOwner.Player!.RunState.Rng.CombatTargets.NextItem(oldOwner.CombatState!.HittableEnemies);
             if (creature != null)
             {
-                CardModel stab = Owner.CombatState!.CreateCard<CiShangCard>(Owner.Player!);
+                CardModel stab = oldOwner.CombatState!.CreateCard<CiShangCard>(oldOwner.Player!);
                 await CardCmd.AutoPlay(new ThrowingPlayerChoiceContext(), stab, creature);
             }
         }

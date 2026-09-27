@@ -13,8 +13,9 @@ using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-// 游戏王「七星道魔术师」：先古攻击卡，将抽牌堆顶1张送入弃牌堆，
-// 伤害 = 21 + 3 × 弃牌堆中不同卡名的数量（用 CalculatedDamageVar 动态显示变化伤害）
+// 游戏王「七星道法师」：先古攻击卡，造成 8 点伤害，并将抽牌堆顶 1 张卡送入弃牌堆；
+// 之后目标在本回合失去力量：基础 4 点，若手牌存在费用 ≥2 的卡，弃牌堆每有 1 张不同卡名的卡额外 +1
+// （卡面 {CalculatedDamage:diff()} 实时显示本次降低的力量总额，{ExtraDamage:diff()} 为每张不同卡名的加成）。
 public class QiXingDaoFaShiCard : YunoSpecialBaseCard
 {
     public QiXingDaoFaShiCard() : base(1, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)

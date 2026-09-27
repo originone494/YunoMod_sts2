@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Custom;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
@@ -45,14 +46,8 @@ public class YiJieXieWuErCard : YunoSpecialBaseCard
             .WithHitFx("vfx/vfx_attack_slash")
             .Execute(choiceContext);
 
-        // 2. 向消耗堆加入2张随机卡（全卡池完全随机，各抽各的）
-        var copies = new List<CardModel>();
-        for (int i = 0; i < 2; i++)
-        {
-            var randomCanonical = Owner.RunState.Rng.Niche.NextItem(ModelDb.AllCards)!;
-            copies.Add(Owner.Creature.CombatState!.CreateCard(randomCanonical!, Owner));
-        }
-        await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Exhaust, Owner);
+        // 2. 向消耗堆加入2张随机卡（全卡池完全随机，各抽各的），并展示给玩家
+        await ToolCmd.AddRandomCardsToExhaust(Owner, 2);
 
         // 3. 从消耗堆将最多2张「异解魔陷」卡加入手牌（可以不选）
         var prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, 0, 2);

@@ -22,6 +22,8 @@ public class SiLingDeYouHuoPower : YunoBasePower
     {
         // 只处理"进入弃牌堆"（打出、丢弃等所有路径都会走到这里）
         if (card.Pile?.Type != PileType.Discard) return Task.CompletedTask;
+        // 只响应自己的卡进弃牌堆（多人下队友的卡不触发）
+        if (card.Owner?.Creature != Owner) return Task.CompletedTask;
         if (CombatState == null) return Task.CompletedTask;
 
         Flash();

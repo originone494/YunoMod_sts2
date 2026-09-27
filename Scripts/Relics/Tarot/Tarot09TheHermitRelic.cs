@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Map;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
@@ -36,11 +38,16 @@ public class Tarot09TheHermitRelic : TarotRelicBase, IModRightClickableRelic
     public async Task OnRightClick(ModRightClickExecutionContext context)
     {
         if (Used) return;
-        if (IsReversed) return;                           // 逆位：无法进入商店
-        if (Owner.Creature.CombatState != null) return;   // 战斗中禁止切房间
+        if (IsReversed) return;                        // 逆位：无法进入商店
+        // 只有"战斗真正进行中"才禁止切房间。不能用 Creature.CombatState 判断：
+        // 战斗结束后（含战斗奖励界面）该字段要等离开战斗房间时才被清空，会把奖励界面上的右键一并挡掉。
+        if (CombatManager.Instance.IsInProgress) return;
 
         Flash();
         Used = true;
-        await RunManager.Instance.EnterRoom(new MerchantRoom());
+        // 必须走 EnterRoomDebug 而不是 EnterRoom：EnterRoom 只做 ExitCurrentRooms + EnterRoomInternal，
+        // 不会调用 ClearScreens()，全屏地图界面会继续盖在新生成的商店之上（表现为"进不去商店"）。
+        // EnterRoomDebug 会补齐 NetLoadingHandle / ClearScreens / ExitCurrentRooms / 同步 / 淡入淡出。
+        await RunManager.Instance.EnterRoomDebug(RoomType.Shop, MapPointType.Shop, null, true);
     }
 }

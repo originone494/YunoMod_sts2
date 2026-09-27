@@ -17,6 +17,9 @@ public class ShouHuPower : YunoBasePower, IOnGetLove
 
     public async Task OnGetLove(PlayerChoiceContext ctx, Player player, int amount)
     {
+        // 只响应自己获得的爱意（与暗中观察同接口的守卫口径一致）
+        if (Owner.Player != player) return;
+
         // 每获得1点爱意，对所有敌人造成 base.Amount 点伤害
         for (int i = 0; i < amount; i++)
         {

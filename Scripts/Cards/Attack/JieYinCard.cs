@@ -54,7 +54,6 @@ public class JieYinCard : YunoBaseCard
 
     protected override void OnUpgrade()
     {
-        DynamicVars.Cards.UpgradeValueBy(1);
         DynamicVars.Repeat.UpgradeValueBy(1);
     }
 }

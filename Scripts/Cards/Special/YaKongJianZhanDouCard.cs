@@ -43,9 +43,9 @@ public class YaKongJianZhanDouCard : YunoSpecialBaseCard
             }
             else
             {
-                // 费用小于2：送去弃牌堆并受到1点伤害
+                // 费用小于2：送去弃牌堆并失去1点生命（不可格挡、不受力量加成）
                 await CardCmd.Discard(choiceContext, card);
-                await CreatureCmd.Damage(choiceContext, Owner.Creature, 1m, ValueProp.Unpowered, Owner.Creature, this, cardPlay);
+                await CreatureCmd.Damage(choiceContext, Owner.Creature, 1m, ValueProp.Unpowered | ValueProp.Unblockable, Owner.Creature, this, cardPlay);
             }
         }
     }

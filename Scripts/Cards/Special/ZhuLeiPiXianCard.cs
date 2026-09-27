@@ -15,7 +15,7 @@ using YunoMod.Scripts.Tool;
 namespace YunoMod.Scripts.Cards.Special;
 
 // 珠泪·劈弦：打出「珠泪」卡时，从抽牌堆顶将3张牌送入弃牌堆（由 ZhuLeiPiXianPower 承载）；
-// 灵活：检索1张「珠泪魔陷」卡加入手牌。
+// 灵活：检索1张「珠泪陷阱」卡加入手牌。
 public class ZhuLeiPiXianCard : YunoSpecialBaseCard, IOnLingHuo
 {
     public ZhuLeiPiXianCard() : base(0, CardType.Power, CardRarity.Ancient, TargetType.Self)
@@ -25,14 +25,17 @@ public class ZhuLeiPiXianCard : YunoSpecialBaseCard, IOnLingHuo
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.LingHuo,
         YunoTags.ZhuLei,
-        YunoTags.ZhuLeiMoXian,
+        YunoTags.ZhuLeiMoFa,
     ];
+
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<ZhuLeiPiXianPower>(),
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
-        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiMoXian),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiMoFa),
         HoverTipFactory.FromKeyword(YunoKeywords.Retriever),
     ];
 
@@ -41,7 +44,7 @@ public class ZhuLeiPiXianCard : YunoSpecialBaseCard, IOnLingHuo
         await PowerCmd.Apply<ZhuLeiPiXianPower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);
     }
 
-    // 灵活：检索1张「珠泪魔陷」卡加入手牌
+    // 灵活：检索1张「珠泪陷阱」卡加入手牌
     public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
     {
         return Task.CompletedTask;
@@ -52,7 +55,7 @@ public class ZhuLeiPiXianCard : YunoSpecialBaseCard, IOnLingHuo
         await ToolCmd.RetrieverCard(
             ctx,
             player,
-            c => c.Tags.Contains(YunoTags.ZhuLeiMoXian),
+            c => c.Tags.Contains(YunoTags.ZhuLeiXianJing),
             p => p is YunoSpecialCardPool,
             1);
     }

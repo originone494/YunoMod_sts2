@@ -12,7 +12,7 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Power;
 
-namespace YunoMod.Scripts.Cards.Power;
+namespace YunoMod.Scripts.Cards.Skill;
 
 public class ZhanYouYuCard : YunoBaseCard
 {

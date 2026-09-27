@@ -42,6 +42,9 @@ public class XieHouCard : YunoBaseCard, IOnGetLove
 
     public Task OnGetLove(PlayerChoiceContext ctx, Player player, int amount)
     {
+        // 只响应自己获得爱意（多人下队友获得爱意不降低费用）
+        if (player != Owner) return Task.CompletedTask;
+
         EnergyCost.UpgradeBy(-1);
         return Task.CompletedTask;
     }

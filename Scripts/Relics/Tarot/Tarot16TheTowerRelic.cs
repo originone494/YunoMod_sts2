@@ -32,10 +32,17 @@ public class Tarot16TheTowerRelic : TarotRelicBase
         var drawCards = PileType.Draw.GetPile(Owner).Cards.ToList();
         if (drawCards.Count == 0) return;
 
+        // 副本要放进「弃牌堆」这个战斗牌堆，必须用 CombatState.CreateCard 登记，
+        // 不能用 RunState.CreateCard：后者造出的是牌组域的卡，不进 CombatState._allCards。
+        // 入堆那一刻它的 Pile 还在牌组域、IsInCombat 为 false，能绕过 CardPileCmd.Add
+        // 的「必须在 CombatState 中」校验；但落进弃牌堆后 IsInCombat 变成 true 而仍未被
+        // 登记，就成了「游离卡牌」——之后任意一次洗牌（Shuffle → CardPileCmd.Add）都会抛
+        // "XXX must be added to a CombatState before adding it to this pile"，
+        // 导致回合循环死亡、战斗卡死（表现为没有结束回合按钮）。
         var addResults = new List<CardPileAddResult>();
         foreach (var card in drawCards)
         {
-            var copy = Owner.RunState.CreateCard(card.CanonicalInstance, Owner);
+            var copy = combatState.CreateCard(card.CanonicalInstance, Owner);
             addResults.Add(await CardPileCmd.Add(copy, PileType.Discard));
         }
         CardCmd.PreviewCardPileAdd(addResults, 2f);

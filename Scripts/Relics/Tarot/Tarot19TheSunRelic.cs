@@ -61,6 +61,8 @@ public class Tarot19TheSunRelic : TarotRelicBase
     public override async Task AfterCardDrawn(PlayerChoiceContext choiceContext, CardModel card, bool fromHandDraw)
     {
         if (IsReversed) return;
+        if (card.Owner != Owner) return;   // 只消耗自己抽到的诅咒/状态牌（多人下不影响队友）
+
         if (card.Type == CardType.Curse || card.Type == CardType.Status)
         {
             await CardCmd.Exhaust(choiceContext, card);

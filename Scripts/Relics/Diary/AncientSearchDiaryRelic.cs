@@ -61,6 +61,8 @@ public class AncientSearchDiaryRelic : YunoBaseRelic
 
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext choiceContext, Player player)
     {
+        if (player != Owner) return;   // 只在自己的回合开始时结算（多人下队友回合不触发）
+
         Flash();
 
         int amount = Owner.Creature.GetPowerAmount<DiaryPower>();

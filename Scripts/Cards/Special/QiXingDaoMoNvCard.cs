@@ -37,7 +37,7 @@ public class QiXingDaoMoNvCard : YunoSpecialBaseCard
         if (handCards.Count == 0) return;
 
         var selectedCard = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, 1),
+            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 1),
             context: choiceContext,
             player: Owner,
             filter: null,

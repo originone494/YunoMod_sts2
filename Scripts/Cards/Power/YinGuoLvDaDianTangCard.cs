@@ -11,7 +11,7 @@ using YunoMod.Scripts.Cards.Other;
 using YunoMod.Scripts.Power;
 using MegaCrit.Sts2.Core.HoverTips;
 
-namespace YunoMod.Scripts.Cards.Skill;
+namespace YunoMod.Scripts.Cards.Power;
 
 public class YinGuoLvDaDianTangCard : YunoBaseCard
 {
@@ -28,7 +28,6 @@ public class YinGuoLvDaDianTangCard : YunoBaseCard
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Ethereal];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
-        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
         HoverTipFactory.FromCard<QiuTiCard>(),
         HoverTipFactory.FromPower<DiaryPower>(),

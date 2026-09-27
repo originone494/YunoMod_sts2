@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Relics;
@@ -25,6 +26,8 @@ public class DiamondRingRelic : YunoBaseRelic
         if (_triggered) return;
         if (delta >= 0) return;
         if (creature != Owner.Creature) return;
+        // 战斗外掉血（事件、诅咒等）不触发：此时 CombatState 为 null，且效果本就只应在战斗内结算
+        if (!CombatManager.Instance.IsInProgress) return;
 
         _triggered = true;
         Flash();

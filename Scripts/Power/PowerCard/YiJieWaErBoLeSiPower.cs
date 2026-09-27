@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Runs;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Custom;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Power;
 
@@ -32,14 +33,8 @@ public class YiJieWaErBoLeSiPower : YunoBasePower
         var self = Owner.Player!;
         if (player != self) return;
 
-        // 1. 向消耗堆加入5张随机卡（全卡池完全随机，各抽各的）
-        var copies = new List<CardModel>();
-        for (int i = 0; i < _randomCards; i++)
-        {
-            var randomCanonical = self.RunState.Rng.Niche.NextItem(ModelDb.AllCards)!;
-            copies.Add(Owner.CombatState!.CreateCard(randomCanonical!, self));
-        }
-        await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Exhaust, self);
+        // 1. 向消耗堆加入5张随机卡（全卡池完全随机，各抽各的），并展示给玩家
+        await ToolCmd.AddRandomCardsToExhaust(self, _randomCards);
 
         // 2. 可以选择消耗堆的1张「异解」卡加入手牌（0-1张，可取消）
         var options = PileType.Exhaust.GetPile(self).Cards

@@ -15,6 +15,8 @@ public class XingQiuGaiZaoCard : YunoSpecialBaseCard
     {
     }
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(YunoKeywords.Retriever),
     ];

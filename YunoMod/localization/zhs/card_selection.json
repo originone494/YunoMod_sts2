@@ -14,5 +14,6 @@
     "TO_LIAN_LI_PAO_CHOICE_B": "选择1张卡，费用记为B。",
     "TO_LIAN_LI_PAO_CHOICE_A_Back": "从消耗堆选择1张费用为A的卡返回抽牌堆。",
     "TO_LIAN_LI_PAO_CHOICE_B_Back": "从消耗堆选择1张费用为B的卡返回抽牌堆。",
-    "TO_HE_LU_SI_XIAN_DAO_HA_BI_CHOICE": "是否选择从消耗堆中将卡加入手牌。"
+    "TO_HE_LU_SI_XIAN_DAO_HA_BI_CHOICE": "是否选择从消耗堆中将卡加入手牌。",
+    "TO_START_SPECIAL_CARD": "开局：从特殊卡中选择1张加入牌组。"
 }

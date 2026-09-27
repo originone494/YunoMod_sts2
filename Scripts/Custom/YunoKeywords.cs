@@ -28,7 +28,9 @@ using YunoMod.Scripts;
 
 [RegisterOwnedCardKeyword(nameof(ZhuLei), IconPath = "res://yuno.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
 
-[RegisterOwnedCardKeyword(nameof(ZhuLeiMoXian), IconPath = "res://yuno.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
+[RegisterOwnedCardKeyword(nameof(ZhuLeiMoFa), IconPath = "res://yuno.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
+
+[RegisterOwnedCardKeyword(nameof(ZhuLeiXianJing), IconPath = "res://yuno.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
 
 [RegisterOwnedCardKeyword(nameof(ZhuLeiGuaiShou), IconPath = "res://yuno.svg", CardDescriptionPlacement = ModKeywordCardDescriptionPlacement.BeforeCardDescription)]
 
@@ -67,7 +69,9 @@ public class YunoKeywords
 
     public static readonly CardKeyword ZhuLei = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(ZhuLei)).GetModCardKeyword();
 
-    public static readonly CardKeyword ZhuLeiMoXian = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(ZhuLeiMoXian)).GetModCardKeyword();
+    public static readonly CardKeyword ZhuLeiMoFa = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(ZhuLeiMoFa)).GetModCardKeyword();
+
+    public static readonly CardKeyword ZhuLeiXianJing = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(ZhuLeiXianJing)).GetModCardKeyword();
 
     public static readonly CardKeyword ZhuLeiGuaiShou = ModContentRegistry.GetQualifiedKeywordId(Entry.ModId, nameof(ZhuLeiGuaiShou)).GetModCardKeyword();
 

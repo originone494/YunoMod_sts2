@@ -25,6 +25,9 @@ public class BreedDiaryRelic : YunoBaseRelic
             return;
         }
 
+        // 只响应自己打出的能力牌（多人下队友的能力牌不触发、不消耗次数）
+        if (cardPlay.Card.Owner != Owner) return;
+
         if (Used) return;
 
         Flash();

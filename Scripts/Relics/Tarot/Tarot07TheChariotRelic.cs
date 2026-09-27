@@ -45,12 +45,11 @@ public class Tarot07TheChariotRelic : TarotRelicBase
         }
     }
 
-    // 逆位：怪物自身的格挡被你的攻击突破时，自己获得1层易伤（一场战斗一次）
+    // 逆位：一场战斗一次，怪物突破自己的格挡时，自己获得1层易伤
     public override async Task AfterBlockBroken(PlayerChoiceContext choiceContext, Creature target, Creature? breaker)
     {
         if (!IsReversed || _vulnerableUsedThisCombat) return;
-        if (breaker == Owner.Creature) return;
-        if (target.IsMonster) return;
+        if (target != Owner.Creature) return;   // 只有自己的格挡被打破时触发（多人下队友格挡被破不影响）
 
         _vulnerableUsedThisCombat = true;
         Flash();

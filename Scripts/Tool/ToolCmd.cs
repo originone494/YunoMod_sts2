@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.GameInfo.Objects;
 using STS2RitsuLib.Keywords;
@@ -41,6 +42,47 @@ public static class ToolCmd
         }
         CardCmd.PreviewCardPileAdd(resultList, 2f);
 
+    }
+
+    // 向消耗堆加入 amount 张随机卡（全卡池完全随机，各抽各的），并把加入的卡展示给玩家：
+    // 卡从屏幕中央出现、停留 previewTime 秒后飞向消耗堆（与 DuiMu / AddCardToDeck 同款表现）。
+    // filter 可选：进一步限定候选卡（如仅稀有卡）；为 null 时不限。
+    public static async Task<IReadOnlyList<CardPileAddResult>> AddRandomCardsToExhaust(Player player, int amount, float previewTime = 2f, Func<CardModel, bool>? filter = null)
+    {
+        if (amount <= 0) return Array.Empty<CardPileAddResult>();
+
+        var combatState = player.Creature.CombatState;
+        if (combatState == null) return Array.Empty<CardPileAddResult>();
+
+        var candidates = ModelDb.AllCards;
+        if (filter != null) candidates = candidates.Where(filter);
+        var candidateList = candidates.ToList();
+        if (candidateList.Count == 0) return Array.Empty<CardPileAddResult>();
+
+        var copies = new List<CardModel>();
+        for (int i = 0; i < amount; i++)
+        {
+            var randomCanonical = player.RunState.Rng.Niche.NextItem(candidateList);
+            if (randomCanonical == null) continue;
+            copies.Add(combatState.CreateCard(randomCanonical, player));
+        }
+        if (copies.Count == 0) return Array.Empty<CardPileAddResult>();
+
+        var results = await CardPileCmd.AddGeneratedCardsToCombat(copies, PileType.Exhaust, player);
+
+        PreviewPileAdd(results, previewTime);
+
+        return results;
+    }
+
+    // 播放"卡入堆"预览：卡从屏幕中央出现、停留 time 秒后飞向目标牌堆（引擎自带的 PreviewCardPileAdd）。
+    // 超过5张时横排会铺出屏幕，故改用凌乱布局。
+    private static void PreviewPileAdd(IReadOnlyList<CardPileAddResult> results, float time)
+    {
+        if (results.Count == 0) return;
+
+        var style = results.Count > 5 ? CardPreviewStyle.MessyLayout : CardPreviewStyle.HorizontalLayout;
+        CardCmd.PreviewCardPileAdd(results, time, style);
     }
 
     public static async Task<IEnumerable<CardModel>> Foresee(PlayerChoiceContext choiceContext, Player player, int amount)
@@ -294,12 +336,13 @@ public static class ToolCmd
     /// <param name="filter">卡条件（如标签、稀有度、排除自身）。</param>
     /// <param name="poolFilter">卡池条件（如限定某个卡池）；为 null 时不限卡池。</param>
     /// <param name="amount">最多可选择并加入手牌的数量。</param>
+    /// <param name="isRandom">true = 不弹选择界面，从候选中不重复地随机抽最多 amount 张。</param>
     public static async Task<List<CardModel>> RetrieverCard(
         PlayerChoiceContext choiceContext,
         Player player,
         Func<CardModel, bool> filter,
         Func<CardPoolModel, bool>? poolFilter = null,
-        int amount = 1, bool isDiscard = false)
+        int amount = 1, bool isDiscard = false, bool isRandom = false, LocString? prompt = null)
     {
         if (player == null || amount < 1) return [];
 
@@ -316,18 +359,33 @@ public static class ToolCmd
             .Select(c => player.Creature.CombatState!.CreateCard(c, player))
             .ToList();
 
-        var prefs = new CardSelectorPrefs(
-            YunoSelectorPrefs.RetrieverSelectionPrompt,
-            0,
-            amount
-        );
+        List<CardModel> selectCards;
+        if (isRandom)
+        {
+            // 随机抽取：从候选中不重复地随机取最多 amount 张，不弹选择界面
+            selectCards = new List<CardModel>();
+            for (int i = 0; i < amount && combatCopies.Count > 0; i++)
+            {
+                var picked = player.RunState.Rng.Niche.NextItem(combatCopies)!;
+                combatCopies.Remove(picked);
+                selectCards.Add(picked);
+            }
+        }
+        else
+        {
+            var prefs = new CardSelectorPrefs(
+                prompt ?? YunoSelectorPrefs.RetrieverSelectionPrompt,
+                0,
+                amount
+            );
 
-        var selectCards = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext,
-            combatCopies,
-            player,
-            prefs
-        )).ToList();
+            selectCards = (await CardSelectCmd.FromSimpleGrid(
+                choiceContext,
+                combatCopies,
+                player,
+                prefs
+            )).ToList();
+        }
         if (isDiscard)
             foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, player);
         else
@@ -414,7 +472,7 @@ public static class ToolCmd
     {
 
         List<CardModel> list = new List<CardModel>();
-
+        var results = new List<CardPileAddResult>();
 
         for (int i = 0; i < amount; i++)
         {
@@ -428,11 +486,20 @@ public static class ToolCmd
             {
                 await CardCmd.Discard(choiceContext, cardModel);
 
-                CardCmd.Preview(cardModel);
+                // 弃牌后自行组装入堆结果，仅用于播放预览（PreviewCardPileAdd 只读取 success 与 cardAdded）
+                results.Add(new CardPileAddResult
+                {
+                    success = true,
+                    cardAdded = cardModel,
+                    targetPile = PileType.Discard,
+                });
 
                 list.Add(cardModel);
             }
         }
+
+        // 展示被送入弃牌堆的卡（与 AddRandomCardsToExhaust 同款表现）
+        PreviewPileAdd(results, 2f);
 
         return list;
     }
