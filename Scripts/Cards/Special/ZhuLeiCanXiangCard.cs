@@ -26,8 +26,8 @@ public class ZhuLeiCanXiangCard : YunoSpecialBaseCard, IOnLingHuo
     }
 
     protected override IEnumerable<DynamicVar> CanonicalVars => [
-        new BlockVar(10m, ValueProp.Move),
-        new PowerVar<WeakPower>(2),
+        new BlockVar(6m, ValueProp.Move),
+        new PowerVar<WeakPower>(1),
     ];
 
     protected override HashSet<CardTag> CanonicalTags => [

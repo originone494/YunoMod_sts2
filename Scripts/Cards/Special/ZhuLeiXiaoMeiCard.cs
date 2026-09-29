@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Keywords;
@@ -23,20 +24,31 @@ public class ZhuLeiXiaoMeiCard : YunoSpecialBaseCard, IOnLingHuo
     {
     }
 
+    // 只用于声明「这张牌能给格挡」：原版菲涅尔透镜的灵活(Nimble)附魔靠 CardModel.GainsBlock
+    // 判定资格，而基类按 CanonicalVars 里是否存在 BlockVar 自动推导该属性。
+    // 实际格挡值仍在 OnPlay 里直接传入——BlockVar 的附魔加成只作用于预览，不会与实际值重复计算。
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+    [
+        new BlockVar(10m, ValueProp.Move),
+    ];
+
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
         YunoTags.ZhuLeiGuaiShou,
-        YunoTags.LingHuo
+        YunoTags.LingHuo,
+        YunoTags.ZhuLeiRongHe
 
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        YunoKeywords.ZhuLeiRongHe,
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

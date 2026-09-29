@@ -27,7 +27,7 @@ public class YiJieDuoZuiHaiCard : YunoSpecialBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(30m, ValueProp.Move),
+        new DamageVar(24m, ValueProp.Move),
     ];
 
     public YiJieDuoZuiHaiCard() : base(2, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)

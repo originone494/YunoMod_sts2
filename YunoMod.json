@@ -3,12 +3,15 @@
 	"name": "我妻由乃Mod",
 	"author": "不知道叫什么",
 	"description": "增加一个人物，我妻由乃。",
-	"version": "0.3.4",
+	"version": "0.4.2",
 	"min_game_version": "0.111.0",
 	"has_pck": true,
 	"has_dll": true,
 	"dependencies": [
-		{ "id": "STS2-RitsuLib", "min_version": "0.4.30" }
+		{
+			"id": "STS2-RitsuLib",
+			"min_version": "0.4.30"
+		}
 	],
 	"affects_gameplay": true
 }

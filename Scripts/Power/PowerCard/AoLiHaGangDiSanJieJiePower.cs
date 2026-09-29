@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Combat.HandSize;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
@@ -15,7 +16,7 @@ namespace YunoMod.Scripts.Power;
 
 // 奥利哈刚第三结界：
 // - 手牌数量没有上限
-// - 若同时拥有「奥利哈刚的结界」和「奥利哈刚第二结界」，回合开始时清除自身负面能力、清除所有敌人的正面能力
+// - 若同时拥有「奥利哈刚的结界」和「奥利哈刚第二结界」，回合开始时清除自身负面能力、清除所有敌人的所有力量
 [RegisterPower]
 public class AoLiHaGangDiSanJieJiePower : YunoBasePower, IMaxHandSizeModifier
 {
@@ -50,12 +51,13 @@ public class AoLiHaGangDiSanJieJiePower : YunoBasePower, IMaxHandSizeModifier
             await PowerCmd.Remove(power);
         }
 
-        // 清除所有敌人的正面能力
+        // 清除所有敌人的所有力量
         foreach (Creature enemy in Owner.CombatState!.HittableEnemies)
         {
-            foreach (var power in enemy.Powers.Where(p => p.Type == PowerType.Buff).ToList())
+            var strength = enemy.GetPower<StrengthPower>();
+            if (strength != null)
             {
-                await PowerCmd.Remove(power);
+                await PowerCmd.Remove(strength);
             }
         }
     }

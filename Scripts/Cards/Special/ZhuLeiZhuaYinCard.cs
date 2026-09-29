@@ -50,7 +50,7 @@ public class ZhuLeiZhuaYinCard : YunoSpecialBaseCard, IOnLingHuo
         await ToolCmd.RetrieverCard(
             choiceContext,
             Owner,
-            c => c.Tags.Contains(YunoTags.ZhuLeiGuaiShou) && !c.Tags.Contains(YunoTags.ZhuLeiRongHe),
+            c => c.Tags.Contains(YunoTags.ZhuLeiGuaiShou) && !c.Tags.Contains(YunoTags.ZhuLeiRongHeGuaiShou),
             p => p is YunoSpecialCardPool,
             1,
             isDiscard: true);

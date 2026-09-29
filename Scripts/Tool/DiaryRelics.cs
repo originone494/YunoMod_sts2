@@ -54,8 +54,15 @@ public static class DiaryRelics
     /// <summary>随机挑1本尚未持有的普通日记（可变实例）；若已全部持有则返回 null。</summary>
     public static RelicModel? PickRandomUnobtained(Player player)
     {
+        // 「跟踪日记（新）」是「跟踪日记」的奥罗巴斯精炼形态，而 RelicCmd.Replace 的顺序是
+        // 「先移除本体 → 再发放强化版 → 最后才触发强化版的 AfterObtained」。
+        // 也就是说精炼的那一刻本体已不在持有列表里；若不在这里排除，
+        // 强化版开局抽随机日记时就会把刚精炼掉的本体又抽回来（精炼等于白做）。
+        bool hasUpgradedSearchDiary = Owns(player, typeof(AncientSearchDiaryRelic));
+
         var missing = ObtainableByAncientSearch
             .Where(t => !Owns(player, t))
+            .Where(t => !(t == typeof(SearchDiaryRelic) && hasUpgradedSearchDiary))
             .ToList();
         if (missing.Count == 0) return null;
 

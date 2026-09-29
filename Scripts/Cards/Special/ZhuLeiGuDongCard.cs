@@ -56,7 +56,7 @@ public class ZhuLeiGuDongCard : YunoSpecialBaseCard, IOnLingHuo
         if (PileType.Hand.GetPile(Owner).Cards.Count == 0) return;
 
         var selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: null,

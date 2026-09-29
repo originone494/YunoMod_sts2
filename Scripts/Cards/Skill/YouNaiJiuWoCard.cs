@@ -22,8 +22,8 @@ public class YouNaiJiuWoCard : YunoBaseCard
     [
         new BlockVar(30m, ValueProp.Move),
         new CardsVar(1),
-        new PowerVar<VulnerablePower>(3),
-        new PowerVar<WeakPower>(3)
+        new PowerVar<VulnerablePower>(99),
+        new PowerVar<WeakPower>(99)
     ];
 
     public YouNaiJiuWoCard() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -43,12 +43,12 @@ public class YouNaiJiuWoCard : YunoBaseCard
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // »ñµÃ¸ñµ²
+        // ï¿½ï¿½Ã¸ï¿½
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         await ToolCmd.ForeseeAndDraw(choiceContext, Owner);
 
-        // »ñµÃÒ×ÉËºÍÐéÈõ£¨¸ºÃæÐ§¹û£©
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½
         await PowerCmd.Apply<VulnerablePower>(choiceContext, Owner.Creature, DynamicVars.Vulnerable.BaseValue, Owner.Creature, this);
         await PowerCmd.Apply<WeakPower>(choiceContext, Owner.Creature, DynamicVars.Weak.BaseValue, Owner.Creature, this);
     }

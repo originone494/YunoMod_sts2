@@ -85,14 +85,13 @@ public class AncientSearchDiaryRelic : YunoBaseRelic
 
         int amount = DynamicVars[_DiaryCount].IntValue;
 
+        // 必须逐次 await。原先调用的 GetDiary 是 async void，两次调用会并发起跑，
+        // 第 2 次挑日记时第 1 本可能还没真正入手，于是可能抽到同一本（实际只多拿 1 本）。
+        // 清单与逻辑统一收口在 DiaryRelics（其中已排除精炼前的本体「跟踪日记」）。
         for (int i = 0; i < amount; i++)
-            GetDiary();
-    }
-
-    private async void GetDiary()
-    {
-        // 随机获得1本尚未持有的普通日记（清单与逻辑统一收口在 DiaryRelics）
-        await DiaryRelics.TryGrantRandomUnobtained(Owner);
+        {
+            await DiaryRelics.TryGrantRandomUnobtained(Owner);
+        }
     }
 
 }

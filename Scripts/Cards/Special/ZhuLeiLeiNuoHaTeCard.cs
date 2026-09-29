@@ -31,7 +31,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
     // 伤害使用动态变量：造成 15 点伤害
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(15m, ValueProp.Move),
+        new DamageVar(12m, ValueProp.Move),
     };
 
     protected override HashSet<CardTag> CanonicalTags => [
@@ -82,7 +82,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
         // ① 条件：手牌有除自己外的「珠泪」卡（带珠泪标签且非珠泪融合卡）
         var handZhuLei = PileType.Hand.GetPile(player).Cards
             .Where(c => c.Tags.Contains(YunoTags.ZhuLei)
-                        && !c.Tags.Contains(YunoTags.ZhuLeiRongHe)
+                        && !c.Tags.Contains(YunoTags.ZhuLeiRongHeGuaiShou)
                         && c != this)
             .ToList();
         if (handZhuLei.Count == 0) return;
@@ -108,7 +108,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
             context: ctx,
             player: player,
             filter: c => c.Tags.Contains(YunoTags.ZhuLei)
-                         && !c.Tags.Contains(YunoTags.ZhuLeiRongHe)
+                         && !c.Tags.Contains(YunoTags.ZhuLeiRongHeGuaiShou)
                          && c != this,
             source: this)).ToList();
         if (selected.Count == 0) return;

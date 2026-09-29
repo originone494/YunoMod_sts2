@@ -15,17 +15,20 @@ public class CongZuoBianErLaiCard : YunoBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(6m, ValueProp.Move)
+        new DamageVar(9m, ValueProp.Move)
     ];
 
     public CongZuoBianErLaiCard() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
+
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromPower<WeakPower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromKeyword(YunoKeywords.Foresee),
+        HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
     ];
 
     

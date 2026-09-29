@@ -21,10 +21,18 @@ public class TianXiaDuBuDeDaYiZeiCard : YunoSpecialBaseCard
     {
     }
 
+    // 明确声明「不可被格挡类附魔」：本卡的格挡在「受到攻击前」的反应里获得，
+    // CreatureCmd.GainBlock 只能传 null cardPlay，而引擎取 cardSource = cardPlay?.Card，
+    // 所以灵活(Nimble)的 +格挡 加不上。若沿用基类的自动判定（有 BlockVar → true），
+    // 菲涅尔透镜会把它附上、卡面还会预览出附魔后的数值，但实际给的格挡不变——显示与结算不符。
+    public override bool GainsBlock => false;
+
     // 伤害使用动态变量：造成 25 点伤害
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(25m, ValueProp.Move)
+        new DamageVar(20m, ValueProp.Move),
+        // 卡面直接写了「获得20点格挡」，格挡数值是看得见的，因此声明 Block 动态变量。
+        new BlockVar(16m, ValueProp.Move)
     };
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];

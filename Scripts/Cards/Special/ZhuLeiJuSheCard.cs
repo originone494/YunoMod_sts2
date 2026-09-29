@@ -26,7 +26,7 @@ public class ZhuLeiJuSheCard : YunoSpecialBaseCard, IOnLingHuo
     // 伤害使用动态变量：造成 23 点伤害
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(23m, ValueProp.Move),
+        new DamageVar(20m, ValueProp.Move),
     };
 
     protected override HashSet<CardTag> CanonicalTags => [
@@ -59,7 +59,7 @@ public class ZhuLeiJuSheCard : YunoSpecialBaseCard, IOnLingHuo
 
         await CardCmd.Exhaust(choiceContext, exhausted[0]);
 
-        await PlayerCmd.GainEnergy(2, this.Owner);
+        await PlayerCmd.GainEnergy(1, this.Owner);
 
         await ToolCmd.DuiMu(choiceContext, Owner, 3);
     }

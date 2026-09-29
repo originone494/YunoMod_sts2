@@ -41,8 +41,8 @@ public class ShenZhiMiGaoCard : YunoSpecialBaseCard
         var targetId = selected.Id;
         await CardCmd.Exhaust(choiceContext, selected);
 
-        // ② 之后，消耗抽牌堆·弃牌堆中的同名卡
-        var sameNameCards = new[] { PileType.Draw, PileType.Discard }
+        // ② 之后，消耗手牌·抽牌堆·弃牌堆中的同名卡
+        var sameNameCards = new[] { PileType.Hand, PileType.Draw, PileType.Discard }
             .SelectMany(pileType => pileType.GetPile(Owner).Cards)
             .Where(card => card.Id == targetId)
             .ToList();

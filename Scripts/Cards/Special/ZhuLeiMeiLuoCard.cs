@@ -34,16 +34,19 @@ public class ZhuLeiMeiLuoCard : YunoSpecialBaseCard, IOnLingHuo
         YunoTags.ZhuLei,
         YunoTags.ZhuLeiGuaiShou,
         YunoTags.LingHuo,
+        YunoTags.ZhuLeiRongHe,
 
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        YunoKeywords.ZhuLeiRongHe,
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

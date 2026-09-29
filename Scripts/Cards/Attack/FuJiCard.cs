@@ -21,7 +21,7 @@ public class FuJiCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(9m, ValueProp.Move),
+        new DamageVar(6m, ValueProp.Move),
         new PowerVar<VulnerablePower>(2m),
     };
 

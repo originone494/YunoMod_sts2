@@ -18,7 +18,7 @@ public class ZhanCard : YunoBaseCard
 {
     private const string _prevDamageKey = "PrevDamage";
     private const string _prevPrevDamageKey = "PrevPrevDamage";
-    private const decimal _baseDamage = 12m;
+    private const decimal _baseDamage = 11m;
     private const decimal _upgradeDamage = 3m;
 
     // PrevDamage  = 上一次打出的伤害 F(n-1)

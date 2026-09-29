@@ -20,7 +20,7 @@ public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
    {
-        new BlockVar(14m, ValueProp.Move),
+        new BlockVar(12m, ValueProp.Move),
         new DynamicVar("LingHuoBlock", 8m),
    };
 

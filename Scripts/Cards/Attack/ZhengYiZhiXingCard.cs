@@ -20,7 +20,7 @@ public class ZhengYiZhiXingCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(21m, ValueProp.Move),
+        new DamageVar(32m, ValueProp.Move),
         new CalculationBaseVar(0m),
         new CalculationExtraVar(1m),
         new ExtraDamageVar(1m),

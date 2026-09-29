@@ -29,7 +29,7 @@ public class ZhenZhuShiJieCard : YunoSpecialBaseCard
         await ToolCmd.RetrieverCard(
             choiceContext,
             Owner,
-            c => c.Tags.Contains(YunoTags.ZhuLei) && !c.Tags.Contains(YunoTags.ZhuLeiRongHe),
+            c => c.Tags.Contains(YunoTags.ZhuLei) && !c.Tags.Contains(YunoTags.ZhuLeiRongHeGuaiShou),
             p => p is YunoSpecialCardPool,
             1);
 

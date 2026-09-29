@@ -15,7 +15,7 @@ public class DianJiQiangCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(8m, ValueProp.Move),
+        new BlockVar(6m, ValueProp.Move),
         new PowerVar<WeakPower>(1m),
     ];
 

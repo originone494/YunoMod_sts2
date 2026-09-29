@@ -17,7 +17,7 @@ namespace YunoMod.Scripts.Relics;
 public class Tarot01TheMagicianRelic : TarotRelicBase
 {
     private const int _cleanseThreshold = 3;  // 3种类型：移除自身所有减益
-    private const int _stripThreshold = 4;    // 4种类型：移除敌人所有增益
+    private const int _stripThreshold = 4;    // 4种类型：移除敌人所有力量
     private const int _energyThreshold = 5;   // 5种类型：下回合获得999点能量
     private const decimal _energyNextTurn = 999m;
     private const int _reversedThreshold = 2; // 逆位：类型数小于2
@@ -54,15 +54,14 @@ public class Tarot01TheMagicianRelic : TarotRelicBase
             await PowerCmd.Remove(power);
         }
 
-        // 4种及以上：移除所有敌人的所有增益
+        // 4种及以上：移除所有敌人的所有力量
         if (typeCount < _stripThreshold) return;
         foreach (var enemy in Owner.Creature.CombatState!.HittableEnemies.ToList())
         {
-            foreach (var power in enemy.Powers
-                         .Where(p => p.TypeForCurrentAmount == PowerType.Buff)
-                         .ToList())
+            var strength = enemy.GetPower<StrengthPower>();
+            if (strength != null)
             {
-                await PowerCmd.Remove(power);
+                await PowerCmd.Remove(strength);
             }
         }
 

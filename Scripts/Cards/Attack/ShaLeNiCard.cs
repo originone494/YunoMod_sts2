@@ -26,7 +26,7 @@ public class ShaLeNiCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(5m, ValueProp.Move),
+        new DamageVar(6m, ValueProp.Move),
         new RepeatVar(2),
         new DynamicVar(_HealKey,4),
         new DynamicVar(_LoseHpKey,3)

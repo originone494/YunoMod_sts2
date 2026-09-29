@@ -23,7 +23,7 @@ public class YiJieMingShenFuCard : YunoSpecialBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(21m, ValueProp.Move),
+        new DamageVar(18m, ValueProp.Move),
     ];
 
     public YiJieMingShenFuCard() : base(2, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)

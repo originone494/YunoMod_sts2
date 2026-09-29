@@ -23,7 +23,7 @@ public class YiJieTuAoNeiLaCard : YunoSpecialBaseCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(20m, ValueProp.Move),
+        new BlockVar(15m, ValueProp.Move),
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [

@@ -44,9 +44,14 @@ public class FeedDiaryRelic : YunoBaseRelic
             Flash();
             _isFirstPlay = false;
         }
-        else if (cardPlay.Card.Type == CardType.Skill && cardPlay.Card.DynamicVars.ContainsKey("Block"))
+        else if (cardPlay.Card.Type == CardType.Skill
+                 && cardPlay.Card.DynamicVars.ContainsKey("Block")
+                 && cardPlay.Card.DynamicVars["Block"] is BlockVar skillBlockVar)
         {
-            cardPlay.Card.DynamicVars.Block.BaseValue += DynamicVars[_increaseKey].BaseValue;
+            // 必须用 is BlockVar 判定：ContainsKey("Block") 只说明"有这个名字的变量"，
+            // 而 DynamicVarSet.Block 是硬转换 (BlockVar)_vars["Block"]，
+            // 对「羊衍生物」这类用普通 DynamicVar 占了 "Block" 名字的卡会直接抛 InvalidCastException。
+            skillBlockVar.BaseValue += DynamicVars[_increaseKey].BaseValue;
             Flash();
             _isFirstPlay = false;
         }

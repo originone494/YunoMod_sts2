@@ -40,19 +40,11 @@ public static class DiaryKillReward
         Player? me = LocalContext.GetMe(evt.RunState.Players);
         if (me == null || me.GetRelic<DeadEndPinkRelic>() == null) return;
 
+        // 「持有先古跟踪日记时不发放原版跟踪日记」的规则已统一收口在
+        // DiaryRelics.PickRandomUnobtained（那里会按持有强化版的情况排除本体），
+        // 这里不再需要单独重抽。
         RelicModel? diary = DiaryRelics.PickRandomUnobtained(me);
         if (diary == null) return;
-
-        // 持有先古跟踪日记时，不发放原版跟踪日记，改抽其他未持有的日记
-        // （反复抽到同款说明只剩它未持有，放弃本次奖励）
-        if (diary is SearchDiaryRelic && me.GetRelic<AncientSearchDiaryRelic>() != null)
-        {
-            for (int i = 0; i < 100 && diary is SearchDiaryRelic; i++)
-            {
-                diary = DiaryRelics.PickRandomUnobtained(me);
-            }
-            if (diary is SearchDiaryRelic) return;
-        }
 
         // 加入战斗结束的奖励栏（与卡牌奖励并列显示，可拿取或跳过）
         combatRoom.AddExtraReward(me, new RelicReward(diary, me));

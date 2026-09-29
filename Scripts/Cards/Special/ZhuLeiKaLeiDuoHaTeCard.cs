@@ -28,12 +28,12 @@ public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
     // 伤害使用动态变量：造成 30 点伤害（打出与驻场共用）
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(30m, ValueProp.Move),
+        new DamageVar(15m, ValueProp.Move),
     };
 
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
-        YunoTags.ZhuLeiRongHe,
+        YunoTags.ZhuLeiRongHeGuaiShou,
         YunoTags.ZhuChang,
         YunoTags.LingHuo,
     ];
@@ -45,7 +45,7 @@ public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
-        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHeGuaiShou),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuChang),
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
     ];

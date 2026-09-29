@@ -23,7 +23,7 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new DamageVar(12m, (ValueProp)0),            // 基础伤害 12（升级后 16）
+        new DamageVar(11m, (ValueProp)0),            // 基础伤害 11（升级后 15）
         new DynamicVar(_baseChanceKey, 2m),          // 基础暴击概率 2%（升级后 3%）
         // 当前暴击概率：RitsuLib Computed 动态变量，显示值 = 委托实时计算（教程 19 - 计算动态变量）
         ModCardVars.Computed(_critChanceKey, 2m, (card, _) =>

@@ -606,7 +606,7 @@ position = Vector2(111, -314)
 [node name="Visuals" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(1, -148)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_pscwk")
 animation = &"die"
 autoplay = "idle_loop"

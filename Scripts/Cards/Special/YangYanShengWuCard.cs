@@ -24,8 +24,10 @@ public class YangYanShengWuCard : YunoBaseCard
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
-        new BlockVar(8m, ValueProp.Move),      // 每次获得的格挡
-        new DynamicVar(_repeatKey, 0m),        // 重复次数，由替罪羊按费用设置
+        // 卡面直接显示了每次获得的格挡数值（{Block:diff()}），属于「看得到就声明」，
+        // 因此这里用 BlockVar 而不是普通 DynamicVar。
+        new BlockVar(4m, ValueProp.Move),      // 每次获得的格挡
+        new DynamicVar(_repeatKey, 1m),        // 重复次数，由替罪羊按费用设置
     ];
 
     // 抽到时触发（该钩子对每张被抽的卡都会调用，必须判断是本卡）

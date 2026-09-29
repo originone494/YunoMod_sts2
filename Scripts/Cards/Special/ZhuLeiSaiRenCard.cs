@@ -28,23 +28,26 @@ public class ZhuLeiSaiRenCard : YunoSpecialBaseCard, IOnLingHuo
     // 伤害使用动态变量：造成 18 点伤害
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(18m, ValueProp.Move),
+        new DamageVar(14m, ValueProp.Move),
     };
 
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
         YunoTags.ZhuLeiGuaiShou,
         YunoTags.LingHuo,
+        YunoTags.ZhuLeiRongHe,
 
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
+        YunoKeywords.ZhuLeiRongHe,
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

@@ -17,7 +17,7 @@ using YunoMod.Scripts.Custom;
 namespace YunoMod.Scripts.Power;
 
 // 奥利哈刚第二结界：
-// - 回合开始时恢复5点生命
+// - 回合开始时恢复1点生命
 // - 回合结束时，选择1张手牌获得永久「保留」
 // - 若拥有「奥利哈刚的结界」，敌人攻击时随机丢弃1张手牌，使那次攻击伤害为0
 [RegisterPower]
@@ -26,12 +26,12 @@ public class AoLiHaGangDiErJieJiePower : YunoBasePower
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    // 回合开始时，恢复5点生命
+    // 回合开始时，恢复1点生命
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
     {
         if (side != Owner.Side) return;
         Flash();
-        await CreatureCmd.Heal(Owner, 5m);
+        await CreatureCmd.Heal(Owner, 1m);
     }
 
     // 回合结束时，选择1张手牌获得永久「保留」

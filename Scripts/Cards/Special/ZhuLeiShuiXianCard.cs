@@ -32,12 +32,12 @@ public class ZhuLeiShuiXianCard : YunoSpecialBaseCard, IOnLingHuo
     // 伤害使用动态变量：驻场对随机敌人造成 23 点伤害
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(23m, ValueProp.Move),
+        new DamageVar(14m, ValueProp.Move),
     };
 
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
-        YunoTags.ZhuLeiRongHe,
+        YunoTags.ZhuLeiRongHeGuaiShou,
         YunoTags.LingHuo,
         YunoTags.ZhuChang
     ];
@@ -51,8 +51,7 @@ public class ZhuLeiShuiXianCard : YunoSpecialBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuChang),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
-        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
-        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHeGuaiShou),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -63,7 +62,7 @@ public class ZhuLeiShuiXianCard : YunoSpecialBaseCard, IOnLingHuo
         var retrievedList = await ToolCmd.RetrieverCard(
             choiceContext,
             Owner,
-            c => c.Tags.Contains(YunoTags.ZhuLei) && !c.Tags.Contains(YunoTags.ZhuLeiRongHe),
+            c => c.Tags.Contains(YunoTags.ZhuLei) && !c.Tags.Contains(YunoTags.ZhuLeiRongHeGuaiShou),
             p => p is YunoSpecialCardPool,
             1);
         if (retrievedList.Count == 0) return;

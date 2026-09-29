@@ -51,7 +51,7 @@ public class CiShiBiKeZhiRenCard : YunoSpecialBaseCard
         _chosenCard = null;
     }
 
-    // 目标卡离开手牌时立刻返回手牌，并对所有敌人造成费用×15点伤害。
+    // 目标卡离开手牌时立刻返回手牌，并对所有敌人造成8点伤害。
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
     {
         if (card != _chosenCard || oldPileType != PileType.Hand || CombatState == null) return;
@@ -65,7 +65,7 @@ public class CiShiBiKeZhiRenCard : YunoSpecialBaseCard
             await CreatureCmd.Damage(
                 new ThrowingPlayerChoiceContext(),
                 enemies,
-                15,
+                8,
                 ValueProp.Move,
                 Owner.Creature,
                 this,

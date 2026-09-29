@@ -1051,7 +1051,7 @@ animations = [{
 
 [node name="YunoCharacterMerchant" type="AnimatedSprite2D" parent="."]
 position = Vector2(231, -156)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(1, 1)
 sprite_frames = SubResource("SpriteFrames_171y2")
 autoplay = "default"
 frame_progress = 0.9195933
