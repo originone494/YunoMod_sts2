@@ -16,7 +16,7 @@ using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
+public class XiangXinWoCard : YunoBaseCard, ILingHuoCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
    {
@@ -46,10 +46,6 @@ public class XiangXinWoCard : YunoBaseCard, IOnLingHuo
         DynamicVars.Block.UpgradeValueBy(2);
     }
 
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {

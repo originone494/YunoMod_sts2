@@ -22,7 +22,7 @@ using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
+public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, ILingHuoCard
 {
     public ZhuLeiLeiNuoHaTeCard() : base(1, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
     {
@@ -38,6 +38,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
         YunoTags.ZhuLei,
         YunoTags.ZhuLeiGuaiShou,
         YunoTags.LingHuo,
+        YunoTags.ZhuLeiXiaJiGuaiShou,
 
     ];
 
@@ -48,6 +49,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiXiaJiGuaiShou),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -60,8 +62,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
         var retrievedList = await ToolCmd.RetrieverCard(
             choiceContext,
             Owner,
-            c => c.Tags.Contains(YunoTags.ZhuLei)
-                 && c.Tags.Contains(YunoTags.ZhuLeiGuaiShou)
+            c => ZhuLeiFilter.IsLowerMonster(c)
                  && c is not ZhuLeiLeiNuoHaTeCard,
             p => p is YunoSpecialCardPool,
             1, true);
@@ -70,24 +71,17 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
 
     private static LocString LingHuoChoicePrompt { get; } = new("card_selection", "TO_ZHU_LEI_LEI_NUO_HA_TE_LING_HUO");
 
-    // 灵活：若手牌有除「珠泪·雷诺哈特」的「珠泪」卡，可以选择将这张卡加入手牌，
-    // 然后选择1张除「珠泪·雷诺哈特」的「珠泪」卡丢弃，加入手牌的这张卡可以在这个回合免费打出。
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
-
+    // 灵活：同名卡一回合一次。若手牌有「珠泪」卡，可以选择1张「珠泪」卡丢弃，将这张卡打出。
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
-        // ① 条件：手牌有除自己外的「珠泪」卡（带珠泪标签且非珠泪融合卡）
-        var handZhuLei = PileType.Hand.GetPile(player).Cards
-            .Where(c => c.Tags.Contains(YunoTags.ZhuLei)
-                        && !c.Tags.Contains(YunoTags.ZhuLeiRongHeGuaiShou)
-                        && c != this)
-            .ToList();
-        if (handZhuLei.Count == 0) return;
+        // ① 同名卡一回合一次
+        string onceKey = PerTurnOnce.Key("LingHuo", Id.Entry);
+        if (PerTurnOnce.IsUsed(player, onceKey)) return;
 
-        // ② 是/否询问（网格 + 提示文本，复用「是」「否」辅助卡）
+        // ② 条件：手牌有「珠泪」卡（任意珠泪卡，含融合怪兽）
+        if (!PileType.Hand.GetPile(player).Cards.Any(ZhuLeiFilter.IsCard)) return;
+
+        // ③ 是/否询问（网格 + 提示文本，复用「是」「否」辅助卡）
         var shi = player.Creature.CombatState!.CreateCard<ShiCard>(player);
         var fou = player.Creature.CombatState!.CreateCard<FouCard>(player);
         CardModel? picked = (await CardSelectCmd.FromSimpleGrid(
@@ -95,32 +89,23 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
             new List<CardModel> { shi, fou },
             player,
             new CardSelectorPrefs(LingHuoChoicePrompt, 1, 1))).FirstOrDefault();
-        if (picked is not ShiCard) return; // 否/取消 → 不发动，卡照常进弃牌堆
+        if (picked is not ShiCard) return; // 否/取消 → 不发动
 
-        // ③ 加入手牌 + 本回合免费打出；标记已被灵活处理，避免补丁把刚回手的卡再弃一次
-        await CardPileCmd.Add(this, PileType.Hand);
-        EnergyCost.AddThisTurn(-EnergyCost.GetWithModifiers(CostModifiers.None));
-        LingHuoHook.HandledByLingHuo.Add(this);
+        // ④ 玩家一确认就记账：这样连锁里再丢掉一张同名卡时，它的灵活不会二次发动
+        PerTurnOnce.Mark(player, onceKey);
 
-        // ④ 选择1张除自己外的「珠泪」卡丢弃（珠泪=带珠泪标签且非珠泪融合卡）
+        // ⑤ 选择1张「珠泪」卡丢弃
         var selected = (await CardSelectCmd.FromHandForDiscard(
             prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
             context: ctx,
             player: player,
-            filter: c => c.Tags.Contains(YunoTags.ZhuLei)
-                         && !c.Tags.Contains(YunoTags.ZhuLeiRongHeGuaiShou)
-                         && c != this,
+            filter: ZhuLeiFilter.IsCard,
             source: this)).ToList();
         if (selected.Count == 0) return;
 
-        CardModel discarded = selected[0];
-        await CardCmd.Discard(ctx, discarded);
+        await CardCmd.Discard(ctx, selected[0]);
 
-        // ⑤ 被丢弃的珠泪也能触发自己的灵活（补丁有防重入保护，这里手动补触发）
-        if (discarded.Keywords.Contains(YunoKeywords.LingHuo) || discarded.Tags.Contains(YunoTags.LingHuo))
-        {
-            await LingHuoHook.LingHuoSpecial(ctx, player, discarded);
-            await LingHuoHook.OnLingHuo(ctx, player);
-        }
+        // ⑥ 将这张卡打出（本卡此刻在弃牌堆里，走"从弃牌堆自动打出"）
+        await LingHuoHook.AutoPlayFromDiscard(ctx, this, null);
     }
 }

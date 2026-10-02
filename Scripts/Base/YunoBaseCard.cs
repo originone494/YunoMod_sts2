@@ -1,8 +1,13 @@
 using System.Linq;
+using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
 using STS2RitsuLib.Scaffolding.Content;
+using YunoMod.Scripts.Hook;
 using YunoMod.Scripts.Pool;
 
 namespace YunoMod.Scripts.Base;
@@ -17,6 +22,25 @@ public abstract class YunoBaseCard(int energyCost, CardType type, CardRarity rar
     // 菲涅尔透镜正是靠给卡牌奖励附上灵活生效，因此漏声明会导致它对整套 mod 卡完全失效。
     // 这里改为按 CanonicalVars 是否声明了 BlockVar 自动判定，避免每新增一张格挡牌就漏一次。
     public override bool GainsBlock => base.GainsBlock || CanonicalVars.Any(v => v is BlockVar);
+
+    // 灵活：本卡因效果被送入弃牌堆时触发。
+    // 用原版唯一的弃牌事件（CardCmd.DiscardAndDraw 内部、入堆之后），
+    // 因此回合结束清空手牌、正常/自动打出后的落堆都不会触发。
+    public override async Task AfterCardDiscarded(PlayerChoiceContext choiceContext, CardModel card)
+    {
+        await base.AfterCardDiscarded(choiceContext, card);
+        if (card != this) return;
+        await LingHuoHook.OnCardDiscarded(choiceContext, card);
+    }
+
+    // 登场：本卡因效果加入手牌时触发（抽牌不算，靠 DrawWindowPatch 的抽牌窗口区分）。
+    // 这个钩子没有 PlayerChoiceContext，需要上下文的地方由 DengChangHook 自己造。
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel? clonedBy)
+    {
+        await base.AfterCardChangedPiles(card, oldPileType, clonedBy);
+        if (card != this) return;
+        await DengChangHook.OnCardAddedToHand(card);
+    }
 
     // 卡图资源
     public override CardAssetProfile AssetProfile => new(

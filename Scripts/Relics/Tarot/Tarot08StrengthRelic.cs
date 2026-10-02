@@ -19,7 +19,7 @@ public class Tarot08StrengthRelic : TarotRelicBase
 
     private int _counter;
 
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Rare;
 
     protected override bool SupportsReversed => true;
 

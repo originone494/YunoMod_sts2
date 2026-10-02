@@ -19,7 +19,7 @@ public class Tarot17TheStarRelic : TarotRelicBase
     private bool _doubleActive;                               // 当前打出是否符合翻倍条件
     private readonly Stack<(CardPlay? play, bool active)> _outerPlays = new();   // 嵌套打出保护（效果中自动打出另一张卡）
 
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
 
     protected override bool SupportsReversed => true;
 

@@ -35,10 +35,14 @@ public class TianXiaDuBuDeDaYiZeiCard : YunoSpecialBaseCard
         new BlockVar(16m, ValueProp.Move)
     };
 
+    // 「应对」：仅作为代码标记（标签），没有卡面注入；说明走悬停提示
+    protected override HashSet<CardTag> CanonicalTags => [YunoTags.YingDui];
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Retain];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
+        HoverTipFactory.FromKeyword(YunoKeywords.YingDui),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

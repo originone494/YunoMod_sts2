@@ -37,7 +37,9 @@ public class CiShiBiKeZhiRenCard : YunoSpecialBaseCard
             source: this)).FirstOrDefault();
     }
 
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    // 回合结束时结算（用 BeforeSideTurnEnd：它在"清空手牌"之前）。
+    // 若用 AfterSideTurnEnd，没有「保留」的被选卡会先被清进弃牌堆，Contains 判定失败、效果静默不发生。
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Player || _chosenCard == null || CombatState == null) return;
 

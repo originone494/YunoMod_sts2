@@ -19,7 +19,7 @@ public class Tarot16TheTowerRelic : TarotRelicBase
 {
     private const int _collapseThreshold = 3;
 
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
 
     protected override bool SupportsReversed => true;
 

@@ -9,6 +9,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 
+using YunoMod.Scripts.Tool;
 namespace YunoMod.Scripts.Power;
 
 // 珍珠世界：打出「珠泪」卡时，对随机敌人造成9点伤害
@@ -21,7 +22,7 @@ public class ZhenZhuShiJiePower : YunoBasePower
     public override Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 只有打出的卡带「珠泪」标签时触发
-        if (!cardPlay.Card.Tags.Contains(YunoTags.ZhuLei)) return Task.CompletedTask;
+        if (!ZhuLeiFilter.IsCard(cardPlay.Card)) return Task.CompletedTask;
         // 只响应自己打出的珠泪卡（与珠泪·哀唱的守卫口径一致）
         if (cardPlay.Card.Owner != Owner.Player) return Task.CompletedTask;
         if (CombatState == null) return Task.CompletedTask;

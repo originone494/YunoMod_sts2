@@ -22,14 +22,14 @@ public class ShaLeNiCard : YunoBaseCard
 {
     private const string _HealKey = "Heal";
 
-    private const string _LoseHpKey = "LoseHp";
+    private const string _HpLossKey = "HpLoss";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
     [
         new DamageVar(6m, ValueProp.Move),
         new RepeatVar(2),
         new DynamicVar(_HealKey,4),
-        new DynamicVar(_LoseHpKey,3)
+        new DynamicVar(_HpLossKey,3)
     ];
 
     public ShaLeNiCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
@@ -48,7 +48,7 @@ public class ShaLeNiCard : YunoBaseCard
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
 
-        await CreatureCmd.Damage(choiceContext, Owner.Creature, new DamageVar(DynamicVars[_LoseHpKey].IntValue, ValueProp.Unpowered | ValueProp.Unblockable), this, cardPlay);
+        await CreatureCmd.Damage(choiceContext, Owner.Creature, new DamageVar(DynamicVars[_HpLossKey].IntValue, ValueProp.Unpowered | ValueProp.Unblockable), this, cardPlay);
 
         bool shouldTriggerFatal = cardPlay.Target.Powers.All((PowerModel p) => p.ShouldOwnerDeathTriggerFatal());
 

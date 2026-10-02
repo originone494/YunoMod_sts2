@@ -26,7 +26,6 @@
   "YUNO_MOD_RELIC_KILLING_DIARY_RELIC.flavor": " ",
   "YUNO_MOD_RELIC_SEEK_DIARY_RELIC.title": "捜査日記",
   "YUNO_MOD_RELIC_SEEK_DIARY_RELIC.description": "戦闘開始時、山札からランダムなスキルカードを[blue]1[/blue]枚手札に加える。このカードはこの戦闘中のコストが0になる。",
-  "YUNO_MOD_RELIC_SEEK_DIARY_RELIC.selectionScreenPrompt": "スキルカードを[blue]1[/blue]枚選んで手札に加える",
   "YUNO_MOD_RELIC_SEEK_DIARY_RELIC.flavor": "事件がない時はただのレンガだ。",
   "YUNO_MOD_RELIC_GRAFFITI_DIARY_RELIC.title": "落書き日記",
   "YUNO_MOD_RELIC_GRAFFITI_DIARY_RELIC.description": "ターン開始時、すべての敵に[blue]2[/blue]スタックの[gold]毒[/gold]を与える。敵が死亡した時に[gold]毒[/gold]を持っていれば、そのスタックをランダムな敵に移す。",

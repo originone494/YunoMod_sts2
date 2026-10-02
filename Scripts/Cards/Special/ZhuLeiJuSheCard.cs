@@ -17,9 +17,13 @@ using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-public class ZhuLeiJuSheCard : YunoSpecialBaseCard, IOnLingHuo
+// 珠泪·俱舍（下级怪兽）
+//   打出（0费）：先让玩家选1张弃牌堆的卡消耗；不选 → 失去2费。
+//                然后造成伤害、从抽牌堆顶将3张卡送入弃牌堆
+//   灵活：从抽牌堆顶将2张卡送入弃牌堆
+public class ZhuLeiJuSheCard : YunoSpecialBaseCard, ILingHuoCard
 {
-    public ZhuLeiJuSheCard() : base(2, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
+    public ZhuLeiJuSheCard() : base(0, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
     {
     }
 
@@ -34,6 +38,7 @@ public class ZhuLeiJuSheCard : YunoSpecialBaseCard, IOnLingHuo
         YunoTags.ZhuLeiGuaiShou,
         YunoTags.LingHuo,
         YunoTags.JuShe,
+        YunoTags.ZhuLeiXiaJiGuaiShou,
     ];
 
     protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
@@ -41,34 +46,39 @@ public class ZhuLeiJuSheCard : YunoSpecialBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.JuShe),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiXiaJiGuaiShou),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 造成23点伤害
+        // ① 先让玩家选择弃牌堆的卡消耗；不选 → 失去2费
+        var discardPile = PileType.Discard.GetPile(Owner);
+        CardModel? chosen = discardPile.Cards.Count == 0
+            ? null
+            : (await CardSelectCmd.FromSimpleGrid(
+                choiceContext,
+                discardPile.Cards.ToList(),
+                Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 0, 1))).FirstOrDefault();
+
+        if (chosen != null)
+        {
+            await CardCmd.Exhaust(choiceContext, chosen);
+        }
+        else
+        {
+            await PlayerCmd.LoseEnergy(2, Owner);
+        }
+
+        // ② 造成伤害
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
         await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this, cardPlay);
 
-        // 消耗弃牌堆1张卡的情况下，从抽牌堆顶将3张卡送入弃牌堆
-        var discardPile = PileType.Discard.GetPile(Owner);
-        if (discardPile.Cards.Count == 0) return;
-
-        var exhausted = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, discardPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).ToList();
-        if (exhausted.Count == 0) return;
-
-        await CardCmd.Exhaust(choiceContext, exhausted[0]);
-
-        await PlayerCmd.GainEnergy(1, this.Owner);
-
+        // ③ 从抽牌堆顶将3张卡送入弃牌堆
         await ToolCmd.DuiMu(choiceContext, Owner, 3);
     }
 
     // 灵活：从抽牌堆顶将2张卡送入弃牌堆（触发效果而非打出）
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {

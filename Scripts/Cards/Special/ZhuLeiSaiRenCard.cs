@@ -19,7 +19,7 @@ using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-public class ZhuLeiSaiRenCard : YunoSpecialBaseCard, IOnLingHuo
+public class ZhuLeiSaiRenCard : YunoSpecialBaseCard, ILingHuoCard
 {
     public ZhuLeiSaiRenCard() : base(1, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
     {
@@ -36,6 +36,7 @@ public class ZhuLeiSaiRenCard : YunoSpecialBaseCard, IOnLingHuo
         YunoTags.ZhuLeiGuaiShou,
         YunoTags.LingHuo,
         YunoTags.ZhuLeiRongHe,
+        YunoTags.ZhuLeiXiaJiGuaiShou,
 
     ];
 
@@ -48,17 +49,13 @@ public class ZhuLeiSaiRenCard : YunoSpecialBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiXiaJiGuaiShou),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 造成18点伤害
-        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
-        await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this, cardPlay);
-
-        // 丢弃1张手牌（玩家选择，手牌为空则跳过）
-        var handCards = PileType.Hand.GetPile(Owner).Cards.ToList();
-        if (handCards.Count == 0) return;
+        // ① 丢弃1张手牌。没有丢成（手牌为空 / 没选）→ 后面的效果都不触发
+        if (PileType.Hand.GetPile(Owner).Cards.Count == 0) return;
 
         var selected = (await CardSelectCmd.FromHand(
             prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
@@ -69,13 +66,16 @@ public class ZhuLeiSaiRenCard : YunoSpecialBaseCard, IOnLingHuo
         if (selected.Count == 0) return;
 
         await CardCmd.Discard(choiceContext, selected[0]);
+
+        // ② 造成14点伤害
+        ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
+        await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this, cardPlay);
+
+        // ③ 从抽牌堆顶将3张卡送入弃牌堆
+        await ToolCmd.DuiMu(choiceContext, Owner, 3);
     }
 
     // 灵活：触发珠泪融合（返回卡组融合）
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {

@@ -12,21 +12,22 @@ using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Hook;
 
+using YunoMod.Scripts.Tool;
 namespace YunoMod.Scripts.Power;
 
 [RegisterPower]
-public class NiaoNiaoLianGeJiDeYiShiHuaiPower : YunoBasePower, IOnLingHuo
+public class NiaoNiaoLianGeJiDeYiShiHuaiPower : YunoBasePower, ILingHuoObserver
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
+    // 观察者：任意一张「珠泪怪兽」卡触发灵活时，从抽牌堆选 1 张费用不超过 1 的卡送入弃牌堆
+    public async Task OnLingHuo(PlayerChoiceContext ctx, Player player, CardModel trigger)
     {
-        return Task.CompletedTask;
-    }
+        if (player != Owner.Player) return;
+        // 「珠泪怪兽」按新口径 = 含珠泪融合怪兽
+        if (!ZhuLeiFilter.IsMonster(trigger)) return;
 
-    public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
-    {
         var drawPile = PileType.Draw.GetPile(player);
         var candidates = drawPile.Cards
             .Where(card => card.EnergyCost.GetWithModifiers(CostModifiers.None) <= 1)

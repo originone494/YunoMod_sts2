@@ -14,7 +14,7 @@ namespace YunoMod.Scripts.Relics;
 // 逆位：因敌人的攻击失去生命值时，该敌人恢复对应数值的生命值
 public class Tarot12TheHangedManRelic : TarotRelicBase
 {
-    public override RelicRarity Rarity => RelicRarity.Rare;
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
 
     protected override bool SupportsReversed => true;
 

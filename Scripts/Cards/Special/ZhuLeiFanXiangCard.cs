@@ -7,18 +7,20 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using YunoMod.Scripts.Base;
-using YunoMod.Scripts.Custom;
 using YunoMod.Scripts.Hook;
 using YunoMod.Scripts.Pool;
 using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-// 珠泪·反响：「检索」1张「珠泪怪兽」卡；若从手牌消耗1张相同费用的卡，则检索的卡可以在这个回合免费打出。
-// 灵活：从消耗堆将1张「珠泪陷阱」卡加入手牌。
-public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, IOnLingHuo
+// 珠泪·反响
+//   打出：是 →「检索」1张「珠泪下级怪兽」卡；否 → 从弃牌堆选择1张「珠泪怪兽」加入手牌；
+//         之后，丢弃1张与其费用相同的「珠泪怪兽」卡
+//   灵活：从消耗堆将1张「珠泪陷阱」卡加入手牌
+public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, ILingHuoCard
 {
     public ZhuLeiFanXiangCard() : base(1, CardType.Skill, CardRarity.Ancient, TargetType.Self)
     {
@@ -27,6 +29,7 @@ public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, IOnLingHuo
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
         YunoTags.LingHuo,
+        YunoTags.ZhuLeiMoFa,
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [CardKeyword.Exhaust];
@@ -35,61 +38,78 @@ public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiXiaJiGuaiShou),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiXianJing),
         HoverTipFactory.FromKeyword(YunoKeywords.Retriever),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiMoFa),
     ];
+
+    // 是/否：是否「检索」1张「珠泪下级怪兽」卡？
+    private static LocString RetrieveChoicePrompt { get; } = new("card_selection", "TO_ZHU_LEI_FAN_XIANG_RETRIEVE");
+
+    // 否 → 从弃牌堆选1张「珠泪怪兽」
+    private static LocString FromDiscardPrompt { get; } = new("card_selection", "TO_ZHU_LEI_FAN_XIANG_FROM_DISCARD");
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // ① 「检索」1张「珠泪怪兽」卡加入手牌
-        var retrieved = await ToolCmd.RetrieverCard(
-            choiceContext,
-            Owner,
-            c => c.Tags.Contains(YunoTags.ZhuLeiGuaiShou),
-            p => p is YunoSpecialCardPool,
-            1);
+        // ① 是 →「检索」1张「珠泪下级怪兽」卡；否 → 从弃牌堆选择1张「珠泪怪兽」加入手牌
+        bool retrieve = await ToolCmd.AskYesNo(choiceContext, Owner, RetrieveChoicePrompt);
 
-        CardModel? retrievedCard = retrieved.FirstOrDefault();
-        if (retrievedCard == null) return;
+        CardModel? added;
+        if (retrieve)
+        {
+            added = (await ToolCmd.RetrieverCard(
+                choiceContext,
+                Owner,
+                ZhuLeiFilter.IsLowerMonster,
+                p => p is YunoSpecialCardPool,
+                1)).FirstOrDefault();
+        }
+        else
+        {
+            var discardPile = PileType.Discard.GetPile(Owner);
+            added = discardPile.Cards.Any(ZhuLeiFilter.IsMonster)
+                ? (await CardSelectCmd.FromCombatPile(
+                    choiceContext,
+                    discardPile,
+                    Owner,
+                    new CardSelectorPrefs(FromDiscardPrompt, 1, 1),
+                    filter: ZhuLeiFilter.IsMonster)).FirstOrDefault()
+                : null;
+        }
 
-        // ② 从手牌消耗1张与检索卡费用相同的卡（可以不选）
-        int cost = retrievedCard.EnergyCost.GetWithModifiers(CostModifiers.None);
-        bool hasSameCostCard = PileType.Hand.GetPile(Owner).Cards
-            .Any(c => c != retrievedCard && c.EnergyCost.GetWithModifiers(CostModifiers.None) == cost);
-        if (!hasSameCostCard) return;
+        if (added == null) return;
 
-        CardModel? toExhaust = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 0, 1),
+        // ② 之后：丢弃1张与其费用相同的「珠泪怪兽」卡（允许就是刚加入手牌的这一张）
+        int cost = added.EnergyCost.GetWithModifiers(CostModifiers.None);
+        bool hasSameCostMonster = PileType.Hand.GetPile(Owner).Cards
+            .Any(c => ZhuLeiFilter.IsMonster(c) && c.EnergyCost.GetWithModifiers(CostModifiers.None) == cost);
+        if (!hasSameCostMonster) return;
+
+        CardModel? toDiscard = (await CardSelectCmd.FromHandForDiscard(
+            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
-            filter: c => c != retrievedCard && c.EnergyCost.GetWithModifiers(CostModifiers.None) == cost,
+            filter: c => ZhuLeiFilter.IsMonster(c) && c.EnergyCost.GetWithModifiers(CostModifiers.None) == cost,
             source: this)).FirstOrDefault();
 
-        if (toExhaust == null) return;
+        if (toDiscard == null) return;
 
-        await CardCmd.Exhaust(choiceContext, toExhaust);
-
-        // ③ 检索的卡在这个回合可以免费打出
-        retrievedCard.EnergyCost.AddThisTurn(-retrievedCard.EnergyCost.GetWithModifiers(CostModifiers.None));
+        await CardCmd.Discard(choiceContext, toDiscard);
     }
 
     // 灵活：从消耗堆将1张「珠泪陷阱」卡加入手牌
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
-
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
         var exhaustPile = PileType.Exhaust.GetPile(player);
-        if (!exhaustPile.Cards.Any(c => c.Tags.Contains(YunoTags.ZhuLeiXianJing))) return;
+        if (!exhaustPile.Cards.Any(ZhuLeiFilter.IsTrap)) return;
 
         var picked = (await CardSelectCmd.FromCombatPile(
             ctx,
             exhaustPile,
             player,
             new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
-            filter: c => c.Tags.Contains(YunoTags.ZhuLeiXianJing))).FirstOrDefault();
+            filter: ZhuLeiFilter.IsTrap)).FirstOrDefault();
 
         if (picked != null)
         {

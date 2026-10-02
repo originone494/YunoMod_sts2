@@ -19,7 +19,7 @@ public class Tarot18TheMoonRelic : TarotRelicBase
     private const decimal _goldOnCombatStart = 20m;
     private const decimal _goldLossPerHit = 5m;
 
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Common;
 
     protected override bool SupportsReversed => true;
 

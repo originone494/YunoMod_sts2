@@ -14,18 +14,22 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Hook;
+using YunoMod.Scripts.Pool;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
+// 珠泪·卡雷多哈特（融合怪兽）
+//   打出：造成15点伤害
+//   驻场：这张卡被打出、或任意「珠泪怪兽」触发灵活的场合 → 给予所有敌人1层虚弱
+//   灵活：同名卡一回合一次 → 打出这张卡 → 加入手牌 → 「检索」并丢弃1张「珠泪下级怪兽」卡
+public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, ILingHuoCard, ILingHuoObserver
 {
-    private bool _lingHuoUsedThisTurn;
-
     public ZhuLeiKaLeiDuoHaTeCard() : base(2, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
     {
     }
 
-    // 伤害使用动态变量：造成 30 点伤害（打出与驻场共用）
+    // 伤害使用动态变量：造成 15 点伤害
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(15m, ValueProp.Move),
@@ -34,8 +38,8 @@ public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
     protected override HashSet<CardTag> CanonicalTags => [
         YunoTags.ZhuLei,
         YunoTags.ZhuLeiRongHeGuaiShou,
-        YunoTags.ZhuChang,
         YunoTags.LingHuo,
+        YunoTags.ZhuLeiGuaiShou,
     ];
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => [
@@ -46,64 +50,62 @@ public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(CardKeyword.Retain),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHeGuaiShou),
-        HoverTipFactory.FromKeyword(YunoKeywords.ZhuChang),
         HoverTipFactory.FromKeyword(YunoKeywords.LingHuo),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 造成30点伤害，给予1层易伤
+        // 造成15点伤害
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
         await CreatureCmd.Damage(choiceContext, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this, cardPlay);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, cardPlay.Target, 1, Owner.Creature, this);
+
+        // 驻场（"这张卡被打出"的场合）：给予所有敌人1层虚弱
+        await GiveWeakToAllEnemies(choiceContext);
     }
 
-    // 驻场：回合结束时，对随机敌人造成30点伤害
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    // 驻场（"「珠泪怪兽」触发灵活"的场合）：本卡在手上时，给予所有敌人1层虚弱。
+    // 本卡自己触发灵活时它已在弃牌堆、不在手上，所以不会重复触发——那次它"被打出"的虚弱由上面的 OnPlay 给。
+    public async Task OnLingHuo(PlayerChoiceContext ctx, Player player, CardModel trigger)
     {
-        if (side != CombatSide.Player) return;
-        if (CombatState == null) return;
+        if (player != Owner) return;
+        if (!trigger.Tags.Contains(YunoTags.ZhuLeiGuaiShou)) return;
         if (!PileType.Hand.GetPile(Owner).Cards.Contains(this)) return;
 
-
-        Creature? enemy = Owner!.RunState.Rng.CombatTargets.NextItem(CombatState.HittableEnemies);
-        if (enemy == null) return;
-
-        await CreatureCmd.Damage(choiceContext, enemy, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this, null);
-        await PowerCmd.Apply<VulnerablePower>(choiceContext, enemy, 1, Owner.Creature, this);
+        await GiveWeakToAllEnemies(ctx);
     }
 
-    // 灵活：一回合一次，将这张卡打出，然后加入手牌
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
+    private async Task GiveWeakToAllEnemies(PlayerChoiceContext ctx)
     {
-        return Task.CompletedTask;
+        if (CombatState == null) return;
+        foreach (Creature enemy in CombatState.HittableEnemies.ToList())
+        {
+            await PowerCmd.Apply<WeakPower>(ctx, enemy, 1, Owner.Creature, this);
+        }
     }
 
+    // 灵活：同名卡一回合一次 → 打出这张卡 → 将这张卡加入手牌
+    //       → 「检索」并丢弃1张「珠泪下级怪兽」卡
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
-        if (_lingHuoUsedThisTurn) return;
-        _lingHuoUsedThisTurn = true;
+        // 同名卡一回合一次（按卡名：多张同名卡共享一次）
+        string onceKey = PerTurnOnce.Key("LingHuo", Id.Entry);
+        if (PerTurnOnce.IsUsed(player, onceKey)) return;
+        // 先记账：连锁里再丢掉一张同名卡时，它的灵活不会二次发动
+        PerTurnOnce.Mark(player, onceKey);
 
-        // 打出（随机敌人）
-        Creature? creature = Owner!.RunState.Rng.CombatTargets.NextItem(Owner.Creature.CombatState!.HittableEnemies);
-        if (creature != null)
+        // ① 打出这张卡（随机敌人）
+        Creature? enemy = player.RunState.Rng.CombatTargets.NextItem(player.Creature.CombatState!.HittableEnemies);
+        if (enemy != null)
         {
-            await CardCmd.AutoPlay(ctx, this, creature);
+            await LingHuoHook.AutoPlayFromDiscard(ctx, this, enemy);
         }
 
-
-
-        // 加入手牌
+        // ② 将这张卡加入手牌
         await CardPileCmd.Add(this, PileType.Hand);
-        LingHuoHook.HandledByLingHuo.Add(this);
 
-    }
-
-    // 回合开始时重置"一回合一次"
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
-    {
-        if (side != CombatSide.Player) return;
-        _lingHuoUsedThisTurn = false;
-        await Task.CompletedTask;
+        // ③ 「检索」并丢弃1张除「珠泪融合怪兽」以外的「珠泪」卡
+        await ToolCmd.RetrieverCard(ctx, player, ZhuLeiFilter.IsCardExceptFusionMonster,
+            p => p is YunoSpecialCardPool, 1, true);
     }
 }

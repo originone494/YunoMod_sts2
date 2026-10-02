@@ -16,7 +16,7 @@ using YunoMod.Scripts.Hook;
 using MegaCrit.Sts2.Core.Entities.Players;
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class RuoDianJiPoCard : YunoBaseCard, IOnLingHuo
+public class RuoDianJiPoCard : YunoBaseCard, ILingHuoCard
 {
 
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
@@ -61,13 +61,9 @@ public class RuoDianJiPoCard : YunoBaseCard, IOnLingHuo
         DynamicVars.Repeat.UpgradeValueBy(1);
     }
 
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
-        await CardCmd.AutoPlay(ctx, this, player.Creature);
+        await LingHuoHook.AutoPlayFromDiscard(ctx, this, player.Creature);
     }
 }

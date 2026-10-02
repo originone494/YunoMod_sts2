@@ -13,7 +13,7 @@ public class Tarot04TheEmperorRelic : TarotRelicBase
 {
     private const decimal _tempAmount = 1m;
 
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
 
     protected override bool SupportsReversed => true;
 

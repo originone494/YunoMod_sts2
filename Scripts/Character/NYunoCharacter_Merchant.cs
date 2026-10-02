@@ -8,7 +8,7 @@ public partial class NYunoCharacter_Merchant : NMerchantCharacter
     {
         try
         {
-            PlayAnimation("default", loop: true);
+            PlayAnimation("relaxed_loop", loop: true);
         }
         catch (InvalidOperationException) { }
     }

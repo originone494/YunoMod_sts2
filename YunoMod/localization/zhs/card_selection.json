@@ -15,5 +15,21 @@
     "TO_LIAN_LI_PAO_CHOICE_A_Back": "从消耗堆选择1张费用为A的卡返回抽牌堆。",
     "TO_LIAN_LI_PAO_CHOICE_B_Back": "从消耗堆选择1张费用为B的卡返回抽牌堆。",
     "TO_HE_LU_SI_XIAN_DAO_HA_BI_CHOICE": "是否选择从消耗堆中将卡加入手牌。",
-    "TO_START_SPECIAL_CARD": "开局：从特殊卡中选择1张加入牌组。"
+    "TO_START_SPECIAL_CARD": "从特殊卡中选择1张加入牌组。",
+    "JUE_DUI_MO_FA_ADD_ONE": "选择1张卡加入手牌。",
+    "JUE_DUI_MO_FA_EXHAUST_ONE": "选择1张卡消耗。",
+    "JUE_DUI_MO_FA_DISCARD_ANY": "选择任意张卡送入弃牌堆。",
+    "JUE_DUI_MO_FA_FROM_EXHAUST": "从消耗堆选择1张卡加入手牌。",
+    "TO_ZHU_LEI_LU_SHA_KA_YING_DUI": "是否发动「珠泪·露莎卡人鱼」的「应对」效果？",
+    "TO_ZHU_LEI_SHUI_XIAN_ZHU_CHANG": "从弃牌堆选择1张「珠泪」卡加入手牌。",
+    "TO_ZHU_LEI_FAN_XIANG_RETRIEVE": "是否「[gold]检索[/gold]」1张「[gold]珠泪下级怪兽[/gold]」卡？",
+    "TO_ZHU_LEI_FAN_XIANG_FROM_DISCARD": "从弃牌堆选择1张「[gold]珠泪怪兽[/gold]」卡加入手牌。",
+    "TO_ZHU_LEI_AI_CHANG_ZHU_CHANG": "选择1张[gold]手牌[/gold]丢弃，击晕该敌人。",
+    "TO_TONG_DIAO_CHOICE_TUNER": "选择1张「[gold]调整[/gold]」卡。",
+    "TO_TONG_DIAO_CHOICE_STAR": "选择1张拥有星级的卡。",
+    "TO_CAN_HUAN_SHENG_LONG_DENG_CHANG": "选择1张「[gold]天杯龙[/gold]」或「[gold]灿幻怪兽[/gold]」卡加入手牌。",
+    "TO_TIAN_BEI_LONG_LV_FA_DENG_CHANG": "选择1张「[gold]天杯龙[/gold]」卡加入手牌。",
+    "TO_BEI_MAN_DE_CAN_HUAN_ZHUANG_BUFF": "选择[gold]手牌[/gold]1张[gold]龙族[/gold]同调卡，使其伤害翻倍。",
+    "TO_CAN_HUAN_KAI_MEN_CHOICE": "是否「检索」1张「天杯龙」？",
+    "TO_CAN_HUAN_KAI_MEN_ZERO_COST": "选择1张「[gold]天杯龙[/gold]」卡，使其费用为0。"
 }

@@ -18,7 +18,7 @@ using STS2RitsuLib.Keywords;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class FanSheShenJingCard : YunoBaseCard, IOnLingHuo
+public class FanSheShenJingCard : YunoBaseCard, ILingHuoCard
 {
 
     private const string _playCard = "PlayCard";
@@ -49,10 +49,6 @@ public class FanSheShenJingCard : YunoBaseCard, IOnLingHuo
         await CardPileCmd.Draw(ctx, DynamicVars[_LingHuoCard].IntValue, Owner);
     }
 
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

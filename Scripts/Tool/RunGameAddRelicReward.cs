@@ -27,6 +27,32 @@ public static class RunGameAddRelicReward
         {
             _ = GrantStartRelics(evt);
         });
+
+        // 「死亡讯息-紫」的选卡需要稳定的房间 UI（开局时弹 overlay 会被进先古事件房前的
+        // ClearScreens 清掉），等第一个房间进入完成后再执行。
+        RitsuLibFramework.SubscribeLifecycle<RoomEnteredEvent>(evt =>
+        {
+            _ = HandlePurplePendingSelection(evt);
+        });
+    }
+
+    private static async Task HandlePurplePendingSelection(RoomEnteredEvent evt)
+    {
+        // 只处理本地玩家（单人局即唯一玩家），与 GrantStartRelics 的匹配方式一致
+        var playerList = evt.RunState.Players.ToList();
+        ulong localNetId = RunManager.Instance.NetService?.NetId ?? 0;
+        Player? me = playerList.FirstOrDefault(p => p.NetId == localNetId) ?? playerList.FirstOrDefault();
+        if (me == null)
+        {
+            return;
+        }
+
+        if (me.GetRelic<DeadEndPurpleRelic>() is not { } purpleRelic)
+        {
+            return;
+        }
+
+        await purpleRelic.TryRunPendingSelection();
     }
 
     private static async Task GrantStartRelics(RunStartedEvent evt)

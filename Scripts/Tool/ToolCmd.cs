@@ -14,6 +14,8 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Saves;
+using MegaCrit.Sts2.Core.Settings;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.GameInfo.Objects;
 using STS2RitsuLib.Keywords;
@@ -387,13 +389,57 @@ public static class ToolCmd
             )).ToList();
         }
         if (isDiscard)
-            foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, player);
+        {
+            // 「检索并丢弃」要同时满足两件事：① 保留"生成卡"记录；② 走真正的弃牌语义（触发灵活等弃牌相关效果）。
+            // 做法：先按生成卡入堆（入的是弃牌堆），再手动结算"被丢弃"（见下面的注释，不用 CardCmd.Discard，
+            // 否则会多出一次"弃牌堆 → 弃牌堆"的入堆和它的重复特效）。
+            foreach (var card in selectCards)
+            {
+                var addResult = await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Discard, player);
+                if (!addResult.success) continue;
+
+                // 弃牌特效：原版对"生成卡进弃牌堆"统一用 CardCmd.PreviewCardPileAdd
+                //（Anger / Turbo / Overclock / GunkUp / FightThrough 等 9 张原版卡都是这么做的）——
+                // 卡从屏幕中央出现、停留片刻、带拖尾飞进弃牌堆。
+                // 那一步之所以必须补，是因为 AddGeneratedCardToCombat 对"刚生成 + 目标是弃牌堆"的卡
+                // 在 CardPileCmd.GetTweenForCardsChangingPiles 里既不建 NCard 节点也不播特效，全程隐形。
+                //
+                // PreviewCardPileAdd 是 void，拿不到"播完了"的句柄；底层 CardCmd.Preview 会返回
+                // TaskCompletionSource，它在卡飞出屏幕（NCardFlyVfx 播完）时才完成，所以用它来卡住顺序：
+                // 特效播完 → 才结算弃牌 → 才触发灵活 → 珠泪融合的选择界面此时才弹出。
+                if (SaveManager.Instance.PrefsSave.FastMode != FastModeType.Instant)
+                {
+                    var previewFinished = CardCmd.Preview(card, DiscardPreviewSeconds);
+                    if (previewFinished != null) await previewFinished.Task;
+                }
+
+                // 弃牌语义：照搬 CardCmd.DiscardAndDraw 内部对一张卡做的两步（记入战斗历史 + 广播 AfterCardDiscarded），
+                // 但这里**不再调用 CardCmd.Discard**。
+                // 因为卡此刻已经在弃牌堆里了，CardCmd.Discard 会把它再入堆一次（弃牌堆 → 弃牌堆），
+                // 那一步会额外生成 NCardFlyShuffleVfx —— 表现出来就是"弃牌堆里有张牌又飞进弃牌堆"的第二个特效。
+                // 注：DiscardAndDraw 里的 Sly 自动打出分支在这里不需要，检索出来的卡永远是刚生成的新卡，不可能带 Sly。
+                if (CombatManager.Instance.IsOverOrEnding) continue;
+                var combatState = card.CombatState ?? player.Creature.CombatState;
+                if (combatState == null) continue;
+                CombatManager.Instance.History.CardDiscarded(combatState, card);
+                await MegaCrit.Sts2.Core.Hooks.Hook.AfterCardDiscarded(combatState, choiceContext, card);
+            }
+        }
         else
             foreach (var card in selectCards) await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player);
 
         // 返回本次实际检索到并加入手牌的卡，供调用方继续处理（如丢弃、选择去向）
         return selectCards;
     }
+
+    // 「检索并丢弃」时，卡在屏幕中央停留多久（之后才带拖尾飞进弃牌堆）。
+    // 按快进模式缩放，口径与基础游戏的 Cmd.CustomScaledWait 一致；Instant 模式下整个特效都会被跳过。
+    private static float DiscardPreviewSeconds =>
+        SaveManager.Instance.PrefsSave.FastMode switch
+        {
+            FastModeType.Fast => 0.35f,
+            _ => 0.8f,
+        };
 
     /// <summary>检索「匕首」标签卡（角色自身卡池）。</summary>
     public static Task<List<CardModel>> RetrieverDaggerCard(PlayerChoiceContext choiceContext, Player player, int amount = 1)

@@ -18,7 +18,7 @@ using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Special;
 
-public class ZhuLeiMeiLuoCard : YunoSpecialBaseCard, IOnLingHuo
+public class ZhuLeiMeiLuoCard : YunoSpecialBaseCard, ILingHuoCard
 {
     public ZhuLeiMeiLuoCard() : base(1, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
     {
@@ -35,6 +35,7 @@ public class ZhuLeiMeiLuoCard : YunoSpecialBaseCard, IOnLingHuo
         YunoTags.ZhuLeiGuaiShou,
         YunoTags.LingHuo,
         YunoTags.ZhuLeiRongHe,
+        YunoTags.ZhuLeiXiaJiGuaiShou,
 
     ];
 
@@ -47,6 +48,7 @@ public class ZhuLeiMeiLuoCard : YunoSpecialBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLei),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiGuaiShou),
         HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiRongHe),
+        HoverTipFactory.FromKeyword(YunoKeywords.ZhuLeiXiaJiGuaiShou),
     ];
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
@@ -60,10 +62,6 @@ public class ZhuLeiMeiLuoCard : YunoSpecialBaseCard, IOnLingHuo
     }
 
     // 灵活：触发珠泪融合（返回卡组融合）
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {

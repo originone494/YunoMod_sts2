@@ -16,7 +16,7 @@ namespace YunoMod.Scripts.Relics;
 // 逆位：第一回合，打击/防御的费用增加1
 public class Tarot00TheFoolRelic : TarotRelicBase
 {
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Rare;
 
     protected override bool SupportsReversed => true;
 

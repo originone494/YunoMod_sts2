@@ -15,7 +15,9 @@ namespace YunoMod.Scripts.Cards.Special;
 
 // 游戏王「削命的宝札」（Card of Demise）：手牌抽至 3 张，回合结束时丢弃所有手牌。
 // 本卡打出后即进入消耗堆，但引擎的钩子监听覆盖 PlayerCombatState.AllPiles 全部牌堆
-//（含消耗堆），延迟效果由本卡的 AfterSideTurnEnd 直接承载，无需临时能力；
+//（含消耗堆），延迟效果由本卡的 BeforeSideTurnEnd 直接承载，无需临时能力；
+// 用 BeforeSideTurnEnd 而不是 AfterSideTurnEnd：后者在"清空手牌"之后跑，
+// 那时手牌已经被清掉，这条"丢弃所有手牌"就几乎什么都丢不到了。
 // 一次性标记保证整场战斗只在打出的那个回合结束时结算一次。
 public class XiaoMingDeBaoPaiCard : YunoSpecialBaseCard
 {
@@ -46,7 +48,8 @@ public class XiaoMingDeBaoPaiCard : YunoSpecialBaseCard
     }
 
     // 回合结束时丢弃所有手牌（只清自己的手牌，联机不影响队友）
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    // 用 BeforeSideTurnEnd：此时手牌还没被清，才丢得到东西
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Creature.Side || !_discardPending) return;
         _discardPending = false;

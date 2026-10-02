@@ -13,17 +13,28 @@ using YunoMod.Scripts.Base;
 
 namespace YunoMod.Scripts.Power;
 
+// 「代罪阿呆」：复制品的链接能力。
+//
+// 和「增值」一样，这个能力挂在**复制品自己身上**（不是玩家身上）：
+//   · Owner 就是那只复制品；
+//   · 复制品死亡时能力随它一起被移除；
+//   · 玩家身上不再多出一个看不懂的 buff 图标。
+//
+// 职责：① 每回合把它重新压成"眩晕"；② 玩家回合开始、重掷行动后再压一次意图；
+//       ③ 复制品受到伤害时，把相同数值的伤害转给本体（Original）。
 [RegisterPower]
 public class DaiZuiADaiPower : YunoBasePower
 {
-    public override PowerType Type => PowerType.Buff;
+    // 纯后台标记：不参与 buff/debuff 语义，也不显示在 UI 上
+    public override PowerType Type => PowerType.None;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    // 每次施加都是独立实例：同一战斗打出多张「代罪阿呆」时，各实例分别追踪自己的复制体，
-    // 不会按 Id 合并到已有实例上导致后续复制体失去链接。
+    // 每次施加都是独立实例（每只复制品一个），不会按 Id 合并
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    public Creature? Copy { get; set; }
+    protected override bool IsVisibleInternal => false;
+
+    // 被复制的那只敌人（本体）
     public Creature? Original { get; set; }
 
     public override async Task BeforeSideTurnStart(
@@ -32,10 +43,9 @@ public class DaiZuiADaiPower : YunoBasePower
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
-        if (side == CombatSide.Enemy && Copy?.IsAlive == true)
-        {
-            await CreatureCmd.Stun(Copy);
-        }
+        if (side != CombatSide.Enemy || !Owner.IsAlive) return;
+
+        await CreatureCmd.Stun(Owner);
     }
 
     // 玩家回合开始时，游戏会为所有敌人重掷行动并刷新意图（PrepareForNextTurn），
@@ -46,9 +56,9 @@ public class DaiZuiADaiPower : YunoBasePower
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
-        if (side == CombatSide.Player && Copy?.IsAlive == true)
+        if (side == CombatSide.Player && Owner.IsAlive)
         {
-            await CreatureCmd.Stun(Copy);
+            await CreatureCmd.Stun(Owner);
         }
     }
 
@@ -60,7 +70,7 @@ public class DaiZuiADaiPower : YunoBasePower
         Creature? dealer,
         CardModel? cardSource)
     {
-        if (target != Copy || Original == null || !Original.IsAlive || result.TotalDamage <= 0) return;
+        if (target != Owner || Original == null || !Original.IsAlive || result.TotalDamage <= 0) return;
 
         await CreatureCmd.Damage(
             choiceContext,

@@ -2,15 +2,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using YunoMod.Scripts.Cards.Special;
 using YunoMod.Scripts.Hook;
 
+using YunoMod.Scripts.Tool;
 namespace YunoMod.Scripts.Custom;
 
 // 珠泪融合：由触发灵活的珠泪卡调用
@@ -18,31 +21,66 @@ namespace YunoMod.Scripts.Custom;
 // 说明：触发灵活的卡在弃牌堆中（被弃后触发灵活），作为素材之一被筛出返回抽牌堆
 public static class ZhuLeiFusion
 {
+    // 受「同名卡一回合只能发动一次」限制的卡 = 带「珠泪融合」关键字的卡（塞壬 / 小美 / 梅洛）。
+    // 「一回合一次」的记录统一走 PerTurnOnce，scope 用 "ZhuLeiRongHe"，
+    // 与同一张卡身上其它效果（例如雷诺哈特灵活的 "LingHuo"）的同名限制互不干扰。
+    private static bool IsRongHeLimited(CardModel card) => ZhuLeiFilter.HasFusionKeyword(card);
+
+    private static string OnceKey(CardModel card) => PerTurnOnce.Key("ZhuLeiRongHe", card.Id.Entry);
+
+    private static bool HasActivatedThisTurn(Player player, CardModel card)
+        => IsRongHeLimited(card) && PerTurnOnce.IsUsed(player, OnceKey(card));
+
+    private static void MarkActivated(Player player, CardModel card)
+    {
+        if (!IsRongHeLimited(card)) return;
+        PerTurnOnce.Mark(player, OnceKey(card));
+    }
+
     public static async Task TryFusion(PlayerChoiceContext choiceContext, Player player, CardModel triggerCard)
     {
         var combatState = player.Creature.CombatState;
         if (combatState == null) return;
 
-        // 素材池 = 弃牌堆 + 场上（Play）堆。
-        // 雷诺哈特等卡在效果处理期间位于场上堆（Play，游戏在效果结束后才将其放入弃牌堆），
-        // 若不纳入会误判“素材不够”，例如打出雷诺哈特检索并丢弃梅洛时，梅洛触发融合却找不到雷诺哈特。
-        var availableCards = PileType.Discard.GetPile(player).Cards
+        // 「同名卡一回合只能发动一次」：本回合这个卡名的珠泪融合已经发动过 → 这次什么都不做
+        //（卡本身照常留在弃牌堆里，只是不再弹融合界面）
+        if (HasActivatedThisTurn(player, triggerCard)) return;
+
+        // 素材池 = 手牌 + 弃牌堆 + 场上（Play）。
+        // Play 堆必须纳入：触发灵活的卡常常是"某张珠泪怪兽结算时顺手丢掉的另一张"，
+        // 而那张正在结算的卡（例如打出雷诺哈特 → 检索并丢弃塞壬 → 塞壬触发灵活）此刻还在 Play 堆里、
+        // 并没有落进弃牌堆。若不算它，场上只有触发卡自己一张素材，任何融合都凑不齐，界面根本不会弹。
+        // 安全性：CardModel.OnPlayWrapper 只在卡仍位于 Play 堆时才把它送去结果堆（CardModel.cs:1989-2004），
+        // 所以被当作素材送回抽牌堆的那张卡不会被"打回"弃牌堆；且所有珠泪怪兽都是攻击牌，
+        // 不存在能力牌常驻 Play 堆变成永久素材的问题。
+        var availableCards = PileType.Hand.GetPile(player).Cards
+            .Concat(PileType.Discard.GetPile(player).Cards)
             .Concat(PileType.Play.GetPile(player).Cards)
             .Distinct()
             .ToList();
         if (availableCards.Count == 0) return;
 
-        // 素材池中的「珠泪怪兽卡」（触发卡在弃牌堆中，自然包含在内）
-        var monsters = availableCards.Where(c => c.Tags.Contains(YunoTags.ZhuLeiGuaiShou)).ToList();
-        bool hasLeiNuo = availableCards.Any(c => c is ZhuLeiLeiNuoHaTeCard);
+        // 触发卡必然是「珠泪怪兽」，它自己也占 1 张素材位。
+        // 素材口径按融合配方的文案走：文案写「珠泪怪兽」，这里就是 IsMonster（含融合怪兽）。
+        var monsters = availableCards.Where(ZhuLeiFilter.IsMonster).ToList();
+        var otherMonsters = monsters.Where(c => c != triggerCard).ToList();
+        int renoCount = availableCards.Count(c => c is ZhuLeiLeiNuoHaTeCard);
         bool hasShuiXian = availableCards.Any(c => c is ZhuLeiShuiXianCard);
 
-        // 构建候选融合怪兽（Splash 式展示，最多3张）
+        // 候选条件必须与实际素材判据一致，否则会出现"界面里选了却没有反应"（素材不足 → 静默 return）
         var candidates = new List<CardModel>();
-        if (monsters.Count > 0)
+        // 水仙：2张「珠泪怪兽」= 触发卡 + 1张其它怪兽
+        if (otherMonsters.Count >= 1)
             candidates.Add(combatState.CreateCard<ZhuLeiShuiXianCard>(player));
-        if (hasLeiNuo && monsters.Count > 1)
+        // 卡雷多哈特：1张「珠泪·雷诺哈特」+ 2张「珠泪怪兽」——三者必须是三张不同的卡，
+        // 雷诺哈特本身不能顶替那 2 张「珠泪怪兽」。
+        // 触发卡已经占掉一个素材位：
+        //   触发卡是雷诺哈特 → 它就是那"1张雷诺哈特"，还需 2 张其它「珠泪怪兽」
+        //   触发卡是其它珠泪怪兽 → 它算那 2 张怪兽之一，还需 1 张雷诺哈特 + 1 张其它「珠泪怪兽」
+        bool hasRenoForFusion = triggerCard is ZhuLeiLeiNuoHaTeCard || renoCount >= 1;
+        if (hasRenoForFusion && otherMonsters.Count >= 2)
             candidates.Add(combatState.CreateCard<ZhuLeiKaLeiDuoHaTeCard>(player));
+        // 露莎卡人鱼：1张「珠泪·水仙人鱼」+ 触发卡（水仙不可能是触发卡，其灵活是送墓）
         if (hasShuiXian)
             candidates.Add(combatState.CreateCard<ZhuLeiLuShaKaCard>(player));
 
@@ -52,35 +90,75 @@ public static class ZhuLeiFusion
         CardModel? picked = await CardSelectCmd.FromChooseACardScreen(choiceContext, candidates, player, canSkip: true);
         if (picked == null) return;
 
-        // 素材 = 触发灵活的卡（必含） + 按选择从弃牌堆选的卡
+        // 素材 = 触发灵活的卡（必含，已在弃牌堆里） + 按选择从手牌·弃牌堆选的卡
         var materials = new List<CardModel> { triggerCard };
 
         if (picked is ZhuLeiShuiXianCard)
         {
             // 选水仙：再从弃牌堆选1张「珠泪怪兽卡」
-            var m = await SelectOne(choiceContext, player, monsters.Where(c => c != triggerCard).ToList(), ShuiXianMaterialPrompt);
-            if (m == null) return;
+            var m = await SelectOne(choiceContext, player, otherMonsters, ShuiXianMaterialPrompt);
+            if (m == null)
+            {
+                Log.Warn("[YunoMod] 珠泪融合：水仙素材为空，取消本次融合");
+                return;
+            }
             materials.Add(m);
         }
         else if (picked is ZhuLeiKaLeiDuoHaTeCard)
         {
-            // 选卡雷多哈特：先选1张「珠泪·雷诺哈特」，再选1张「珠泪怪兽卡」
-            var leiNuoOptions = availableCards.OfType<ZhuLeiLeiNuoHaTeCard>().Cast<CardModel>().ToList();
-            var m1 = await SelectOne(choiceContext, player, leiNuoOptions, KaLeiDuoHaTeRenoPrompt);
-            if (m1 == null) return;
-            materials.Add(m1);
+            if (triggerCard is ZhuLeiLeiNuoHaTeCard)
+            {
+                // 触发卡本身就是「雷诺哈特」，已满足"1张雷诺哈特" → 再选 2 张其它「珠泪怪兽」
+                var first = await SelectOne(choiceContext, player, otherMonsters, KaLeiDuoHaTeMonsterPrompt);
+                if (first == null)
+                {
+                    Log.Warn("[YunoMod] 珠泪融合：卡雷多哈特缺少「珠泪怪兽」素材，取消本次融合");
+                    return;
+                }
+                materials.Add(first);
 
-            var monsterOptions = monsters.Where(c => c != triggerCard && c != m1).ToList();
-            var m2 = await SelectOne(choiceContext, player, monsterOptions, KaLeiDuoHaTeMonsterPrompt);
-            if (m2 == null) return;
-            materials.Add(m2);
+                var rest = otherMonsters.Where(c => c != first).ToList();
+                var second = await SelectOne(choiceContext, player, rest, KaLeiDuoHaTeMonsterPrompt);
+                if (second == null)
+                {
+                    Log.Warn("[YunoMod] 珠泪融合：卡雷多哈特缺少第2张「珠泪怪兽」素材，取消本次融合");
+                    return;
+                }
+                materials.Add(second);
+            }
+            else
+            {
+                // 触发卡是其它珠泪怪兽，它已算那 2 张「珠泪怪兽」之一 → 再选 1 张「雷诺哈特」+ 1 张其它「珠泪怪兽」
+                var leiNuoOptions = availableCards.OfType<ZhuLeiLeiNuoHaTeCard>().Cast<CardModel>()
+                    .Where(c => c != triggerCard).ToList();
+                var m1 = await SelectOne(choiceContext, player, leiNuoOptions, KaLeiDuoHaTeRenoPrompt);
+                if (m1 == null)
+                {
+                    Log.Warn("[YunoMod] 珠泪融合：卡雷多哈特缺少「雷诺哈特」素材，取消本次融合");
+                    return;
+                }
+                materials.Add(m1);
+
+                var monsterOptions = monsters.Where(c => c != triggerCard && c != m1).ToList();
+                var m2 = await SelectOne(choiceContext, player, monsterOptions, KaLeiDuoHaTeMonsterPrompt);
+                if (m2 == null)
+                {
+                    Log.Warn("[YunoMod] 珠泪融合：卡雷多哈特缺少「珠泪怪兽」素材，取消本次融合");
+                    return;
+                }
+                materials.Add(m2);
+            }
         }
         else if (picked is ZhuLeiLuShaKaCard)
         {
             // 选露莎卡人鱼：再从弃牌堆选1张「珠泪·水仙」
             var shuiXianOptions = availableCards.OfType<ZhuLeiShuiXianCard>().Cast<CardModel>().ToList();
             var m = await SelectOne(choiceContext, player, shuiXianOptions, LuShaKaMaterialPrompt);
-            if (m == null) return;
+            if (m == null)
+            {
+                Log.Warn("[YunoMod] 珠泪融合：露莎卡人鱼缺少「水仙人鱼」素材，取消本次融合");
+                return;
+            }
             materials.Add(m);
         }
 
@@ -90,14 +168,12 @@ public static class ZhuLeiFusion
             await CardPileCmd.Add(mat, PileType.Draw);
         }
 
-        // 标记触发卡已被灵活效果处理（弃牌流程跳过它，避免返回抽牌堆后被再次弃掉）
-        LingHuoHook.HandledByLingHuo.Add(triggerCard);
-
-        picked.EnergyCost.AddThisTurn(-picked.EnergyCost.GetWithModifiers(CostModifiers.None));
-
-
-        // 融合怪兽加入手牌
+        // 融合怪兽加入手牌（不再给"本回合费用为0"——已按需求删除）
         await CardPileCmd.AddGeneratedCardToCombat(picked, PileType.Hand, player);
+
+        // 到这里才算真正"发动"成功（玩家从界面选了融合怪兽、素材也齐了），
+        // 记下"本回合这张卡名的珠泪融合已发动"；中途放弃/素材不足取消的都不消耗这次机会。
+        MarkActivated(player, triggerCard);
     }
 
     private static async Task<CardModel?> SelectOne(PlayerChoiceContext choiceContext, Player player, List<CardModel> options, LocString prompt)

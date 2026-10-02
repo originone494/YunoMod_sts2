@@ -18,7 +18,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class LianXiCard : YunoBaseCard, IOnLingHuo
+public class LianXiCard : YunoBaseCard, ILingHuoCard
 {
 
     private const string _playLoveCount = "PlayLoveCount";
@@ -49,10 +49,6 @@ public class LianXiCard : YunoBaseCard, IOnLingHuo
         await ToolCmd.GainLovePower(ctx, Owner, this, DynamicVars["LovePower"].IntValue);
     }
 
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {

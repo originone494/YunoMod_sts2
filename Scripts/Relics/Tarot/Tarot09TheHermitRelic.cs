@@ -14,7 +14,7 @@ namespace YunoMod.Scripts.Relics;
 // 逆位：失去正位的效果，无法通过该遗物进入商店
 public class Tarot09TheHermitRelic : TarotRelicBase, IModRightClickableRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
+    public override RelicRarity Rarity => RelicRarity.Common;
 
     protected override bool SupportsReversed => true;
 

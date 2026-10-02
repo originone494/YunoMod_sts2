@@ -5,11 +5,13 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using STS2RitsuLib.Cards.DynamicVars;
 using YunoMod.Scripts.Base;
+using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Attack;
 
@@ -38,6 +40,12 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
     {
     }
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => [YunoKeywords.Sword];
+    protected override IEnumerable<IHoverTip> AdditionalHoverTips => [
+        HoverTipFactory.FromKeyword(YunoKeywords.Sword),
+        HoverTipFactory.FromKeyword(YunoKeywords.Stance),
+    ];
+
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target, "cardPlay.Target");
@@ -61,6 +69,8 @@ public class WoHuiHaoHaoZuoDeCard : YunoBaseCard
             .Execute(choiceContext);
 
         _missStreak = crit ? 0 : _missStreak + 1;
+
+        await ToolCmd.SwordStance(choiceContext, Owner, this);
     }
 
     protected override void OnUpgrade()

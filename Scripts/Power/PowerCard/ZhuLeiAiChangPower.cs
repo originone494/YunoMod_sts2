@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using STS2RitsuLib.Interop.AutoRegistration;
 using YunoMod.Scripts.Base;
 
+using YunoMod.Scripts.Tool;
 namespace YunoMod.Scripts.Power;
 
 // 珠泪·哀唱：每回合第一次打出「珠泪」卡时，给予所有敌人2层易伤
@@ -26,7 +27,7 @@ public class ZhuLeiAiChangPower : YunoBasePower
         if (_triggeredThisTurn) return;
         if (cardPlay.Card == null) return;
         if (cardPlay.Card.Owner != Owner.Player) return;
-        if (!cardPlay.Card.Tags.Contains(YunoTags.ZhuLei)) return;
+        if (!ZhuLeiFilter.IsCard(cardPlay.Card)) return;
         if (CombatState == null) return;
 
         _triggeredThisTurn = true;

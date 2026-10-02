@@ -15,7 +15,7 @@ using YunoMod.Scripts.Tool;
 
 namespace YunoMod.Scripts.Cards.Skill;
 
-public class ChaoFuHeCard : YunoBaseCard, IOnLingHuo
+public class ChaoFuHeCard : YunoBaseCard, ILingHuoCard
 {
 
     private const string _discardCount = "DiscardCount";
@@ -62,10 +62,6 @@ public class ChaoFuHeCard : YunoBaseCard, IOnLingHuo
         DynamicVars[_discardCount].UpgradeValueBy(2);
     }
 
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {

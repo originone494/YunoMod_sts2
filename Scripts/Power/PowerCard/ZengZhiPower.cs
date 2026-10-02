@@ -10,17 +10,27 @@ using YunoMod.Scripts.Base;
 
 namespace YunoMod.Scripts.Power;
 
+// 「珠泪…」无关，游戏王「增值」：复制品的链接能力。
+//
+// 这个能力挂在**复制品自己身上**（不是玩家身上）：
+//   · Owner 就是那只复制品，所以不需要再持有 Copy 引用；
+//   · 复制品死亡时能力随它一起被移除，不会留下悬空引用；
+//   · 玩家身上不再多出一个看不懂的 buff 图标。
+//
+// 职责：① 每回合把它重新压成"眩晕"（无攻击意图、不行动）；
+//       ② 玩家回合开始、游戏重掷敌人行动后，再压一次意图；
+//       ③ 同侧其他敌人死亡时，自己也死亡。
 [RegisterPower]
 public class ZengZhiPower : YunoBasePower
 {
-    public override PowerType Type => PowerType.Buff;
+    // 纯后台标记：不参与 buff/debuff 语义，也不显示在 UI 上
+    public override PowerType Type => PowerType.None;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    // 每次施加都是独立实例：同一战斗打出多张「增值」时，各实例分别追踪自己的复制体，
-    // 不会按 Id 合并到已有实例上导致后续复制体失去链接。
+    // 每次施加都是独立实例（每只复制品一个），不会按 Id 合并
     public override PowerInstanceType InstanceType => PowerInstanceType.Instanced;
 
-    public Creature? Copy { get; set; }
+    protected override bool IsVisibleInternal => false;
 
     public override async Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,
@@ -28,10 +38,9 @@ public class ZengZhiPower : YunoBasePower
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
-        if (side != CombatSide.Enemy || Copy == null || !Copy.IsAlive) return;
+        if (side != CombatSide.Enemy || !Owner.IsAlive) return;
 
-        // 每个敌人回合开始时重新设为眩晕，使复制品没有攻击意图且不会行动。
-        await CreatureCmd.Stun(Copy);
+        await CreatureCmd.Stun(Owner);
     }
 
     // 玩家回合开始时，游戏会为所有敌人重掷行动并刷新意图（PrepareForNextTurn），
@@ -42,9 +51,9 @@ public class ZengZhiPower : YunoBasePower
         IReadOnlyList<Creature> participants,
         ICombatState combatState)
     {
-        if (side == CombatSide.Player && Copy?.IsAlive == true)
+        if (side == CombatSide.Player && Owner.IsAlive)
         {
-            await CreatureCmd.Stun(Copy);
+            await CreatureCmd.Stun(Owner);
         }
     }
 
@@ -54,9 +63,9 @@ public class ZengZhiPower : YunoBasePower
         bool wasRemovalPrevented,
         float deathAnimLength)
     {
-        if (wasRemovalPrevented || Copy == null || !Copy.IsAlive) return;
-        if (creature == Copy || !creature.IsMonster || creature.Side != Copy.Side) return;
+        if (wasRemovalPrevented || creature == Owner || !Owner.IsAlive) return;
+        if (!creature.IsMonster || creature.Side != Owner.Side) return;
 
-        await CreatureCmd.Kill(Copy);
+        await CreatureCmd.Kill(Owner);
     }
 }

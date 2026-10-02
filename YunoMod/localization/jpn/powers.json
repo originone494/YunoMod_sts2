@@ -143,8 +143,8 @@
   "YUNO_MOD_POWER_YI_JIE_WA_ER_BO_LE_SI_POWER.smartDescription": "ターン開始時、[gold]消尽置き場[/gold]にランダムなカードを[blue]5[/blue]枚加え、その後、[gold]消尽置き場[/gold]から「異解」カードを[blue]1[/blue]枚手札に加えられる。",
   "YUNO_MOD_POWER_YI_JIE_WA_ER_BO_LE_SI_POWER.handPrompt": "[blue]1[/blue]枚の「異解」カードを選んで手札に加える（選択しなくてもよい）",
   "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.title": "ヌルヌル涙歌姫の壱世壊",
-  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.description": "「ティアラメンツ」カードの[gold]柔軟[/gold]効果が発動した時、[gold]山札[/gold]からコスト1以下のカードを1枚選び、[gold]捨て札[/gold]に送る。",
-  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.smartDescription": "「ティアラメンツ」カードの[gold]柔軟[/gold]効果が発動した時、[gold]山札[/gold]からコスト1以下のカードを1枚選び、[gold]捨て札[/gold]に送る。",
+  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.description": "「ティアラメンツモンスター」カードの[gold]柔軟[/gold]効果が発動した時、[gold]山札[/gold]からコスト1以下のカードを1枚選び、[gold]捨て札[/gold]に送る。",
+  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.smartDescription": "「ティアラメンツモンスター」カードの[gold]柔軟[/gold]効果が発動した時、[gold]山札[/gold]からコスト1以下のカードを1枚選び、[gold]捨て札[/gold]に送る。",
   "YUNO_MOD_POWER_YI_CUN_JIA_POWER.title": "一寸家",
   "YUNO_MOD_POWER_YI_CUN_JIA_POWER.description": "与えるダメージが2倍になり、受けるダメージが半分になる。ターン終了時、最大エナジーを1失う。エナジーが0なら「一寸家」を出て最大エナジーを戻す。",
   "YUNO_MOD_POWER_YI_CUN_JIA_POWER.smartDescription": "与えるダメージが2倍になり、受けるダメージが半分になる。ターン終了時、最大エナジーを1失う。エナジーが0なら「一寸家」を出て最大エナジーを戻す。",
@@ -165,5 +165,8 @@
   "YUNO_MOD_POWER_YI_JIE_SHEN_PAN_POWER.smartDescription": "シャッフル時、[gold]消尽置き場[/gold]から「[gold]異解[/gold]」カードを[blue]1[/blue]枚取り戻して[gold]手札[/gold]に加える。\n「[gold]異解[/gold]」カードをプレイした時、[gold]山札[/gold]の枚数が0なら、すべての敵はこのターン[blue]99[/blue]筋力を失う。",
   "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.title": "カイザーコロシアム",
   "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.description": "敵が2体以上いる場合、すべての敵が与えるダメージは0。",
-  "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.smartDescription": "敵が2体以上いる場合、すべての敵が与えるダメージは0。"
+  "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.smartDescription": "敵が2体以上いる場合、すべての敵が与えるダメージは0。",
+  "YUNO_MOD_POWER_JUE_DUI_MO_FA_SHENG_JIE_JIE_POWER.title": "絶対魔法聖結界",
+  "YUNO_MOD_POWER_JUE_DUI_MO_FA_SHENG_JIE_JIE_POWER.description": "ターン開始時、[gold]アーティファクト[/gold]を持っていない場合、[gold]アーティファクト[/gold]を1得る。\nその後、所持している能力の種類に応じて以下の効果を適用する：\n[blue]1[/blue]：[gold]山札[/gold]からカードを1枚選んで[gold]手札[/gold]に加える。\n[blue]2[/blue]：[gold]山札[/gold]のカードを1枚[gold]廃棄[/gold]し、すべての敵に6ダメージを与える。\n[blue]3[/blue]：[gold]山札[/gold]から好きな数のカードを選んで[gold]捨て札[/gold]に送る。\n[blue]4[/blue]：[gold]消尽置き場[/gold]からカードを1枚[gold]手札[/gold]に加える。\nターン終了時、[gold]手札[/gold]にあるカードの種類に応じて以下の効果を適用する：\n（1）[gold]アタック[/gold]：すべての敵に6ダメージを与える。\n（2）[gold]スキル[/gold]：[gold]ブロック[/gold]を7得る。\n（3）[gold]パワー[/gold]：HPを1回復する。\n「[gold]聖結界の巫女[/gold]」がデッキにある場合、さらに以下を適用する：\n（1）ターン開始時、ランダムな敵に8ダメージを3回与える。\n（2）自身のデバフをすべて解除する。\n（3）ターン開始時、[gold]バッファー[/gold]を1得る。",
+  "YUNO_MOD_POWER_JUE_DUI_MO_FA_SHENG_JIE_JIE_POWER.smartDescription": "ターン開始時、[gold]アーティファクト[/gold]を持っていない場合、[gold]アーティファクト[/gold]を1得る。\nその後、所持している能力の種類に応じて以下の効果を適用する：\n[blue]1[/blue]：[gold]山札[/gold]からカードを1枚選んで[gold]手札[/gold]に加える。\n[blue]2[/blue]：[gold]山札[/gold]のカードを1枚[gold]廃棄[/gold]し、すべての敵に6ダメージを与える。\n[blue]3[/blue]：[gold]山札[/gold]から好きな数のカードを選んで[gold]捨て札[/gold]に送る。\n[blue]4[/blue]：[gold]消尽置き場[/gold]からカードを1枚[gold]手札[/gold]に加える。\nターン終了時、[gold]手札[/gold]にあるカードの種類に応じて以下の効果を適用する：\n（1）[gold]アタック[/gold]：すべての敵に6ダメージを与える。\n（2）[gold]スキル[/gold]：[gold]ブロック[/gold]を7得る。\n（3）[gold]パワー[/gold]：HPを1回復する。\n「[gold]聖結界の巫女[/gold]」がデッキにある場合、さらに以下を適用する：\n（1）ターン開始時、ランダムな敵に8ダメージを3回与える。\n（2）自身のデバフをすべて解除する。\n（3）ターン開始時、[gold]バッファー[/gold]を1得る。"
 }

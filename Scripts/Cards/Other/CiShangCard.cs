@@ -14,7 +14,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 
 namespace YunoMod.Scripts.Cards.Other;
 
-public class CiShangCard : YunoBaseCard, IOnLingHuo
+public class CiShangCard : YunoBaseCard, ILingHuoCard
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => [
         new DamageVar(6m, ValueProp.Move)
@@ -43,16 +43,12 @@ public class CiShangCard : YunoBaseCard, IOnLingHuo
     }
 
     // 灵活：被弃时打出自己
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
         Creature? creature = Owner!.RunState.Rng.CombatTargets.NextItem(Owner.Creature.CombatState!.HittableEnemies);
         if (creature == null) return;
 
-        await CardCmd.AutoPlay(ctx, this, creature);
+        await LingHuoHook.AutoPlayFromDiscard(ctx, this, creature);
     }
 }

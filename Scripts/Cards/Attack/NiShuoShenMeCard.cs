@@ -18,7 +18,7 @@ using STS2RitsuLib.Keywords;
 using MegaCrit.Sts2.Core.Entities.Players;
 namespace YunoMod.Scripts.Cards.Attack;
 
-public class NiShuoShenMeCard : YunoBaseCard, IOnLingHuo
+public class NiShuoShenMeCard : YunoBaseCard, ILingHuoCard
 {
 
     public NiShuoShenMeCard() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
@@ -40,14 +40,10 @@ public class NiShuoShenMeCard : YunoBaseCard, IOnLingHuo
         HoverTipFactory.FromKeyword(YunoKeywords.Dagger),
         HoverTipFactory.FromKeyword(YunoKeywords.Stance),
     ];
-    public Task OnLingHuo(PlayerChoiceContext ctx, Player player)
-    {
-        return Task.CompletedTask;
-    }
 
     public async Task LingHuoSpecial(PlayerChoiceContext ctx, Player player)
     {
-        await CardCmd.AutoPlay(ctx, this, player.Creature);
+        await LingHuoHook.AutoPlayFromDiscard(ctx, this, player.Creature);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)

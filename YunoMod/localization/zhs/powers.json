@@ -143,8 +143,8 @@
   "YUNO_MOD_POWER_YI_JIE_WA_ER_BO_LE_SI_POWER.smartDescription": "回合开始时，向[gold]消耗堆[/gold]加入[blue]5[/blue]张随机卡，之后，可以从[gold]消耗堆[/gold]将[blue]1[/blue]张「异解」卡加入手牌。",
   "YUNO_MOD_POWER_YI_JIE_WA_ER_BO_LE_SI_POWER.handPrompt": "选择[blue]1[/blue]张「异解」卡加入手牌（可以不选）",
   "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.title": "袅袅涟歌姬的壹世坏",
-  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.description": "触发「珠泪」卡的[gold]灵活[/gold]效果时，从[gold]抽牌堆[/gold]选择1张费用不超过1的卡，将其送入[gold]弃牌堆[/gold]。",
-  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.smartDescription": "「珠泪」卡的[gold]灵活[/gold]效果触发时，从[gold]抽牌堆[/gold]选择1张费用不超过1的卡，将其送入[gold]弃牌堆[/gold]。",
+  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.description": "触发「珠泪怪兽」卡的[gold]灵活[/gold]效果时，从[gold]抽牌堆[/gold]选择1张费用不超过1的卡，将其送入[gold]弃牌堆[/gold]。",
+  "YUNO_MOD_POWER_NIAO_NIAO_LIAN_GE_JI_DE_YI_SHI_HUAI_POWER.smartDescription": "「珠泪怪兽」卡的[gold]灵活[/gold]效果触发时，从[gold]抽牌堆[/gold]选择1张费用不超过1的卡，将其送入[gold]弃牌堆[/gold]。",
   "YUNO_MOD_POWER_YI_CUN_JIA_POWER.title": "一寸家",
   "YUNO_MOD_POWER_YI_CUN_JIA_POWER.description": "造成的伤害翻倍，受到的伤害减半。回合结束时，失去1点最大能量；若能量为0，则退出一寸家并恢复最大能量。",
   "YUNO_MOD_POWER_YI_CUN_JIA_POWER.smartDescription": "造成的伤害翻倍，受到的伤害减半。回合结束时失去1点最大能量；若能量为0，则退出一寸家并恢复最大能量。",
@@ -165,5 +165,8 @@
   "YUNO_MOD_POWER_YI_JIE_SHEN_PAN_POWER.smartDescription": "洗牌时，从[gold]消耗堆[/gold]取回[blue]1[/blue]张「[gold]异解[/gold]」卡加入[gold]手牌[/gold]。\n打出「[gold]异解[/gold]」卡时，若[gold]抽牌堆[/gold]数量为0，所有敌人本回合失去[blue]99[/blue]点力量。",
   "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.title": "凯撒斗技场",
   "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.description": "敌人数量大于1时，所有敌人造成的伤害为0。",
-  "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.smartDescription": "敌人数量大于1时，所有敌人造成的伤害为0。"
+  "YUNO_MOD_POWER_KAI_SAI_DOU_JI_CHANG_POWER.smartDescription": "敌人数量大于1时，所有敌人造成的伤害为0。",
+  "YUNO_MOD_POWER_JUE_DUI_MO_FA_SHENG_JIE_JIE_POWER.title": "绝对魔法圣结界",
+  "YUNO_MOD_POWER_JUE_DUI_MO_FA_SHENG_JIE_JIE_POWER.description": "回合开始时，若没有[gold]人工制品[/gold]，获得1层[gold]人工制品[/gold]。\n之后，根据拥有的能力种类适用以下效果：\n[blue]1[/blue]：可以从[gold]抽牌堆[/gold]选择1张卡加入[gold]手牌[/gold]。\n[blue]2[/blue]：可以从[gold]抽牌堆[/gold]消耗1张卡，对所有敌人造成6点伤害。\n[blue]3[/blue]：可以从[gold]抽牌堆[/gold]选择任意张卡送去[gold]弃牌堆[/gold]。\n[blue]4[/blue]：可以从[gold]消耗堆[/gold]将1张卡加入[gold]手牌[/gold]。\n回合结束时，根据[gold]手牌[/gold]存在的卡牌类型适用以下效果：\n（1）[gold]攻击牌[/gold]：对所有敌人造成6点伤害。\n（2）[gold]技能牌[/gold]：获得7点[gold]格挡[/gold]。\n（3）[gold]能力牌[/gold]：恢复1点生命值。\n「[gold]圣结界的巫女[/gold]」存在于卡组的情况下，适用以下效果：\n（1）回合开始时，对随机敌人造成8点伤害，重复3次。\n（2）清除自身所有减益。\n（3）回合开始时，获得1层[gold]缓冲[/gold]。",
+  "YUNO_MOD_POWER_JUE_DUI_MO_FA_SHENG_JIE_JIE_POWER.smartDescription": "回合开始时，若没有[gold]人工制品[/gold]，获得1层[gold]人工制品[/gold]。\n之后，根据拥有的能力种类适用以下效果：\n[blue]1[/blue]：可以从[gold]抽牌堆[/gold]选择1张卡加入[gold]手牌[/gold]。\n[blue]2[/blue]：可以从[gold]抽牌堆[/gold]消耗1张卡，对所有敌人造成6点伤害。\n[blue]3[/blue]：可以从[gold]抽牌堆[/gold]选择任意张卡送去[gold]弃牌堆[/gold]。\n[blue]4[/blue]：可以从[gold]消耗堆[/gold]将1张卡加入[gold]手牌[/gold]。\n回合结束时，根据[gold]手牌[/gold]存在的卡牌类型适用以下效果：\n（1）[gold]攻击牌[/gold]：对所有敌人造成6点伤害。\n（2）[gold]技能牌[/gold]：获得7点[gold]格挡[/gold]。\n（3）[gold]能力牌[/gold]：恢复1点生命值。\n「[gold]圣结界的巫女[/gold]」存在于卡组的情况下，适用以下效果：\n（1）回合开始时，对随机敌人造成8点伤害，重复3次。\n（2）清除自身所有减益。\n（3）回合开始时，获得1层[gold]缓冲[/gold]。"
 }

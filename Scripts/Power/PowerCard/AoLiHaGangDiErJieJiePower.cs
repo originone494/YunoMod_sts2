@@ -35,7 +35,9 @@ public class AoLiHaGangDiErJieJiePower : YunoBasePower
     }
 
     // 回合结束时，选择1张手牌获得永久「保留」
-    public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
+    // 用 BeforeSideTurnEnd（"清空手牌"之前）：用 AfterSideTurnEnd 的话手牌已经被清掉，
+    // 没有「保留」的牌都不在了，这条效果几乎选不到东西。
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != Owner.Side) return;
         Flash();
