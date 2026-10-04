@@ -65,7 +65,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, ILingHuoCard
             c => ZhuLeiFilter.IsLowerMonster(c)
                  && c is not ZhuLeiLeiNuoHaTeCard,
             p => p is YunoSpecialCardPool,
-            1, true);
+            1, true, source: this);
 
     }
 
@@ -88,7 +88,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, ILingHuoCard
             ctx,
             new List<CardModel> { shi, fou },
             player,
-            new CardSelectorPrefs(LingHuoChoicePrompt, 1, 1))).FirstOrDefault();
+            CardPrefs(this, LingHuoChoicePrompt, 1, 1))).FirstOrDefault();
         if (picked is not ShiCard) return; // 否/取消 → 不发动
 
         // ④ 玩家一确认就记账：这样连锁里再丢掉一张同名卡时，它的灵活不会二次发动
@@ -96,7 +96,7 @@ public class ZhuLeiLeiNuoHaTeCard : YunoSpecialBaseCard, ILingHuoCard
 
         // ⑤ 选择1张「珠泪」卡丢弃
         var selected = (await CardSelectCmd.FromHandForDiscard(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 1, 1),
             context: ctx,
             player: player,
             filter: ZhuLeiFilter.IsCard,

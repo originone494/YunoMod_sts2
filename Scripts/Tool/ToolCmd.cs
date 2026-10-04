@@ -20,6 +20,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.GameInfo.Objects;
 using STS2RitsuLib.Keywords;
 using YunoMod.Scripts.Cards.Other;
+using YunoMod.Scripts.Base;
 using YunoMod.Scripts.Custom;
 using YunoMod.Scripts.Hook;
 using YunoMod.Scripts.Power;
@@ -87,7 +88,7 @@ public static class ToolCmd
         CardCmd.PreviewCardPileAdd(results, time, style);
     }
 
-    public static async Task<IEnumerable<CardModel>> Foresee(PlayerChoiceContext choiceContext, Player player, int amount)
+    public static async Task<IEnumerable<CardModel>> Foresee(PlayerChoiceContext choiceContext, Player player, int amount, CardModel? source = null)
     {
         if (amount <= 0) return Array.Empty<CardModel>(); ;
 
@@ -103,8 +104,15 @@ public static class ToolCmd
 
 
         if (cardsToScry.Count == 0) return Array.Empty<CardModel>();
+        // 预视提示：source 非空时用带卡名的 mod 提示（文本含 {CardName}），否则用通用提示
+        LocString foreseePrompt = YunoSelectorPrefs.ForeseeSelectionPrompt;
+        if (source != null)
+        {
+            foreseePrompt = YunoSpecialBaseCard.ForeseeNamedPrompt;
+            foreseePrompt.Add("CardName", source.Title);
+        }
         var prefs = new CardSelectorPrefs(
-            YunoSelectorPrefs.ForeseeSelectionPrompt,
+            foreseePrompt,
             1,
             1
         );
@@ -140,9 +148,9 @@ public static class ToolCmd
         return result;
     }
 
-    public static async Task<IEnumerable<CardModel>> ForeseeAndDraw(PlayerChoiceContext choiceContext, Player player, int ForeseeAmount = 5, int DrawAmount = 0)
+    public static async Task<IEnumerable<CardModel>> ForeseeAndDraw(PlayerChoiceContext choiceContext, Player player, int ForeseeAmount = 5, int DrawAmount = 0, CardModel? source = null)
     {
-        return await Foresee(choiceContext, player, ForeseeAmount);
+        return await Foresee(choiceContext, player, ForeseeAmount, source: source);
     }
 
     public static async Task GainLovePower(PlayerChoiceContext choiceContext, Player player, CardModel source, int amount)
@@ -339,12 +347,15 @@ public static class ToolCmd
     /// <param name="poolFilter">卡池条件（如限定某个卡池）；为 null 时不限卡池。</param>
     /// <param name="amount">最多可选择并加入手牌的数量。</param>
     /// <param name="isRandom">true = 不弹选择界面，从候选中不重复地随机抽最多 amount 张。</param>
+    /// <param name="prompt">自定义提示；为 null 时用通用检索提示（source 非空时自动带卡名前缀）。</param>
+    /// <param name="source">触发检索的卡（用于提示文本的 {CardName} 卡名前缀）。</param>
     public static async Task<List<CardModel>> RetrieverCard(
         PlayerChoiceContext choiceContext,
         Player player,
         Func<CardModel, bool> filter,
         Func<CardPoolModel, bool>? poolFilter = null,
-        int amount = 1, bool isDiscard = false, bool isRandom = false, LocString? prompt = null)
+        int amount = 1, bool isDiscard = false, bool isRandom = false, LocString? prompt = null,
+        CardModel? source = null)
     {
         if (player == null || amount < 1) return [];
 
@@ -375,8 +386,14 @@ public static class ToolCmd
         }
         else
         {
+            // 提示文本：调用方自带 > 带卡名的 mod 检索提示（source 非空）> 通用检索提示
+            var usedPrompt = prompt ?? (source != null
+                ? YunoSpecialBaseCard.RetrieveNamedPrompt(isDiscard)
+                : YunoSelectorPrefs.RetrieverSelectionPrompt);
+            if (source != null) usedPrompt.Add("CardName", source.Title);
+
             var prefs = new CardSelectorPrefs(
-                prompt ?? YunoSelectorPrefs.RetrieverSelectionPrompt,
+                usedPrompt,
                 0,
                 amount
             );
@@ -473,8 +490,11 @@ public static class ToolCmd
     /// <param name="choiceContext">选择上下文。</param>
     /// <param name="player">做选择的玩家。</param>
     /// <param name="prompt">选择界面的提示文本（card_selection 本地化）。</param>
-    public static async Task<bool> AskYesNo(PlayerChoiceContext choiceContext, Player player, LocString prompt)
+    /// <param name="source">触发询问的卡（用于提示文本的 {CardName} 卡名前缀）。</param>
+    public static async Task<bool> AskYesNo(PlayerChoiceContext choiceContext, Player player, LocString prompt, CardModel? source = null)
     {
+        if (source != null) prompt.Add("CardName", source.Title);
+
         var shi = player.Creature.CombatState!.CreateCard<ShiCard>(player);
         var fou = player.Creature.CombatState!.CreateCard<FouCard>(player);
 

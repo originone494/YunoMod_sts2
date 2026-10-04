@@ -20,7 +20,7 @@ namespace YunoMod.Scripts.Cards.Special;
 
 // 游戏王「天盃龍ファドラ」（Tenpai Dragon Fadra，站内 cn_name「天杯龙 发龙」/ sc_name「天杯龙 绿发龙」）：
 //   打出：造成8点伤害
-//   登场：从弃牌堆将1张「天杯龙」加入手牌
+//   登场：从消耗堆将1张「天杯龙」加入手牌
 //   时机：回合结束时，打出此卡，可以进行一次「同调」
 public class TianBeiLongLvFaCard : YunoSpecialBaseCard, IDengChangCard
 {
@@ -63,17 +63,17 @@ public class TianBeiLongLvFaCard : YunoSpecialBaseCard, IDengChangCard
             .Execute(choiceContext);
     }
 
-    // 登场：从弃牌堆将1张「天杯龙」加入手牌
+    // 登场：从消耗堆将1张「天杯龙」加入手牌
     public async Task DengChangSpecial(PlayerChoiceContext ctx, Player player)
     {
-        var discardPile = PileType.Discard.GetPile(player);
-        if (!discardPile.Cards.Any(c => c.Tags.Contains(YunoTags.TianBeiLong))) return;
+        var exhaustPile = PileType.Exhaust.GetPile(player);
+        if (!exhaustPile.Cards.Any(c => c.Tags.Contains(YunoTags.TianBeiLong))) return;
 
         var picked = (await CardSelectCmd.FromCombatPile(
             ctx,
-            discardPile,
+            exhaustPile,
             player,
-            new CardSelectorPrefs(DengChangPrompt, 1, 1),
+            CardPrefs(this, DengChangPrompt, 1, 1),
             filter: c => c.Tags.Contains(YunoTags.TianBeiLong))).FirstOrDefault();
 
         if (picked != null)
@@ -86,15 +86,20 @@ public class TianBeiLongLvFaCard : YunoSpecialBaseCard, IDengChangCard
     private static LocString DengChangPrompt { get; } = new("card_selection", "TO_TIAN_BEI_LONG_LV_FA_DENG_CHANG");
 
     // 时机：回合结束时，打出此卡，可以进行一次「同调」
-    // 打出此卡后，返回手牌，之后可以进行一次「同调」（同名卡一回合一次）
+    // 一回合只能打出一次：按**这张卡自己**记（文本写的是「一回合一次」，不是「同名卡一回合一次」）
+    private (CombatId? Combat, int Turn)? _playedThisTurn;
+
+    protected override bool IsPlayable => Owner == null || _playedThisTurn != PerTurnOnce.CurrentKey(Owner);
+
+    // 打出此卡后，返回手牌，之后可以进行一次「同调」（一回合一次）
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card != this) return;
         if (Owner == null) return;
 
-        var onceKey = PerTurnOnce.Key("Play", Id.Entry);
-        if (PerTurnOnce.IsUsed(Owner, onceKey)) return;
-        PerTurnOnce.Mark(Owner, onceKey);
+        var now = PerTurnOnce.CurrentKey(Owner);
+        if (_playedThisTurn == now) return;
+        _playedThisTurn = now;
 
         // 打出后返回手牌；回合结束的最后由游戏机制正常清空手牌（连同它一起进弃牌堆）
         await CardPileCmd.Add(this, PileType.Hand);

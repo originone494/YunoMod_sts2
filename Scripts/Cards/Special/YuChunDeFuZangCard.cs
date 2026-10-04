@@ -37,6 +37,6 @@ public class YuChunDeFuZangCard : YunoSpecialBaseCard
             null,
             1,
             isDiscard: true,
-            prompt: RetrievePrompt);
+            prompt: RetrievePrompt, source: this);
     }
 }

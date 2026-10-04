@@ -29,14 +29,14 @@ public class YouShiDuanLiCard : YunoSpecialBaseCard
         if (discardPile.Cards.Count == 0) return;
 
         var retrieved = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, discardPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).ToList();
+            choiceContext, discardPile.Cards.ToList(), Owner, CardPrefs(this, SelectionScreenPrompt, 1, 1))).ToList();
         if (retrieved.Count == 0) return;
 
         await CardPileCmd.Add(retrieved[0], PileType.Hand);
 
         // ② 选择1张手牌消耗（可选，未选择则结束）
         var exhausted = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 0, 1),
             context: choiceContext,
             player: Owner,
             filter: null,
@@ -50,7 +50,7 @@ public class YouShiDuanLiCard : YunoSpecialBaseCard
         if (exhaustPile.Cards.Count == 0) return;
 
         var moved = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, exhaustPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).ToList();
+            choiceContext, exhaustPile.Cards.ToList(), Owner, CardPrefs(this, SelectionScreenPrompt, 1, 1))).ToList();
         if (moved.Count == 0) return;
 
         await CardPileCmd.Add(moved[0], PileType.Discard);

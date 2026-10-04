@@ -30,7 +30,7 @@ public class CiShiBiKeZhiRenCard : YunoSpecialBaseCard
         if (hand.Count == 0) return;
 
         _chosenCard = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: null,

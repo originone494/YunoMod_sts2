@@ -19,8 +19,8 @@ namespace YunoMod.Scripts.Tool;
 // 分支二：触发卡为「调整」→ 选手牌 1 张拥有星级的卡；3 星 → 升龙。
 // 节奏：弹选择界面之前先等一刀（等前面的打出/伤害动画落地），与珠泪融合同款。
 // 产物判定：**先算产物再动卡**——星级组合不成立时什么都不处理，不移动任何卡。
-// 关键点：移动到弃牌堆走 CardPileCmd.Add（不是 CardCmd.Discard），
-// 因此不经过 AfterCardDiscarded，不会触发「灵活」。
+// 关键点：触发卡与所选卡都走 CardCmd.Exhaust 进消耗堆（不进弃牌堆），
+// 不经过 AfterCardDiscarded，因此不会触发「灵活」。
 public static class TongDiao
 {
     // 分支一提示：从手牌选 1 张「调整」卡
@@ -82,14 +82,14 @@ public static class TongDiao
             source: source)).FirstOrDefault();
         if (chosen == null) return;
 
-        // 先算产物：星级组合不成立时**什么都不处理**——既不同调，也不把任何卡送进弃牌堆。
-        // （不能先移动再判断，否则玩家选错星级会白白损失两张卡。）
+        // 先算产物：星级组合不成立时**什么都不处理**——既不同调，也不消耗任何卡。
+        // （不能先消耗再判断，否则玩家选错星级会白白损失两张卡。）
         CardModel? dragon = ResolveDragon(sourceIsTuner, chosen);
         if (dragon == null) return;
 
-        // 将自身和选择的卡移动到弃牌堆（非丢弃，不触发灵活）
-        await MoveToDiscard(source);
-        await MoveToDiscard(chosen);
+        // 将自身和选择的卡消耗（进消耗堆，不触发灵活）
+        await ExhaustCard(choiceContext, source);
+        await ExhaustCard(choiceContext, chosen);
 
         var copy = player.Creature.CombatState!.CreateCard(dragon, player);
         await CardPileCmd.Add(copy, PileType.Hand);
@@ -107,9 +107,8 @@ public static class TongDiao
         _ => null,
     };
 
-    private static async Task MoveToDiscard(CardModel card)
+    private static async Task ExhaustCard(PlayerChoiceContext choiceContext, CardModel card)
     {
-        if (card.Pile?.Type == PileType.Discard) return;
-        await CardPileCmd.Add(card, PileType.Discard);
+        await CardCmd.Exhaust(choiceContext, card);
     }
 }

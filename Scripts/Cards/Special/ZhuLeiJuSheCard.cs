@@ -59,7 +59,7 @@ public class ZhuLeiJuSheCard : YunoSpecialBaseCard, ILingHuoCard
                 choiceContext,
                 discardPile.Cards.ToList(),
                 Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 0, 1))).FirstOrDefault();
+                CardPrefs(this, SelectionScreenPrompt, 0, 1))).FirstOrDefault();
 
         if (chosen != null)
         {

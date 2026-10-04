@@ -37,7 +37,7 @@ public class QiXingDaoMoNvCard : YunoSpecialBaseCard
         if (handCards.Count == 0) return;
 
         var selectedCard = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 1),
+            prefs: CardPrefs(this, DiscardNamedPrompt, 0, 1),
             context: choiceContext,
             player: Owner,
             filter: null,
@@ -55,7 +55,7 @@ public class QiXingDaoMoNvCard : YunoSpecialBaseCard
 
         // 从手牌选择1张费用在2及2以上的牌免费打出（可跳过），目标为随机敌人
         var selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 0, 1),
             context: choiceContext,
             player: Owner,
             filter: c => c.EnergyCost.GetWithModifiers(CostModifiers.None) >= 2,

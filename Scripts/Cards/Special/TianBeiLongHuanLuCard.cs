@@ -83,7 +83,7 @@ public class TianBeiLongHuanLuCard : YunoSpecialBaseCard, IDengChangCard
             Owner,
             c => c.Tags.Contains(YunoTags.TianBeiLong) && c.Id != Id,
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
     }
 
     // 登场：这张卡可以免费打出，变为「调整」，等级上升1星

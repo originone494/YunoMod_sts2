@@ -30,7 +30,7 @@ public class TianShiDeShiSheCard : YunoSpecialBaseCard
         // 弃2张牌（玩家选择）
         var handCards = PileType.Hand.GetPile(Owner).Cards.ToList();
         var selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 2, 2),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 2, 2),
             context: choiceContext,
             player: Owner,
             filter: null,

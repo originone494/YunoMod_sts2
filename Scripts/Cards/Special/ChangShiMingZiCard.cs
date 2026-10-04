@@ -25,7 +25,7 @@ public class ChangShiMingZiCard : YunoSpecialBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         CardModel? selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: card => card.Type == CardType.Attack && card.DynamicVars.ContainsKey("Damage"),

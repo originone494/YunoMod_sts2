@@ -58,7 +58,7 @@ public class ZhuLeiSaiRenCard : YunoSpecialBaseCard, ILingHuoCard
         if (PileType.Hand.GetPile(Owner).Cards.Count == 0) return;
 
         var selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: null,

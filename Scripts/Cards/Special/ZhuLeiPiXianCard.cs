@@ -81,6 +81,6 @@ public class ZhuLeiPiXianCard : YunoSpecialBaseCard, ILingHuoCard
             player,
             c => ZhuLeiFilter.IsTrap(c),
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
     }
 }

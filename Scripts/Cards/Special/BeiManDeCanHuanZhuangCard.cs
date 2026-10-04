@@ -53,8 +53,11 @@ public class BeiManDeCanHuanZhuangCard : YunoSpecialBaseCard
 
     private static bool _endPhaseWindow;
 
-    // 一回合一次
-    private string OnceKey => PerTurnOnce.Key("Play", Id.Entry);
+    // 一回合只能打出一次：按**这张卡自己**记
+    //（文本写的是「一回合只能打出一次」，不是「同名卡一回合一次」→ 每份拷贝各自一次）
+    private (CombatId? Combat, int Turn)? _playedThisTurn;
+
+    private bool PlayedThisTurn => Owner != null && _playedThisTurn == PerTurnOnce.CurrentKey(Owner);
 
     // 龙族同调卡：天杯龙族的同调产物
     private static Func<CardModel, bool> IsDragonSynchroCard
@@ -80,14 +83,14 @@ public class BeiManDeCanHuanZhuangCard : YunoSpecialBaseCard
 
     // 一回合只能打出一次：本回合已经打出过 → 直接把这张卡变成"不可打出"
     //（UI 会灰掉、点了也打不出去），而不是"能打出去但没效果"。
-    protected override bool IsPlayable => Owner == null || !PerTurnOnce.IsUsed(Owner, OnceKey);
+    protected override bool IsPlayable => !PlayedThisTurn;
 
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (Owner == null) return;
 
         // 兜底：万一被效果绕过 IsPlayable 打出来，第二次也不结算
-        if (PerTurnOnce.IsUsed(Owner, OnceKey)) return;
+        if (PlayedThisTurn) return;
 
         // 「检索」1张「天杯龙」
         await ToolCmd.RetrieverCard(
@@ -95,23 +98,23 @@ public class BeiManDeCanHuanZhuangCard : YunoSpecialBaseCard
             Owner,
             c => c.Tags.Contains(YunoTags.TianBeiLong),
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
 
         // 之后，丢弃1张手牌
         await CardSelectCmd.FromHandForDiscard(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1),
+            prefs: CardPrefs(this, DiscardNamedPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: null,
             source: this);
     }
 
-    // 打出后，返回手牌（一回合一次）
+    // 打出后，返回手牌（一回合一次，按这张卡自己记）
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card != this) return;
-        if (Owner == null || PerTurnOnce.IsUsed(Owner, OnceKey)) return;
-        PerTurnOnce.Mark(Owner, OnceKey);
+        if (Owner == null || PlayedThisTurn) return;
+        _playedThisTurn = PerTurnOnce.CurrentKey(Owner);
 
         await CardPileCmd.Add(this, PileType.Hand);
     }
@@ -138,7 +141,7 @@ public class BeiManDeCanHuanZhuangCard : YunoSpecialBaseCard
         if (!PileType.Hand.GetPile(Owner).Cards.Any(IsDragonSynchroCard)) return;
 
         CardModel? target = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(BuffPrompt, 1, 1),
+            prefs: CardPrefs(this, BuffPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: IsDragonSynchroCard,

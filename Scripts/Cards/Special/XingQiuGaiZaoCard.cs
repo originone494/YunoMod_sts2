@@ -29,6 +29,6 @@ public class XingQiuGaiZaoCard : YunoSpecialBaseCard
             Owner,
             c => c.Type == CardType.Power,
             null,
-            1);
+            1, source: this);
     }
 }

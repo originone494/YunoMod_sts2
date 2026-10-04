@@ -24,17 +24,13 @@ namespace YunoMod.Scripts.Cards.Special;
 
 // 游戏王「燦幻昇龍バイデント・ドラギオン」（Sangenpai Bident Dragion，站内 sc_name「灿幻升龙 双戟天龙」）：
 //   打出：造成20点伤害
-//   登场：从弃牌堆将1张「天杯龙」或「灿幻怪兽」加入手牌
+//   登场：从消耗堆将1张「天杯龙」或「灿幻怪兽」加入手牌
 //   时机：回合结束时，打出此卡
-//   回合结束阶段打出过3张攻击卡的情况：将位于弃牌堆的这张卡加入手牌，之后可以丢弃1张手牌。
+//   一回合打出过3张攻击卡的情况下，在回合结束时（游戏流程清空手牌之后）将位于弃牌堆的这张卡打出，之后可以丢弃1张手牌。
 //
-// "回合结束阶段打出过3张攻击卡"的统计窗口（静态状态，跨实例共享）：
-//   - SideTurnEndingEvent（RitsuLib 在 Hook.BeforeSideTurnEnd 扇出前的前缀）开启窗口并清零计数；
-//   - AfterCardPlayed 是广播钩子（对所有卡牌模型触发），在此统计窗口内打出的攻击卡，
-//     计数达到 3 的那一刻立即回归（与扇出顺序无关）；
-//   - SideTurnEndedEvent / PlayerTurnStartedEvent 关闭窗口（战斗中途获胜跳出时由后者兜底重置）。
-// 若"第3张攻击卡"就是本卡自己：AfterCardPlayed 时它还在打牌区（落堆发生在 AfterCardPlayed 之后），
-// 此时移回手牌后，出牌流水线的落堆步骤会因卡已不在打牌区而自动跳过，回归不会被覆盖。
+// "一回合打出过3张攻击卡"：静态计数，PlayerTurnStarted 清零、AfterCardPlayed（广播钩子）累加本回合
+// 本卡拥有者打出的攻击卡；SideTurnEndedEvent（清空手牌之后）检查计数并从弃牌堆打出。
+// 本卡打出后返回手牌（一回合一次，按这张卡自己记），时机打出与回合结束打出同样适用。
 public class CanHuanShengLongShuangChaTianLongCard : YunoSpecialBaseCard, IDengChangCard
 {
     public CanHuanShengLongShuangChaTianLongCard() : base(2, CardType.Attack, CardRarity.Ancient, TargetType.AnyEnemy)
@@ -43,30 +39,28 @@ public class CanHuanShengLongShuangChaTianLongCard : YunoSpecialBaseCard, IDengC
 
     static CanHuanShengLongShuangChaTianLongCard()
     {
-        RitsuLibFramework.SubscribeLifecycle<SideTurnEndingEvent>(evt =>
+        RitsuLibFramework.SubscribeLifecycle<PlayerTurnStartedEvent>(_ =>
         {
-            if (evt.Side != CombatSide.Player) return;
-            _endPhaseWindow = true;
-            _attacksPlayedInEndPhase = 0;
-            _returnedInEndPhase = false;
+            _attacksPlayedThisTurn = 0;
         });
         RitsuLibFramework.SubscribeLifecycle<SideTurnEndedEvent>(evt =>
         {
             if (evt.Side != CombatSide.Player) return;
-            _endPhaseWindow = false;
-        });
-        RitsuLibFramework.SubscribeLifecycle<PlayerTurnStartedEvent>(_ =>
-        {
-            // 兜底：回合结束阶段中途获胜跳出时窗口可能未正常关闭
-            _endPhaseWindow = false;
+            _ = EndTurnPlay(evt.CombatState);
         });
     }
 
-    private static bool _endPhaseWindow;
-    private static int _attacksPlayedInEndPhase;
-    private static bool _returnedInEndPhase;
+    private static int _attacksPlayedThisTurn;
 
-    // 登场：从弃牌堆将1张「天杯龙」或「灿幻怪兽」加入手牌
+    // 一回合只能打出一次：按**这张卡自己**记（文本写的是「一回合一次」，不是「同名卡一回合一次」）
+    private (CombatId? Combat, int Turn)? _playedThisTurn;
+
+    protected override bool IsPlayable => Owner == null || _playedThisTurn != PerTurnOnce.CurrentKey(Owner);
+
+    // 回合结束的"打出"每回合只执行一次
+    private (CombatId? Combat, int Turn)? _endPlayedTurn;
+
+    // 登场：从消耗堆将1张「天杯龙」或「灿幻怪兽」加入手牌
     private static LocString DengChangPrompt { get; } = new("card_selection", "TO_CAN_HUAN_SHENG_LONG_DENG_CHANG");
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -107,17 +101,17 @@ public class CanHuanShengLongShuangChaTianLongCard : YunoSpecialBaseCard, IDengC
             .Execute(choiceContext);
     }
 
-    // 登场：从弃牌堆将1张「天杯龙」或「灿幻怪兽」加入手牌
+    // 登场：从消耗堆将1张「天杯龙」或「灿幻怪兽」加入手牌
     public async Task DengChangSpecial(PlayerChoiceContext ctx, Player player)
     {
-        var discardPile = PileType.Discard.GetPile(player);
-        if (!discardPile.Cards.Any(IsTianBeiLongOrCanHuanGuaiShou)) return;
+        var exhaustPile = PileType.Exhaust.GetPile(player);
+        if (!exhaustPile.Cards.Any(IsTianBeiLongOrCanHuanGuaiShou)) return;
 
         var picked = (await CardSelectCmd.FromCombatPile(
             ctx,
-            discardPile,
+            exhaustPile,
             player,
-            new CardSelectorPrefs(DengChangPrompt, 1, 1),
+            CardPrefs(this, DengChangPrompt, 1, 1),
             filter: IsTianBeiLongOrCanHuanGuaiShou)).FirstOrDefault();
 
         if (picked != null)
@@ -127,44 +121,63 @@ public class CanHuanShengLongShuangChaTianLongCard : YunoSpecialBaseCard, IDengC
     }
 
     // 时机：回合结束时，打出此卡
-    // 广播钩子：统计回合结束阶段打出的攻击卡，达到3张时从弃牌堆回归
+
+    // 广播钩子：统计本回合打出的攻击卡 + 打出后返回手牌（一回合一次）
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
-        // 打出此卡后，返回手牌（同名卡一回合一次）
-        if (cardPlay.Card == this && Owner != null)
+        if (Owner == null) return;
+
+        if (cardPlay.Card?.Type == CardType.Attack && cardPlay.Card.Owner == Owner)
         {
-            var onceKey = PerTurnOnce.Key("Play", Id.Entry);
-            if (!PerTurnOnce.IsUsed(Owner, onceKey))
-            {
-                PerTurnOnce.Mark(Owner, onceKey);
-                await CardPileCmd.Add(this, PileType.Hand);
-            }
+            _attacksPlayedThisTurn++;
         }
 
-        if (!_endPhaseWindow) return;
-        if (cardPlay.Card?.Type != CardType.Attack) return;
-        if (cardPlay.Card.Owner != Owner) return;
+        if (cardPlay.Card != this) return;
+        var now = PerTurnOnce.CurrentKey(Owner);
+        if (_playedThisTurn == now) return;
+        _playedThisTurn = now;
 
-        _attacksPlayedInEndPhase++;
-        if (_attacksPlayedInEndPhase < 3 || _returnedInEndPhase) return;
-        _returnedInEndPhase = true;
-
-        // 将位于弃牌堆的这张卡加入手牌。
-        // 若本卡自己就是第3张攻击卡：此刻它还在打牌区，移入手牌后，
-        // 出牌流水线末尾的落堆步骤（仅当卡仍在打牌区才执行）会自动跳过，回归不会被覆盖。
-        var pileType = Pile?.Type;
-        // 只有确实位于弃牌堆（或它是第3张攻击卡、此刻还在打牌区）才回归；
-        // 已经回到手牌的情况不再算"从弃牌堆回归"。
-        if (pileType != PileType.Discard && pileType != PileType.Play) return;
         await CardPileCmd.Add(this, PileType.Hand);
+    }
 
-        // 之后可以丢弃1张手牌（0~1，可选）
-        await CardSelectCmd.FromHandForDiscard(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 0, 1),
-            context: choiceContext,
-            player: Owner,
-            filter: null,
-            source: this);
+    // 回合结束（清空手牌之后）：一回合打出过3张攻击卡 → 将位于弃牌堆的这张卡打出，之后可以丢弃1张手牌
+    private static async Task EndTurnPlay(ICombatState combatState)
+    {
+        var ctx = new BlockingPlayerChoiceContext();
+        foreach (var player in combatState.Players)
+        {
+            var dragons = PileType.Discard.GetPile(player).Cards
+                .OfType<CanHuanShengLongShuangChaTianLongCard>()
+                .Where(c => c.Owner == player
+                            && _attacksPlayedThisTurn >= 3
+                            && c._endPlayedTurn != PerTurnOnce.CurrentKey(player))
+                .ToList();
+
+            foreach (var dragon in dragons)
+            {
+                dragon._endPlayedTurn = PerTurnOnce.CurrentKey(player);
+
+                Creature? target = player.RunState.Rng.CombatTargets.NextItem(player.Creature.CombatState!.HittableEnemies);
+                if (target == null) return;
+
+                await LingHuoHook.AutoPlayFromDiscard(ctx, dragon, target);
+
+                // 打出后返回手牌（一回合只能打出一次：本回合尚未打出过才回手）
+                if (dragon._playedThisTurn != PerTurnOnce.CurrentKey(player))
+                {
+                    dragon._playedThisTurn = PerTurnOnce.CurrentKey(player);
+                    await CardPileCmd.Add(dragon, PileType.Hand);
+                }
+
+                // 之后可以丢弃1张手牌（0~1，可选）
+                await CardSelectCmd.FromHandForDiscard(
+                    prefs: CardPrefs(dragon, DiscardNamedPrompt, 0, 1),
+                    context: ctx,
+                    player: player,
+                    filter: null,
+                    source: dragon);
+            }
+        }
     }
 
     private static bool IsTianBeiLongOrCanHuanGuaiShou(CardModel c)

@@ -50,7 +50,7 @@ public class CanHuanKaiMenCard : YunoSpecialBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 是 →「检索」1张「天杯龙」；否 → 使手牌的1张「天杯龙」卡的费用为0
-        if (await ToolCmd.AskYesNo(choiceContext, Owner, KaiMenChoicePrompt))
+        if (await ToolCmd.AskYesNo(choiceContext, Owner, KaiMenChoicePrompt, source: this))
         {
             await RetrieveTianBeiLong(choiceContext, Owner);
         }
@@ -79,7 +79,7 @@ public class CanHuanKaiMenCard : YunoSpecialBaseCard
             player,
             IsTianBeiLong,
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
     }
 
     private async Task MakeTianBeiLongFree(PlayerChoiceContext choiceContext, Player player)
@@ -88,7 +88,7 @@ public class CanHuanKaiMenCard : YunoSpecialBaseCard
         if (hand.Count == 0) return;
 
         var selected = await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(ZeroCostPrompt, 1, 1),
+            prefs: CardPrefs(this, ZeroCostPrompt, 1, 1),
             context: choiceContext,
             player: player,
             filter: CanBeFree,

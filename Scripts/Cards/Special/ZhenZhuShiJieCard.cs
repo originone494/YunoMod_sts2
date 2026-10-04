@@ -31,7 +31,7 @@ public class ZhenZhuShiJieCard : YunoSpecialBaseCard
             Owner,
             ZhuLeiFilter.IsCardExceptFusionMonster,
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
 
         // 施加能力：打出「珠泪」卡时对随机敌人造成9点伤害
         await PowerCmd.Apply<ZhenZhuShiJiePower>(choiceContext, Owner.Creature, 1, Owner.Creature, this);

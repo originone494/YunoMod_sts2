@@ -66,7 +66,7 @@ public class YiJieDuoZuiHaiCard : YunoSpecialBaseCard
         if (count >= _retrieveThreshold)
         {
             // 从消耗堆将1张卡加入手牌
-            var prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, 0, 1);
+            var prefs = CardPrefs(this, base.SelectionScreenPrompt, 0, 1);
             var picked = (await CardSelectCmd.FromCombatPile(
                 choiceContext,
                 PileType.Exhaust.GetPile(Owner),

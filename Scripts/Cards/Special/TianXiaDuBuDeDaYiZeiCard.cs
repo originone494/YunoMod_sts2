@@ -65,7 +65,7 @@ public class TianXiaDuBuDeDaYiZeiCard : YunoSpecialBaseCard
             if (attackCards.Count < 2) return;
 
             var selected = (await CardSelectCmd.FromHand(
-                prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, 2),
+                prefs: CardPrefs(this, SelectionScreenPrompt, 0, 2),
                 context: choiceContext,
                 player: Owner,
                 filter: c => c.Type == CardType.Attack,

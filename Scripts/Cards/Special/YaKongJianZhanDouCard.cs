@@ -29,7 +29,7 @@ public class YaKongJianZhanDouCard : YunoSpecialBaseCard
         // 从抽牌堆选择最多3张卡
         var drawPile = PileType.Draw.GetPile(Owner);
         int amount = drawPile.Cards.ToList().Count() < 3 ? drawPile.Cards.ToList().Count() : 3;
-        var prefs = new CardSelectorPrefs(SelectionScreenPrompt, amount, amount);
+        var prefs = CardPrefs(this, SelectionScreenPrompt, amount, amount);
         var selected = (await CardSelectCmd.FromSimpleGrid(choiceContext, drawPile.Cards.ToList(), Owner, prefs)).ToList();
 
         if (selected == null) return;

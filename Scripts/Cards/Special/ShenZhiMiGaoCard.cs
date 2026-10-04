@@ -29,7 +29,7 @@ public class ShenZhiMiGaoCard : YunoSpecialBaseCard
         if (PileType.Hand.GetPile(Owner).Cards.Count == 0) return;
 
         CardModel? selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1),
+            prefs: CardPrefs(this, ExhaustNamedPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: null,

@@ -22,7 +22,7 @@ public class DangNianJiaSheShanHaiTuCard : YunoSpecialBaseCard
     {
         // 先选择一张可变化的手牌。
         CardModel? selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: card => card.IsTransformable,

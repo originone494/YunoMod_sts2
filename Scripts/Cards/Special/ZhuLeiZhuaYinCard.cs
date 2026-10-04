@@ -69,7 +69,7 @@ public class ZhuLeiZhuaYinCard : YunoSpecialBaseCard, ILingHuoCard
             ZhuLeiFilter.IsLowerMonster,
             p => p is YunoSpecialCardPool,
             1,
-            isDiscard: true);
+            isDiscard: true, source: this);
 
         // ③ 效果处理完，把这张卡打出——它带「消耗」，于是被消耗掉。
         //    这样同一份拷贝不会一直留在手上、每次被攻击都重复触发
@@ -88,7 +88,7 @@ public class ZhuLeiZhuaYinCard : YunoSpecialBaseCard, ILingHuoCard
             ctx,
             discardPile,
             player,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            CardPrefs(this, SelectionScreenPrompt, 1, 1),
             filter: ZhuLeiFilter.IsMonster)).FirstOrDefault();
 
         if (picked != null)

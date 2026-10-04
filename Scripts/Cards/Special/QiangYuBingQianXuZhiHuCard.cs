@@ -29,6 +29,6 @@ public class QiangYuBingQianXuZhiHuCard : YunoSpecialBaseCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // 预知 3
-        await ToolCmd.ForeseeAndDraw(choiceContext, Owner, _foreseeAmount);
+        await ToolCmd.ForeseeAndDraw(choiceContext, Owner, _foreseeAmount, source: this);
     }
 }

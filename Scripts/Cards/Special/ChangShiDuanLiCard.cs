@@ -29,7 +29,7 @@ public class ChangShiDuanLiCard : YunoSpecialBaseCard
         if (discardPile.Cards.Count == 0) return;
 
         var exhausted = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, discardPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 0, 5))).ToList();
+            choiceContext, discardPile.Cards.ToList(), Owner, CardPrefs(this, SelectionScreenPrompt, 0, 5))).ToList();
 
         foreach (var card in exhausted)
         {
@@ -44,7 +44,7 @@ public class ChangShiDuanLiCard : YunoSpecialBaseCard
         if (exhaustPile.Cards.Count == 0) return;
 
         var moved = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, exhaustPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, count, count))).ToList();
+            choiceContext, exhaustPile.Cards.ToList(), Owner, CardPrefs(this, SelectionScreenPrompt, count, count))).ToList();
 
         foreach (var card in moved)
         {

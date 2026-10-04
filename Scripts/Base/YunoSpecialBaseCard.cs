@@ -1,8 +1,10 @@
 using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using STS2RitsuLib.Interop.AutoRegistration;
@@ -22,6 +24,26 @@ public abstract class YunoSpecialBaseCard(int energyCost, CardType type, CardRar
     // 菲涅尔透镜正是靠给卡牌奖励附上灵活生效，因此漏声明会导致它对整套 mod 卡完全失效。
     // 这里改为按 CanonicalVars 是否声明了 BlockVar 自动判定，避免每新增一张格挡牌就漏一次。
     public override bool GainsBlock => base.GainsBlock || CanonicalVars.Any(v => v is BlockVar);
+
+    // 选卡提示统一注入卡名：提示文本以 {CardName} 开头（渲染为「卡名：」）。
+    // 克隆传入的 LocString（table+key 不变），避免向调用方的共享静态实例注入变量。
+    // 原版通用提示（弃牌/消耗等）的文本不含 {CardName}，需要名字的调用点请改用
+    // DiscardNamedPrompt / ExhaustNamedPrompt 等 mod 专用键。
+    protected static CardSelectorPrefs CardPrefs(CardModel source, LocString prompt, int min, int max)
+    {
+        var p = new LocString(prompt.LocTable, prompt.LocEntryKey);
+        if (source != null) p.Add("CardName", source.Title);
+        return new CardSelectorPrefs(p, min, max);
+    }
+
+    protected static CardSelectorPrefs CardPrefs(CardModel source, LocString prompt, int count)
+        => CardPrefs(source, prompt, count, count);
+
+    // 原版通用提示的"带卡名"版本（文本含 {CardName}，见 card_selection.json）
+    protected static LocString DiscardNamedPrompt => new("card_selection", "YUNO_MOD_PROMPT_DISCARD");
+    protected static LocString ExhaustNamedPrompt => new("card_selection", "YUNO_MOD_PROMPT_EXHAUST");
+    public static LocString RetrieveNamedPrompt(bool discard) => new("card_selection", discard ? "YUNO_MOD_PROMPT_RETRIEVE_DISCARD" : "YUNO_MOD_PROMPT_RETRIEVE");
+    public static LocString ForeseeNamedPrompt => new("card_selection", "YUNO_MOD_PROMPT_FORESEE");
 
     // 灵活：本卡因效果被送入弃牌堆时触发。
     // 用原版唯一的弃牌事件（CardCmd.DiscardAndDraw 内部、入堆之后），

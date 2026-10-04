@@ -53,7 +53,7 @@ public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, ILingHuoCard
     protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         // ① 是 →「检索」1张「珠泪下级怪兽」卡；否 → 从弃牌堆选择1张「珠泪怪兽」加入手牌
-        bool retrieve = await ToolCmd.AskYesNo(choiceContext, Owner, RetrieveChoicePrompt);
+        bool retrieve = await ToolCmd.AskYesNo(choiceContext, Owner, RetrieveChoicePrompt, source: this);
 
         CardModel? added;
         if (retrieve)
@@ -63,7 +63,7 @@ public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, ILingHuoCard
                 Owner,
                 ZhuLeiFilter.IsLowerMonster,
                 p => p is YunoSpecialCardPool,
-                1)).FirstOrDefault();
+                1, source: this)).FirstOrDefault();
         }
         else
         {
@@ -73,7 +73,7 @@ public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, ILingHuoCard
                     choiceContext,
                     discardPile,
                     Owner,
-                    new CardSelectorPrefs(FromDiscardPrompt, 1, 1),
+                    CardPrefs(this, FromDiscardPrompt, 1, 1),
                     filter: ZhuLeiFilter.IsMonster)).FirstOrDefault()
                 : null;
         }
@@ -87,7 +87,7 @@ public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, ILingHuoCard
         if (!hasSameCostMonster) return;
 
         CardModel? toDiscard = (await CardSelectCmd.FromHandForDiscard(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1),
+            prefs: CardPrefs(this, DiscardNamedPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: c => ZhuLeiFilter.IsMonster(c) && c.EnergyCost.GetWithModifiers(CostModifiers.None) == cost,
@@ -108,7 +108,7 @@ public class ZhuLeiFanXiangCard : YunoSpecialBaseCard, ILingHuoCard
             ctx,
             exhaustPile,
             player,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            CardPrefs(this, SelectionScreenPrompt, 1, 1),
             filter: ZhuLeiFilter.IsTrap)).FirstOrDefault();
 
         if (picked != null)

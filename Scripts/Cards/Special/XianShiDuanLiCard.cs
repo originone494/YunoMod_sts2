@@ -28,7 +28,7 @@ public class XianShiDuanLiCard : YunoSpecialBaseCard
         if (PileType.Hand.GetPile(Owner).Cards.Count == 0) return;
 
         var exhausted = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: null,
@@ -42,7 +42,7 @@ public class XianShiDuanLiCard : YunoSpecialBaseCard
         if (exhaustPile.Cards.Count == 0) return;
 
         var retrieved = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, exhaustPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).ToList();
+            choiceContext, exhaustPile.Cards.ToList(), Owner, CardPrefs(this, SelectionScreenPrompt, 1, 1))).ToList();
         if (retrieved.Count == 0) return;
 
         await CardPileCmd.Add(retrieved[0], PileType.Hand);

@@ -47,7 +47,7 @@ public class YiJieXinNenGuCard : YunoSpecialBaseCard
         await ToolCmd.AddRandomCardsToExhaust(Owner, 1);
 
         // 3. 从消耗堆将最多2张「异解怪兽」卡加入手牌（可以不选）
-        var prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, 0, 2);
+        var prefs = CardPrefs(this, base.SelectionScreenPrompt, 0, 2);
         var selected = await CardSelectCmd.FromCombatPile(
             choiceContext,
             PileType.Exhaust.GetPile(Owner),

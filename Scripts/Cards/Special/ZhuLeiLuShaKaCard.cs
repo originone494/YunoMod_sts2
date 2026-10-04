@@ -108,14 +108,14 @@ public class ZhuLeiLuShaKaCard : YunoSpecialBaseCard, ILingHuoCard
             choiceContext,
             new List<CardModel> { shi, fou },
             player,
-            new CardSelectorPrefs(YingDuiChoicePrompt, 1, 1))).FirstOrDefault();
+            CardPrefs(this, YingDuiChoicePrompt, 1, 1))).FirstOrDefault();
         if (picked is not ShiCard) return; // 否/取消 → 不发动，照常吃伤害
 
         PerTurnOnce.Mark(player, onceKey);
 
         // 选择丢弃1张「珠泪」卡
         var selected = (await CardSelectCmd.FromHandForDiscard(
-            prefs: new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            prefs: CardPrefs(this, SelectionScreenPrompt, 1, 1),
             context: choiceContext,
             player: player,
             filter: ZhuLeiFilter.IsCard,

@@ -58,7 +58,7 @@ public class HeLuSiXianDaoHaBiCard : YunoSpecialBaseCard
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Move, cardPlay);
 
         // 「是」→ 从消耗堆选，「否」→ 从弃牌堆选
-        bool fromExhaust = await ToolCmd.AskYesNo(choiceContext, Owner, ChoicePrompt);
+        bool fromExhaust = await ToolCmd.AskYesNo(choiceContext, Owner, ChoicePrompt, source: this);
 
         var candidates = fromExhaust
             ? PileType.Exhaust.GetPile(Owner).Cards.ToList()
@@ -70,7 +70,7 @@ public class HeLuSiXianDaoHaBiCard : YunoSpecialBaseCard
             choiceContext,
             candidates,
             Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, Math.Min(DynamicVars[_retrieveCardCount].IntValue, candidates.Count)));
+            CardPrefs(this, SelectionScreenPrompt, Math.Min(DynamicVars[_retrieveCardCount].IntValue, candidates.Count)));
 
         foreach (var card in selectedCards)
         {

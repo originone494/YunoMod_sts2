@@ -51,6 +51,6 @@ public class ZuoWanDeDaiJiaCard : YunoSpecialBaseCard
             c => c.Type == CardType.Skill,
             null,
             1,
-            prompt: RetrievePrompt);
+            prompt: RetrievePrompt, source: this);
     }
 }

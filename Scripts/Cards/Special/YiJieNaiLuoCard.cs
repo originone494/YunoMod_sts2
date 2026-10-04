@@ -50,7 +50,7 @@ public class YiJieNaiLuoCard : YunoSpecialBaseCard
         await ToolCmd.AddRandomCardsToExhaust(Owner, 4);
 
         // 3. 从消耗堆选择1张「异解怪兽」卡打出（可以不选）
-        var prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, 0, 1);
+        var prefs = CardPrefs(this, base.SelectionScreenPrompt, 0, 1);
         var picked = (await CardSelectCmd.FromCombatPile(
             choiceContext,
             PileType.Exhaust.GetPile(Owner),

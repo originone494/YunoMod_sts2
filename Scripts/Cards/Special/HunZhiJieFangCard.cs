@@ -31,7 +31,7 @@ public class HunZhiJieFangCard : YunoSpecialBaseCard
             choiceContext,
             discardPile.Cards.ToList(),
             Owner,
-            new CardSelectorPrefs(SelectionScreenPrompt, 0, 5))).ToList();
+            CardPrefs(this, SelectionScreenPrompt, 0, 5))).ToList();
 
         foreach (var card in selected)
         {

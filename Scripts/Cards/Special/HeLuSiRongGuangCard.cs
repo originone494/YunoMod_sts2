@@ -45,7 +45,7 @@ public class HeLuSiRongGuangCard : YunoSpecialBaseCard
         if (handCards.Count > 0)
         {
             var selected = (await CardSelectCmd.FromHand(
-                prefs: new CardSelectorPrefs(SelectionScreenPrompt, 0, 1),
+                prefs: CardPrefs(this, SelectionScreenPrompt, 0, 1),
                 context: choiceContext,
                 player: Owner,
                 filter: null,

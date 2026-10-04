@@ -47,7 +47,7 @@ public class YiJieHuangQuanGuoCard : YunoSpecialBaseCard
         await ToolCmd.AddRandomCardsToExhaust(Owner, 5);
 
         // 3. 从消耗堆选择1张「异解怪兽」返回抽牌堆（可以不选）
-        var prefs = new CardSelectorPrefs(base.SelectionScreenPrompt, 0, 1);
+        var prefs = CardPrefs(this, base.SelectionScreenPrompt, 0, 1);
         var picked = (await CardSelectCmd.FromCombatPile(
             choiceContext,
             PileType.Exhaust.GetPile(Owner),

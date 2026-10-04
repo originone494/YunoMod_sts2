@@ -57,7 +57,7 @@ public class ZhuLeiGuDongCard : YunoSpecialBaseCard, ILingHuoCard
         if (PileType.Hand.GetPile(Owner).Cards.Count == 0) return;
 
         var selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1, 1),
+            prefs: CardPrefs(this, DiscardNamedPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: null,
@@ -78,7 +78,7 @@ public class ZhuLeiGuDongCard : YunoSpecialBaseCard, ILingHuoCard
             ctx,
             discardPile,
             player,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            CardPrefs(this, SelectionScreenPrompt, 1, 1),
             filter: ZhuLeiFilter.IsTrap)).FirstOrDefault();
 
         if (picked != null)

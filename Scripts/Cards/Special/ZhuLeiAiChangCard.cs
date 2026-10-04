@@ -104,7 +104,7 @@ public class ZhuLeiAiChangCard : YunoSpecialBaseCard, ILingHuoCard
 
         // 丢弃1张自身以外的卡（必选 1 张；若没能丢成 → 不结算）
         var selected = (await CardSelectCmd.FromHand(
-            prefs: new CardSelectorPrefs(ZhuChangDiscardPrompt, 1, 1),
+            prefs: CardPrefs(this, ZhuChangDiscardPrompt, 1, 1),
             context: choiceContext,
             player: Owner,
             filter: card => card != this,
@@ -128,6 +128,6 @@ public class ZhuLeiAiChangCard : YunoSpecialBaseCard, ILingHuoCard
             player,
             c => ZhuLeiFilter.IsLowerMonster(c),
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
     }
 }

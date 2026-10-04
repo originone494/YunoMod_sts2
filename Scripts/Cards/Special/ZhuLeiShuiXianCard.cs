@@ -84,13 +84,13 @@ public class ZhuLeiShuiXianCard : YunoSpecialBaseCard, ILingHuoCard, IDengChangC
             player,
             ZhuLeiFilter.IsCardExceptFusionMonster,
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
         if (retrievedList.Count == 0) return;
 
         CardModel retrieved = retrievedList[0];
 
         // 「选择加入手牌或丢弃」= 是/否，必须选一个（是 → 留在手牌，否 → 丢弃）
-        if (!await ToolCmd.AskYesNo(ctx, player, RetrieveChoicePrompt))
+        if (!await ToolCmd.AskYesNo(ctx, player, RetrieveChoicePrompt, source: this))
         {
             // 选「否」→ 丢弃（走真正的弃牌语义，会触发被弃卡的灵活）
             await CardCmd.Discard(ctx, retrieved);
@@ -116,7 +116,7 @@ public class ZhuLeiShuiXianCard : YunoSpecialBaseCard, ILingHuoCard, IDengChangC
             choiceContext,
             options,
             player,
-            new CardSelectorPrefs(ZhuChangRetrievePrompt, 0, 1))).FirstOrDefault();
+            CardPrefs(this, ZhuChangRetrievePrompt, 0, 1))).FirstOrDefault();
 
         // 玩家没选 → 后续不处理（不丢弃这张卡）
         if (picked == null) return;

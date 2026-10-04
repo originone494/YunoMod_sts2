@@ -33,7 +33,7 @@ public class XiaoShiJieCard : YunoSpecialBaseCard
         var handCards = PileType.Hand.GetPile(Owner).Cards.ToList();
         if (handCards.Count == 0) return;
 
-        CardModel? selectedA = (await CardSelectCmd.FromHand(prefs: new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 1, 1), context: choiceContext, player: Owner, filter: null, source: this)).FirstOrDefault();
+        CardModel? selectedA = (await CardSelectCmd.FromHand(prefs: CardPrefs(this, ExhaustNamedPrompt, 1, 1), context: choiceContext, player: Owner, filter: null, source: this)).FirstOrDefault();
 
         if (selectedA == null) return;
         var cardA = selectedA;
@@ -43,7 +43,7 @@ public class XiaoShiJieCard : YunoSpecialBaseCard
         var drawPile = PileType.Draw.GetPile(Owner);
         if (drawPile.Cards.Count == 0) return;
         var selectedB = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, drawPile.Cards.ToList(), Owner, new CardSelectorPrefs(SelectionScreenPrompt, 1, 1))).ToList();
+            choiceContext, drawPile.Cards.ToList(), Owner, CardPrefs(this, SelectionScreenPrompt, 1, 1))).ToList();
         if (selectedB.Count == 0) return;
         var cardB = selectedB[0];
         await CardCmd.Exhaust(choiceContext, cardB);
@@ -61,7 +61,7 @@ public class XiaoShiJieCard : YunoSpecialBaseCard
             Owner,
             c => CountSameProperties(c, cardB) == 1,
             p => p.Title == randomPool.Title,
-            1);
+            1, source: this);
     }
 
     // 统计两张卡在 费用 / 类型 / 稀有度 上相同的个数

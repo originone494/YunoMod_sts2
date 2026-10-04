@@ -34,6 +34,6 @@ public class JinManBingQianXuZhiHuCard : YunoSpecialBaseCard
         await ToolCmd.AddRandomCardsToExhaust(Owner, _rareCards, 2f, c => c.Rarity == CardRarity.Rare);
 
         // 预知 6
-        await ToolCmd.ForeseeAndDraw(choiceContext, Owner, _foreseeAmount);
+        await ToolCmd.ForeseeAndDraw(choiceContext, Owner, _foreseeAmount, source: this);
     }
 }

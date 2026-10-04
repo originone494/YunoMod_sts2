@@ -52,7 +52,7 @@ public class LianLiPaoGuDingShiCard : YunoSpecialBaseCard
 
         // ① 选择抽牌堆1张费用为A的卡并消耗
         var cardA1 = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, drawPile.Cards.ToList(), Owner, new CardSelectorPrefs(ChoiceAFirstPrompt, 1, 1))).FirstOrDefault();
+            choiceContext, drawPile.Cards.ToList(), Owner, CardPrefs(this, ChoiceAFirstPrompt, 1, 1))).FirstOrDefault();
         if (cardA1 == null) return;
         int costA = cardA1.EnergyCost.GetWithModifiers(CostModifiers.None);
         await CardCmd.Exhaust(choiceContext, cardA1);
@@ -63,7 +63,7 @@ public class LianLiPaoGuDingShiCard : YunoSpecialBaseCard
             .ToList();
         if (costACandidates.Count == 0) return;
         var cardA2 = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, costACandidates, Owner, new CardSelectorPrefs(ChoiceAPrompt, 1, 1))).FirstOrDefault();
+            choiceContext, costACandidates, Owner, CardPrefs(this, ChoiceAPrompt, 1, 1))).FirstOrDefault();
         if (cardA2 == null) return;
         await CardCmd.Exhaust(choiceContext, cardA2);
 
@@ -73,7 +73,7 @@ public class LianLiPaoGuDingShiCard : YunoSpecialBaseCard
             .ToList();
         if (costBCandidates.Count == 0) return;
         var cardB = (await CardSelectCmd.FromSimpleGrid(
-            choiceContext, costBCandidates, Owner, new CardSelectorPrefs(ChoiceBPrompt, 1, 1))).FirstOrDefault();
+            choiceContext, costBCandidates, Owner, CardPrefs(this, ChoiceBPrompt, 1, 1))).FirstOrDefault();
         if (cardB == null) return;
         int costB = cardB.EnergyCost.GetWithModifiers(CostModifiers.None);
         await CardCmd.Exhaust(choiceContext, cardB);
@@ -95,7 +95,7 @@ public class LianLiPaoGuDingShiCard : YunoSpecialBaseCard
         var exhaustA = exhaustPile.Cards.Where(c => c.EnergyCost.GetWithModifiers(CostModifiers.None) == costA).ToList();
 
         var backCardA = (await CardSelectCmd.FromSimpleGrid(
-    choiceContext, exhaustA, Owner, new CardSelectorPrefs(ChoiceABackPrompt, 1, 1))).FirstOrDefault();
+    choiceContext, exhaustA, Owner, CardPrefs(this, ChoiceABackPrompt, 1, 1))).FirstOrDefault();
 
         if (backCardA != null) await CardPileCmd.Add(backCardA, PileType.Draw);
 
@@ -103,7 +103,7 @@ public class LianLiPaoGuDingShiCard : YunoSpecialBaseCard
         var exhaustB = exhaustPile.Cards.Where(c => c.EnergyCost.GetWithModifiers(CostModifiers.None) == costB).ToList();
 
         var backCardB = (await CardSelectCmd.FromSimpleGrid(
-choiceContext, exhaustB, Owner, new CardSelectorPrefs(ChoiceBBackPrompt, 1, 1))).FirstOrDefault();
+choiceContext, exhaustB, Owner, CardPrefs(this, ChoiceBBackPrompt, 1, 1))).FirstOrDefault();
 
         if (backCardB != null) await CardPileCmd.Add(backCardB, PileType.Draw);
     }

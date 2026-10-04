@@ -61,16 +61,21 @@ public class TianBeiLongHongZhongCard : YunoSpecialBaseCard
             .Execute(choiceContext);
     }
 
+    // 一回合只能打出一次：按**这张卡自己**记（文本写的是「一回合一次」，不是「同名卡一回合一次」）
+    private (CombatId? Combat, int Turn)? _playedThisTurn;
+
+    protected override bool IsPlayable => Owner == null || _playedThisTurn != PerTurnOnce.CurrentKey(Owner);
+
     // 打出此卡后：「检索」除自身以外的1张「天杯龙」卡，返回手牌，之后可以进行一次「同调」
-    //（同名卡一回合一次）
+    //（一回合一次）
     public override async Task AfterCardPlayed(PlayerChoiceContext choiceContext, CardPlay cardPlay)
     {
         if (cardPlay.Card != this) return;
         if (Owner == null) return;
 
-        var onceKey = PerTurnOnce.Key("Play", Id.Entry);
-        if (PerTurnOnce.IsUsed(Owner, onceKey)) return;
-        PerTurnOnce.Mark(Owner, onceKey);
+        var now = PerTurnOnce.CurrentKey(Owner);
+        if (_playedThisTurn == now) return;
+        _playedThisTurn = now;
 
         // 「检索」除自身以外的 1 张「天杯龙」卡（加入手牌）
         await ToolCmd.RetrieverCard(
@@ -78,7 +83,7 @@ public class TianBeiLongHongZhongCard : YunoSpecialBaseCard
             Owner,
             c => c.Tags.Contains(YunoTags.TianBeiLong) && c.Id != Id,
             p => p is YunoSpecialCardPool,
-            1);
+            1, source: this);
 
         // 打出后返回手牌
         await CardPileCmd.Add(this, PileType.Hand);

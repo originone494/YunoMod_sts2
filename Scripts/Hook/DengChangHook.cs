@@ -77,6 +77,9 @@ public static class DengChangHook
         _chainDepth++;
         try
         {
+            // 登场只触发后注效果；没有后注的卡不做任何事
+            if (card is not IDengChangCard self) return;
+
             // 同名卡一回合一次：所有「登场」效果统一在这里限制（按卡名记，回合刷新）
             string onceKey = PerTurnOnce.Key("DengChang", card.Id.Entry);
             if (PerTurnOnce.IsUsed(player, onceKey)) return;
@@ -87,16 +90,7 @@ public static class DengChangHook
             // 它会挡住后续队列直到玩家选完（原版 Hellraiser 把抽到的牌自动打出时就是这么做的）。
             var ctx = new BlockingPlayerChoiceContext();
 
-            if (card is IDengChangCard self)
-            {
-                // 「若登场后面注有效果，则不会打出，而是改为触发那些效果」
-                await self.DengChangSpecial(ctx, player);
-            }
-            else
-            {
-                // 默认：将其打出，然后返回手牌
-                await PlayAndReturnToHand(ctx, card);
-            }
+            await self.DengChangSpecial(ctx, player);
         }
         catch (Exception e)
         {
@@ -107,23 +101,5 @@ public static class DengChangHook
             _chainDepth--;
             Resolving.Remove(card);
         }
-    }
-
-    // 默认登场：打出这张卡，结算完再把它放回手牌
-    private static async Task PlayAndReturnToHand(PlayerChoiceContext ctx, CardModel card)
-    {
-        // CardCmd.AutoPlay 内部会先把它搬进 Play（CardModel.OnPlayWrapper 里 isAutoPlay 分支，
-        // CardModel.cs:1868-1875），结算后按结果堆落进弃牌堆/消耗堆/离场，所以这里不用自己搬。
-        // 同为"自动打出"，因此不消耗能量（与灵活的自动打出、原版 Hellraiser 一致）。
-        await CardCmd.AutoPlay(ctx, card, null);
-
-        // 返回手牌。三种情况不搬：
-        //   ① 已经离场（能力牌打出后进 limbo，卡已不在战斗里）——引擎根本搬不回去
-        //   ② 卡自己的效果已经把它放回手牌了
-        //   ③ 已经不在任何牌堆里（防御性判断）
-        if (card.HasBeenRemovedFromState) return;
-        if (card.Pile is null || card.Pile.Type == PileType.Hand) return;
-
-        await CardPileCmd.Add(card, PileType.Hand);
     }
 }

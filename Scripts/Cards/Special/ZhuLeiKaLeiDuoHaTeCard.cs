@@ -106,6 +106,6 @@ public class ZhuLeiKaLeiDuoHaTeCard : YunoSpecialBaseCard, ILingHuoCard, ILingHu
 
         // ③ 「检索」并丢弃1张除「珠泪融合怪兽」以外的「珠泪」卡
         await ToolCmd.RetrieverCard(ctx, player, ZhuLeiFilter.IsCardExceptFusionMonster,
-            p => p is YunoSpecialCardPool, 1, true);
+            p => p is YunoSpecialCardPool, 1, true, source: this);
     }
 }

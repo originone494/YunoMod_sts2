@@ -19,7 +19,7 @@ using YunoMod.Scripts.Tool;
 namespace YunoMod.Scripts.Cards.Special;
 
 // 珠泪·残响（陷阱）
-//   应对：受到敌人攻击前（本卡在手上）→ 对攻击者造成6点伤害、获得7点格挡、对攻击者给予2层虚弱，
+//   应对：受到敌人攻击前（本卡在手上）→ 丢弃1张攻击卡，对攻击者造成6点伤害、获得7点格挡、对攻击者给予2层虚弱，
 //         处理完把这张卡打出（带「消耗」→ 进消耗堆）
 //   灵活：从消耗堆将1张「珠泪怪兽」卡加入手牌
 //   打出没有效果（按新文案）：靠「应对」与「灵活」生效，手动打出只是把它消耗掉
@@ -68,6 +68,18 @@ public class ZhuLeiCanXiangCard : YunoSpecialBaseCard, ILingHuoCard
         if (cardSource != null) return;                 // 只要"受到敌人攻击"
         if (dealer == null || !dealer.IsMonster) return;
 
+        // ⓪ 丢弃1张攻击卡：手牌没有攻击卡（或玩家取消）时，整个应对不发动
+        if (!PileType.Hand.GetPile(Owner).Cards.Any(c => c.Type == CardType.Attack)) return;
+
+        var discarded = (await CardSelectCmd.FromHandForDiscard(
+            prefs: CardPrefs(this, DiscardNamedPrompt, 1, 1),
+            context: choiceContext,
+            player: Owner,
+            filter: c => c.Type == CardType.Attack,
+            source: this)).FirstOrDefault();
+        if (discarded == null) return;
+        await CardCmd.Discard(choiceContext, discarded);
+
         // ① 造成6点伤害（对攻击者）
         await CreatureCmd.Damage(choiceContext, dealer, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this, null);
 
@@ -93,7 +105,7 @@ public class ZhuLeiCanXiangCard : YunoSpecialBaseCard, ILingHuoCard
             ctx,
             exhaustPile,
             player,
-            new CardSelectorPrefs(SelectionScreenPrompt, 1, 1),
+            CardPrefs(this, SelectionScreenPrompt, 1, 1),
             filter: ZhuLeiFilter.IsMonster)).FirstOrDefault();
 
         if (picked != null)
